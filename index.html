@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5e35b1">
+<title>Vettori · Fisica Liceo</title>
+<style>
+:root{
+  --bg:#f4f6fb;--surface:#fff;--primary:#5e35b1;--primary-d:#4527a0;--accent:#ff7043;
+  --text:#1a1a2e;--muted:#5b6378;--border:#d8dce8;--shadow:0 2px 6px rgba(0,0,0,.08);
+  --vA:#1565c0;--vB:#ef6c00;--vR:#2e7d32;--vP:#8e24aa;--vC:#00897b;--vN:#c62828;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:clamp(15px,2.4vw,17px);line-height:1.55}
+header{background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;
+  padding:.85rem 1rem;box-shadow:var(--shadow);position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:clamp(1.15rem,4.5vw,1.55rem)}
+header .sub{font-size:.85em;opacity:.85}
+nav.main{background:var(--surface);display:flex;overflow-x:auto;
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5;scrollbar-width:thin}
+nav.main button{flex:0 0 auto;background:none;border:0;padding:.85rem 1rem;
+  font-size:.95em;color:var(--muted);border-bottom:3px solid transparent;
+  cursor:pointer;white-space:nowrap;min-height:44px;font-family:inherit}
+nav.main button.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+main{padding:1rem;max-width:880px;margin:0 auto}
+section.scene{display:none}
+section.scene.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:1rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.card h2{margin-top:0;color:var(--primary-d);font-size:1.15em}
+.card h3{margin:.8rem 0 .3rem;color:var(--primary-d);font-size:1em}
+.formula{background:#f1edfa;border-left:3px solid var(--primary);
+  padding:.55rem .8rem;margin:.4rem 0;border-radius:4px;
+  font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05em;
+  overflow-x:auto;white-space:nowrap}
+.tip{background:#e8f5e9;border-left:3px solid #2e7d32;padding:.5rem .8rem;
+  margin:.5rem 0;border-radius:4px;font-size:.93em}
+.warn{background:#fff8e1;border-left:3px solid #f9a825;padding:.5rem .8rem;
+  margin:.5rem 0;border-radius:4px;font-size:.93em}
+.ctrl{display:grid;gap:.55rem;margin:.6rem 0}
+.ctrl label{display:flex;align-items:center;gap:.6rem;font-size:.92em}
+.ctrl label .nm{color:var(--muted);min-width:5.2em}
+.ctrl label input[type=range]{flex:1;min-height:30px}
+.ctrl label .v{min-width:3.6em;text-align:right;font-weight:700;
+  color:var(--primary-d);font-variant-numeric:tabular-nums}
+.ctrl select{padding:.45rem;border:1px solid var(--border);border-radius:6px;
+  font-size:1em;background:var(--surface);width:100%}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));
+  gap:.4rem;margin:.6rem 0;font-size:.88em}
+.read .it{background:#eef0f8;padding:.4rem .55rem;border-radius:6px}
+.read .it .l{color:var(--muted);font-size:.78em;display:block}
+.read .it .v{font-weight:700;font-variant-numeric:tabular-nums}
+.eqs{text-align:center;font-weight:700;padding:.5rem;border-radius:8px;margin-top:.5rem;font-size:.92em}
+.eqs.ok{background:#c8e6c9;color:#1b5e20}
+.eqs.no{background:#ffcdd2;color:#b71c1c}
+.eqs.lim{background:#ffe0b2;color:#bf360c}
+svg.sim{width:100%;height:auto;background:#fafbff;border:1px solid var(--border);
+  border-radius:8px;display:block;font-family:sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0;font-size:.78em}
+.legend span{display:inline-flex;align-items:center;gap:.3rem;
+  background:#f0f1f8;padding:.18rem .5rem;border-radius:999px}
+.legend span i{display:inline-block;width:14px;height:3px;background:currentColor;border-radius:2px}
+.anim-btn{background:var(--accent);color:#fff;border:0;border-radius:8px;
+  padding:.5rem 1.1rem;font-size:.9em;cursor:pointer;font-family:inherit;
+  margin-top:.4rem;font-weight:600}
+.anim-btn:hover{filter:brightness(1.07)}
+.anim-btn:disabled{opacity:.55;cursor:default}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem}
+.home-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:.9rem;cursor:pointer;box-shadow:var(--shadow);text-align:left;font-size:1em;
+  font-family:inherit;color:inherit}
+.home-card:hover{border-color:var(--primary)}
+.home-card .ico{font-size:1.8em;display:block;margin-bottom:.3rem}
+.home-card strong{color:var(--primary-d);display:block;margin-bottom:.15rem}
+.home-card span{color:var(--muted);font-size:.88em}
+@media(max-width:480px){main{padding:.7rem}.card{padding:.85rem}}
+/* ----- Quiz ----- */
+.quiz-kinds{display:flex;gap:.4rem;margin-bottom:.7rem}
+.quiz-kinds button{flex:1;background:#f0f1f8;border:1.5px solid var(--border);
+  border-radius:8px;padding:.5rem;font-size:.85em;cursor:pointer;font-family:inherit;
+  color:var(--muted)}
+.quiz-kinds button.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+.quiz-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem;font-size:.84em}
+.quiz-bar-wrap{background:#d8dce8;border-radius:999px;height:7px;margin-bottom:.9rem;overflow:hidden}
+.quiz-bar-fill{background:var(--primary);height:100%;border-radius:999px;transition:width .35s}
+.quiz-q{font-weight:600;margin:.2rem 0 .75rem;line-height:1.45;font-size:.96em}
+.quiz-opts{display:grid;gap:.4rem;margin-bottom:.45rem}
+.quiz-btn{background:#f0f1f8;border:1.5px solid var(--border);border-radius:8px;
+  padding:.55rem .85rem;text-align:left;cursor:pointer;font-size:.88em;
+  font-family:inherit;color:var(--text);line-height:1.35;transition:background .12s,border-color .12s}
+.quiz-btn:not(:disabled):hover{background:#e3e0f3;border-color:var(--primary)}
+.quiz-btn:disabled{cursor:default}
+.quiz-btn.correct{background:#c8e6c9!important;border-color:#388e3c!important;color:#1b5e20;font-weight:600}
+.quiz-btn.wrong{background:#ffcdd2!important;border-color:#c62828!important;color:#b71c1c}
+.quiz-exp{padding:.55rem .85rem;border-radius:8px;font-size:.86em;line-height:1.5;margin:.45rem 0}
+.quiz-exp.ok{background:#e8f5e9;border-left:3px solid #388e3c;color:#1b5e20}
+.quiz-exp.no{background:#ffebee;border-left:3px solid #c62828;color:#b71c1c}
+.quiz-next{background:var(--primary);color:#fff;border:0;border-radius:8px;
+  padding:.48rem 1.1rem;font-size:.88em;cursor:pointer;font-family:inherit;margin-top:.25rem}
+.quiz-next:hover{background:var(--primary-d)}
+.quiz-done{text-align:center;padding:.7rem 0}
+.quiz-score-big{font-size:2.3em;font-weight:800;color:var(--primary-d);display:block;margin-bottom:.25rem}
+.quiz-msg{color:var(--muted);margin:.15rem 0 .8rem;font-size:.93em}
+.quiz-restart{background:var(--primary);color:#fff;border:0;border-radius:8px;
+  padding:.48rem 1.3rem;font-size:.88em;cursor:pointer;font-family:inherit}
+.quiz-restart:hover{background:var(--primary-d)}
+</style>
+</head>
+<body>
+<header>
+  <h1>➳ Studio dei Vettori</h1>
+  <div class="sub">Fisica e matematica per il liceo · teoria, simulazioni animate &amp; quiz</div>
+</header>
+<nav class="main" id="mainNav">
+  <button data-tab="home" class="active">🏠 Home</button>
+  <button data-tab="vettori">➳ Vettori</button>
+  <button data-tab="somma">➕ Somma e differenza</button>
+  <button data-tab="scalare">✕ Prodotto per scalare</button>
+  <button data-tab="pscalare">· Prodotto scalare</button>
+  <button data-tab="pvett">⊗ Prodotto vettoriale</button>
+</nav>
+<main>
+
+<section class="scene active" id="home">
+  <div class="card">
+    <h2>Che cos'è un vettore?</h2>
+    <p>Una <strong>grandezza vettoriale</strong> è completamente definita da tre informazioni: <strong>modulo</strong> (l'intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento su quella retta). Esempi: spostamento, velocità, forza, accelerazione.</p>
+    <p>Le <strong>grandezze scalari</strong>, invece, sono definite da un solo numero: massa, temperatura, tempo, energia.</p>
+    <div class="formula"><b>v</b> = (v<sub>x</sub> ; v<sub>y</sub>)   ·   |<b>v</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)</div>
+    <p>In questa app esplori cinque argomenti. Per ognuno trovi una breve teoria, una <strong>rappresentazione grafica interattiva e animata</strong> (muovi i cursori, premi <em>▶ Anima</em>) e due quiz: <strong>10 domande di teoria</strong> e <strong>10 di calcolo</strong>.</p>
+    <div class="tip">💡 Suggerimento: dopo aver letto la teoria, premi <em>▶ Anima</em> per vedere la costruzione passo-passo, poi prova valori estremi con i cursori prima di affrontare i quiz.</div>
+  </div>
+  <div class="home-grid">
+    <button class="home-card" data-go="vettori"><span class="ico">➳</span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span></button>
+    <button class="home-card" data-go="somma"><span class="ico">➕</span><strong>Somma e differenza</strong><span>Regola punta-coda e parallelogramma</span></button>
+    <button class="home-card" data-go="scalare"><span class="ico">✕</span><strong>Prodotto per uno scalare</strong><span>Allungare, accorciare e invertire un vettore</span></button>
+    <button class="home-card" data-go="pscalare"><span class="ico">·</span><strong>Prodotto scalare</strong><span>a·b, proiezioni e angolo tra vettori</span></button>
+    <button class="home-card" data-go="pvett"><span class="ico">⊗</span><strong>Prodotto vettoriale</strong><span>a×b in 3D, regola della mano destra</span></button>
+  </div>
+</section>
+
+<!-- ============ VETTORI ============ -->
+<section class="scene" id="vettori">
+  <div class="card">
+    <h2>➳ Il vettore e le sue componenti</h2>
+    <p>Nel piano cartesiano un vettore <b>v</b> applicato nell'origine raggiunge il punto (v<sub>x</sub>; v<sub>y</sub>). Le due <strong>componenti</strong> sono le proiezioni del vettore sugli assi.</p>
+    <h3>Da componenti a modulo e angolo</h3>
+    <div class="formula">|<b>v</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
+    <h3>Da modulo e angolo a componenti</h3>
+    <div class="formula">v<sub>x</sub> = |<b>v</b>| cos θ        v<sub>y</sub> = |<b>v</b>| sin θ</div>
+    <h3>Il versore</h3>
+    <p>Il <strong>versore</strong> v&#770; è il vettore di modulo 1 che indica la direzione e il verso di <b>v</b>:</p>
+    <div class="formula">v&#770; = <b>v</b> / |<b>v</b>|        |v&#770;| = 1</div>
+    <div class="tip">📐 L'angolo θ si misura a partire dal semiasse x positivo, in senso antiorario. Due vettori sono uguali se hanno stesso modulo, direzione e verso, ovunque siano applicati.</div>
+  </div>
+  <div class="card">
+    <h2>Rappresentazione interattiva</h2>
+    <div class="ctrl">
+      <label><span class="nm">v<sub>x</sub></span><input type="range" id="veX" min="-8" max="8" step="1" value="5"><span class="v" id="veXv">5</span></label>
+      <label><span class="nm">v<sub>y</sub></span><input type="range" id="veY" min="-8" max="8" step="1" value="3"><span class="v" id="veYv">3</span></label>
+    </div>
+    <svg class="sim" id="svgVett" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vA)"><i></i>vettore v</span>
+      <span style="color:var(--vN)"><i></i>componente v<sub>x</sub></span>
+      <span style="color:var(--vR)"><i></i>componente v<sub>y</sub></span>
+    </div>
+    <button class="anim-btn" id="veAnim">▶ Anima la costruzione</button>
+    <div class="read" id="rdVett"></div>
+  </div>
+  <div id="qz-vettori"></div>
+</section>
+
+<!-- ============ SOMMA ============ -->
+<section class="scene" id="somma">
+  <div class="card">
+    <h2>➕ Somma e differenza di vettori</h2>
+    <h3>Regola punta-coda</h3>
+    <p>Per sommare <b>a</b> + <b>b</b> si trasla <b>b</b> in modo che la sua coda coincida con la punta di <b>a</b>. La <strong>risultante</strong> va dalla coda di <b>a</b> alla punta di <b>b</b>.</p>
+    <h3>Per componenti</h3>
+    <div class="formula">(<b>a</b>+<b>b</b>)<sub>x</sub> = a<sub>x</sub>+b<sub>x</sub>        (<b>a</b>+<b>b</b>)<sub>y</sub> = a<sub>y</sub>+b<sub>y</sub></div>
+    <p>La somma è <strong>commutativa</strong> (<b>a</b>+<b>b</b> = <b>b</b>+<b>a</b>) e si può costruire anche con la <strong>regola del parallelogramma</strong>.</p>
+    <h3>La differenza</h3>
+    <div class="formula"><b>a</b> − <b>b</b> = <b>a</b> + (−<b>b</b>)</div>
+    <p>Si somma ad <b>a</b> il vettore opposto di <b>b</b>. Applicati nello stesso punto, <b>a</b>−<b>b</b> è il vettore che va dalla punta di <b>b</b> alla punta di <b>a</b>.</p>
+    <div class="tip">🔺 Il modulo della somma NON è in generale |<b>a</b>|+|<b>b</b>|: vale |<b>a</b>|+|<b>b</b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b>a</b>+<b>b</b>| = √(|<b>a</b>|²+|<b>b</b>|²).</div>
+  </div>
+  <div class="card">
+    <h2>Costruzione interattiva</h2>
+    <div class="ctrl">
+      <label><span class="nm">Operazione</span>
+        <select id="soMode">
+          <option value="somma">a + b  (somma)</option>
+          <option value="diff">a − b  (differenza)</option>
+        </select>
+      </label>
+      <label><span class="nm">a<sub>x</sub></span><input type="range" id="soAx" min="-6" max="6" step="1" value="4"><span class="v" id="soAxv">4</span></label>
+      <label><span class="nm">a<sub>y</sub></span><input type="range" id="soAy" min="-6" max="6" step="1" value="1"><span class="v" id="soAyv">1</span></label>
+      <label><span class="nm">b<sub>x</sub></span><input type="range" id="soBx" min="-6" max="6" step="1" value="1"><span class="v" id="soBxv">1</span></label>
+      <label><span class="nm">b<sub>y</sub></span><input type="range" id="soBy" min="-6" max="6" step="1" value="3"><span class="v" id="soByv">3</span></label>
+    </div>
+    <svg class="sim" id="svgSomma" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vA)"><i></i>a</span>
+      <span style="color:var(--vB)"><i></i>b</span>
+      <span style="color:var(--vR)"><i></i>risultante</span>
+    </div>
+    <button class="anim-btn" id="soAnim">▶ Anima la costruzione</button>
+    <div class="read" id="rdSomma"></div>
+  </div>
+  <div id="qz-somma"></div>
+</section>
+
+<!-- ============ SCALARE ============ -->
+<section class="scene" id="scalare">
+  <div class="card">
+    <h2>✕ Prodotto di un vettore per uno scalare</h2>
+    <p>Moltiplicando un vettore <b>v</b> per un numero (scalare) <em>k</em> si ottiene un nuovo <strong>vettore</strong> k<b>v</b>:</p>
+    <div class="formula">|k<b>v</b>| = |k| · |<b>v</b>|        (k<b>v</b>)<sub>x</sub> = k·v<sub>x</sub>   ;   (k<b>v</b>)<sub>y</sub> = k·v<sub>y</sub></div>
+    <ul>
+      <li>se <strong>k &gt; 0</strong>: k<b>v</b> ha lo <em>stesso verso</em> di <b>v</b>;</li>
+      <li>se <strong>k &lt; 0</strong>: k<b>v</b> ha <em>verso opposto</em>;</li>
+      <li>se <strong>|k| &gt; 1</strong> il vettore si allunga, se <strong>|k| &lt; 1</strong> si accorcia;</li>
+      <li>se <strong>k = 0</strong> si ottiene il vettore nullo.</li>
+    </ul>
+    <p>Il vettore k<b>v</b> è sempre <strong>parallelo</strong> a <b>v</b>. Vale la proprietà distributiva: k(<b>a</b>+<b>b</b>) = k<b>a</b> + k<b>b</b>.</p>
+    <div class="tip">🎯 Dividendo un vettore per il suo modulo si ottiene il versore: v&#770; = <b>v</b>/|<b>v</b>| = (1/|<b>v</b>|)·<b>v</b>. È un prodotto per lo scalare 1/|<b>v</b>|.</div>
+  </div>
+  <div class="card">
+    <h2>Rappresentazione interattiva</h2>
+    <div class="ctrl">
+      <label><span class="nm">v<sub>x</sub></span><input type="range" id="scX" min="-7" max="7" step="1" value="3"><span class="v" id="scXv">3</span></label>
+      <label><span class="nm">v<sub>y</sub></span><input type="range" id="scY" min="-7" max="7" step="1" value="2"><span class="v" id="scYv">2</span></label>
+      <label><span class="nm">scalare k</span><input type="range" id="scK" min="-3" max="3" step="0.25" value="2"><span class="v" id="scKv">2.00</span></label>
+    </div>
+    <svg class="sim" id="svgScal" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vA)"><i></i>vettore v</span>
+      <span style="color:var(--vR)"><i></i>vettore k·v</span>
+    </div>
+    <button class="anim-btn" id="scAnim">▶ Anima il prodotto</button>
+    <div class="read" id="rdScal"></div>
+    <div class="eqs" id="scStat">—</div>
+  </div>
+  <div id="qz-scalare"></div>
+</section>
+
+<!-- ============ PRODOTTO SCALARE ============ -->
+<section class="scene" id="pscalare">
+  <div class="card">
+    <h2>· Prodotto scalare</h2>
+    <p>Il <strong>prodotto scalare</strong> di due vettori è un <strong>numero</strong> (uno scalare), non un vettore. Si può calcolare in due modi equivalenti:</p>
+    <div class="formula"><b>a</b>·<b>b</b> = |<b>a</b>| |<b>b</b>| cos θ        <b>a</b>·<b>b</b> = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub></div>
+    <p>dove θ è l'angolo compreso tra i due vettori.</p>
+    <h3>Segno e angolo</h3>
+    <ul>
+      <li><b>a</b>·<b>b</b> &gt; 0 → angolo <em>acuto</em>;</li>
+      <li><b>a</b>·<b>b</b> = 0 → vettori <em>perpendicolari</em>;</li>
+      <li><b>a</b>·<b>b</b> &lt; 0 → angolo <em>ottuso</em>.</li>
+    </ul>
+    <h3>Significato geometrico</h3>
+    <p>Il prodotto scalare è il modulo di <b>a</b> moltiplicato per la <strong>proiezione</strong> di <b>b</b> sulla direzione di <b>a</b>:</p>
+    <div class="formula">proiezione di <b>b</b> su <b>a</b> = (<b>a</b>·<b>b</b>) / |<b>a</b>|        cos θ = (<b>a</b>·<b>b</b>) / (|<b>a</b>| |<b>b</b>|)</div>
+    <div class="tip">📌 Proprietà utili: <b>a</b>·<b>a</b> = |<b>a</b>|²  ed è commutativo: <b>a</b>·<b>b</b> = <b>b</b>·<b>a</b>.</div>
+  </div>
+  <div class="card">
+    <h2>Rappresentazione interattiva</h2>
+    <div class="ctrl">
+      <label><span class="nm">a<sub>x</sub></span><input type="range" id="psAx" min="-7" max="7" step="1" value="5"><span class="v" id="psAxv">5</span></label>
+      <label><span class="nm">a<sub>y</sub></span><input type="range" id="psAy" min="-7" max="7" step="1" value="1"><span class="v" id="psAyv">1</span></label>
+      <label><span class="nm">b<sub>x</sub></span><input type="range" id="psBx" min="-7" max="7" step="1" value="2"><span class="v" id="psBxv">2</span></label>
+      <label><span class="nm">b<sub>y</sub></span><input type="range" id="psBy" min="-7" max="7" step="1" value="4"><span class="v" id="psByv">4</span></label>
+    </div>
+    <svg class="sim" id="svgPsc" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vA)"><i></i>a</span>
+      <span style="color:var(--vB)"><i></i>b</span>
+      <span style="color:var(--vP)"><i></i>proiezione di b su a</span>
+    </div>
+    <button class="anim-btn" id="psAnim">▶ Anima la proiezione</button>
+    <div class="read" id="rdPsc"></div>
+    <div class="eqs" id="psStat">—</div>
+  </div>
+  <div id="qz-pscalare"></div>
+</section>
+
+<!-- ============ PRODOTTO VETTORIALE ============ -->
+<section class="scene" id="pvett">
+  <div class="card">
+    <h2>⊗ Prodotto vettoriale</h2>
+    <p>Il <strong>prodotto vettoriale</strong> <b>a</b>×<b>b</b> di due vettori è un <strong>vettore</strong>. È un'operazione intrinsecamente <strong>tridimensionale</strong>.</p>
+    <h3>Direzione e verso</h3>
+    <p>Il vettore <b>a</b>×<b>b</b> è <strong>perpendicolare al piano</strong> individuato da <b>a</b> e <b>b</b>; il suo verso è dato dalla <strong>regola della mano destra</strong>.</p>
+    <h3>Modulo</h3>
+    <div class="formula">|<b>a</b>×<b>b</b>| = |<b>a</b>| |<b>b</b>| sin θ</div>
+    <p>Il modulo è uguale all'<strong>area del parallelogramma</strong> di lati <b>a</b> e <b>b</b>.</p>
+    <h3>Componenti</h3>
+    <div class="formula">a×b = ( a<sub>y</sub>b<sub>z</sub>−a<sub>z</sub>b<sub>y</sub> ;  a<sub>z</sub>b<sub>x</sub>−a<sub>x</sub>b<sub>z</sub> ;  a<sub>x</sub>b<sub>y</sub>−a<sub>y</sub>b<sub>x</sub> )</div>
+    <div class="tip">🔄 Il prodotto vettoriale è <strong>anticommutativo</strong>: <b>a</b>×<b>b</b> = −(<b>b</b>×<b>a</b>). Se <b>a</b> e <b>b</b> sono paralleli (θ = 0° o 180°) allora <b>a</b>×<b>b</b> = <b>0</b>; in particolare <b>a</b>×<b>a</b> = <b>0</b>.</div>
+  </div>
+  <div class="card">
+    <h2>Rappresentazione 3D interattiva</h2>
+    <div class="ctrl">
+      <label><span class="nm">a = (a<sub>x</sub></span><input type="range" id="pvAx" min="-5" max="5" step="1" value="3"><span class="v" id="pvAxv">3</span></label>
+      <label><span class="nm">a<sub>y</sub></span><input type="range" id="pvAy" min="-5" max="5" step="1" value="1"><span class="v" id="pvAyv">1</span></label>
+      <label><span class="nm">a<sub>z</sub>)</span><input type="range" id="pvAz" min="-5" max="5" step="1" value="0"><span class="v" id="pvAzv">0</span></label>
+      <label><span class="nm">b = (b<sub>x</sub></span><input type="range" id="pvBx" min="-5" max="5" step="1" value="1"><span class="v" id="pvBxv">1</span></label>
+      <label><span class="nm">b<sub>y</sub></span><input type="range" id="pvBy" min="-5" max="5" step="1" value="3"><span class="v" id="pvByv">3</span></label>
+      <label><span class="nm">b<sub>z</sub>)</span><input type="range" id="pvBz" min="-5" max="5" step="1" value="0"><span class="v" id="pvBzv">0</span></label>
+      <label><span class="nm">vista (az.)</span><input type="range" id="pvAz2" min="0" max="360" step="1" value="35"><span class="v" id="pvAz2v">35</span>°</label>
+    </div>
+    <svg class="sim" id="svgPvt" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vA)"><i></i>a</span>
+      <span style="color:var(--vB)"><i></i>b</span>
+      <span style="color:var(--vR)"><i></i>a×b</span>
+      <span style="color:var(--vP)"><i></i>parallelogramma</span>
+    </div>
+    <button class="anim-btn" id="pvAnim">▶ Anima la rotazione 3D</button>
+    <div class="read" id="rdPvt"></div>
+    <div class="warn" id="pvNote" style="font-size:.85em">Il vettore a×b è disegnato in scala ridotta quando è molto lungo: il valore reale del modulo è nella tabella.</div>
+  </div>
+  <div id="qz-pvett"></div>
+</section>
+
+</main>
+<script>
+"use strict";
+
+/* ===================== HELPERS ===================== */
+function arrow(x1,y1,x2,y2,opt){
+  opt=opt||{};
+  const color=opt.color||'#000', w=opt.w||3, label=opt.label;
+  const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy);
+  if(L<1.2) return '';
+  const ux=dx/L, uy=dy/L;
+  const tip=Math.min(13,L*0.42), tw=tip*0.55;
+  const bx=x2-tip*ux, by=y2-tip*uy;
+  const lx=bx-tw*uy, ly=by+tw*ux;
+  const rx=bx+tw*uy, ry=by-tw*ux;
+  const dash=opt.dash?`stroke-dasharray="${opt.dash}"`:'';
+  const op=opt.opacity!=null?`opacity="${opt.opacity}"`:'';
+  let lbl='';
+  if(label){
+    const off=opt.labelOff||17;
+    const tx=x2+off*ux-off*0.55*uy, ty=y2+off*uy+off*0.55*ux;
+    lbl=`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" fill="${color}" font-size="13.5" font-weight="700" text-anchor="middle" dominant-baseline="middle">${label}</text>`;
+  }
+  return `<g ${op}><line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" ${dash}/>`+
+    `<polygon points="${x2.toFixed(1)},${y2.toFixed(1)} ${lx.toFixed(1)},${ly.toFixed(1)} ${rx.toFixed(1)},${ry.toFixed(1)}" fill="${color}"/>${lbl}</g>`;
+}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const COL={A:'#1565c0',B:'#ef6c00',R:'#2e7d32',P:'#8e24aa',C:'#00897b',N:'#c62828'};
+
+/* ----- 2D plotting ----- */
+const P2={ox:200,oy:188,u:20};
+const gx=x=>P2.ox+x*P2.u;
+const gy=y=>P2.oy-y*P2.u;
+function grid2d(){
+  let g='';
+  for(let x=-9;x<=9;x++) g+=`<line x1="${gx(x)}" y1="0" x2="${gx(x)}" y2="360" stroke="#e9ecf5" stroke-width="1"/>`;
+  for(let y=-8;y<=8;y++) g+=`<line x1="0" y1="${gy(y)}" x2="400" y2="${gy(y)}" stroke="#e9ecf5" stroke-width="1"/>`;
+  g+=`<line x1="0" y1="${gy(0)}" x2="400" y2="${gy(0)}" stroke="#9aa4b8" stroke-width="1.6"/>`;
+  g+=`<line x1="${gx(0)}" y1="0" x2="${gx(0)}" y2="360" stroke="#9aa4b8" stroke-width="1.6"/>`;
+  for(let x=-8;x<=8;x+=2){ if(x!==0) g+=`<text x="${gx(x)}" y="${gy(0)+13}" font-size="9" fill="#9aa4b8" text-anchor="middle">${x}</text>`; }
+  for(let y=-7;y<=7;y+=2){ if(y!==0) g+=`<text x="${gx(0)-6}" y="${gy(y)+3}" font-size="9" fill="#9aa4b8" text-anchor="end">${y}</text>`; }
+  g+=`<text x="394" y="${gy(0)-6}" font-size="12" fill="#6b7488" text-anchor="end" font-style="italic">x</text>`;
+  g+=`<text x="${gx(0)+7}" y="13" font-size="12" fill="#6b7488" font-style="italic">y</text>`;
+  g+=`<circle cx="${gx(0)}" cy="${gy(0)}" r="2.6" fill="#6b7488"/>`;
+  return g;
+}
+function fmt(n,d){ return (Math.abs(n)<1e-9?0:n).toFixed(d==null?2:d); }
+function angleDeg(x,y){ let a=Math.atan2(y,x)*180/Math.PI; if(a<0)a+=360; return a; }
+
+/* ----- animation runner ----- */
+const anims={};
+function runAnim(key,dur,render,btn){
+  if(anims[key]) cancelAnimationFrame(anims[key]);
+  if(btn){ btn.disabled=true; }
+  const t0=performance.now();
+  function step(now){
+    let p=clamp((now-t0)/dur,0,1);
+    render(p);
+    if(p<1){ anims[key]=requestAnimationFrame(step); }
+    else { delete anims[key]; if(btn) btn.disabled=false; }
+  }
+  anims[key]=requestAnimationFrame(step);
+}
+
+/* ----- nav ----- */
+const navBtns=document.querySelectorAll('#mainNav button');
+const scenes=document.querySelectorAll('section.scene');
+function showTab(name){
+  navBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  scenes.forEach(s=>s.classList.toggle('active',s.id===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('.home-card').forEach(c=>c.addEventListener('click',()=>showTab(c.dataset.go)));
+
+function bindRange(id,valId,fmtFn){
+  const el=document.getElementById(id), out=document.getElementById(valId);
+  const upd=()=>{ out.textContent=fmtFn?fmtFn(+el.value):el.value; };
+  el.addEventListener('input',upd); upd();
+  return el;
+}
+
+/* ===================== VETTORI ===================== */
+function renderVett(p){
+  if(p==null)p=1;
+  const vx=+document.getElementById('veX').value;
+  const vy=+document.getElementById('veY').value;
+  const mod=Math.hypot(vx,vy);
+  const vScale=clamp(p/0.6,0,1);
+  const compA=clamp((p-0.55)/0.45,0,1);
+  const ex=vx*vScale, ey=vy*vScale;
+  let s=grid2d();
+  // components (dashed)
+  if(compA>0.01 && Math.abs(vx)>0){
+    s+=`<line x1="${gx(0)}" y1="${gy(0)}" x2="${gx(vx)}" y2="${gy(0)}" stroke="${COL.N}" stroke-width="2.4" stroke-dasharray="5 3" opacity="${compA}"/>`;
+    s+=`<text x="${gx(vx/2)}" y="${gy(0)+(vy>=0?15:-8)}" font-size="11" fill="${COL.N}" text-anchor="middle" opacity="${compA}">vx=${vx}</text>`;
+  }
+  if(compA>0.01 && Math.abs(vy)>0){
+    s+=`<line x1="${gx(vx)}" y1="${gy(0)}" x2="${gx(vx)}" y2="${gy(vy)}" stroke="${COL.R}" stroke-width="2.4" stroke-dasharray="5 3" opacity="${compA}"/>`;
+    s+=`<text x="${gx(vx)+(vx>=0?16:-16)}" y="${gy(vy/2)}" font-size="11" fill="${COL.R}" text-anchor="middle" opacity="${compA}">vy=${vy}</text>`;
+  }
+  // vector
+  s+=arrow(gx(0),gy(0),gx(ex),gy(ey),{color:COL.A,w:3.4,label:p>0.5?'v':''});
+  document.getElementById('svgVett').innerHTML=s;
+  const rd=document.getElementById('rdVett');
+  const ang=mod>0?angleDeg(vx,vy):0;
+  const vers=mod>0?`(${fmt(vx/mod)} ; ${fmt(vy/mod)})`:'—';
+  rd.innerHTML=`<div class="it"><span class="l">componenti</span><span class="v">(${vx} ; ${vy})</span></div>
+    <div class="it"><span class="l">modulo |v|</span><span class="v">${fmt(mod)}</span></div>
+    <div class="it"><span class="l">angolo θ</span><span class="v">${mod>0?fmt(ang,1)+'°':'—'}</span></div>
+    <div class="it"><span class="l">versore v&#770;</span><span class="v">${vers}</span></div>`;
+}
+['veX','veY'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderVett(1)));
+bindRange('veX','veXv'); bindRange('veY','veYv');
+document.getElementById('veAnim').addEventListener('click',e=>runAnim('vett',1600,renderVett,e.target));
+
+/* ===================== SOMMA ===================== */
+function renderSomma(p){
+  if(p==null)p=1;
+  const ax=+document.getElementById('soAx').value, ay=+document.getElementById('soAy').value;
+  const bx=+document.getElementById('soBx').value, by=+document.getElementById('soBy').value;
+  const mode=document.getElementById('soMode').value;
+  const cx=(mode==='somma')?bx:-bx, cy=(mode==='somma')?by:-by;
+  const rx=ax+cx, ry=ay+cy;
+  // animation phases
+  const slide=clamp((p-0.3)/0.4,0,1);     // chained vector slides to tip of a
+  const grow=clamp((p-0.72)/0.28,0,1);    // resultant grows
+  const offX=ax*slide, offY=ay*slide;
+  let s=grid2d();
+  // parallelogram dashed (somma only) once chained in place
+  if(mode==='somma' && slide>0.99){
+    s+=`<line x1="${gx(bx)}" y1="${gy(by)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#bdbdbd" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+    s+=`<line x1="${gx(ax)}" y1="${gy(ay)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#bdbdbd" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+  }
+  // a
+  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
+  // b from origin
+  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b',opacity:mode==='diff'?0.5:1});
+  // for differenza: -b from origin
+  if(mode==='diff'){
+    s+=arrow(gx(0),gy(0),gx(-bx),gy(-by),{color:COL.B,w:2.6,label:'−b',dash:'5 3'});
+  }
+  // chained vector (b or -b) sliding toward tip of a
+  if(slide>0.02){
+    s+=arrow(gx(offX),gy(offY),gx(offX+cx),gy(offY+cy),{color:COL.B,w:2.8,opacity:0.85,dash:slide<0.99?'4 3':null});
+  }
+  // resultant
+  if(grow>0.01){
+    s+=arrow(gx(0),gy(0),gx(rx*grow),gy(ry*grow),{color:COL.R,w:3.8,label:grow>0.6?(mode==='somma'?'a+b':'a−b'):''});
+  }
+  document.getElementById('svgSomma').innerHTML=s;
+  const op=mode==='somma'?'a + b':'a − b';
+  document.getElementById('rdSomma').innerHTML=`<div class="it"><span class="l">a</span><span class="v">(${ax} ; ${ay})</span></div>
+    <div class="it"><span class="l">b</span><span class="v">(${bx} ; ${by})</span></div>
+    <div class="it"><span class="l">${op}</span><span class="v">(${rx} ; ${ry})</span></div>
+    <div class="it"><span class="l">|${op}|</span><span class="v">${fmt(Math.hypot(rx,ry))}</span></div>`;
+}
+['soMode','soAx','soAy','soBx','soBy'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderSomma(1)));
+bindRange('soAx','soAxv'); bindRange('soAy','soAyv'); bindRange('soBx','soBxv'); bindRange('soBy','soByv');
+document.getElementById('soAnim').addEventListener('click',e=>runAnim('somma',2000,renderSomma,e.target));
+
+/* ===================== SCALARE ===================== */
+function renderScal(p){
+  if(p==null)p=1;
+  const vx=+document.getElementById('scX').value, vy=+document.getElementById('scY').value;
+  const k=+document.getElementById('scK').value;
+  const kEff=k*p;                 // grows from 0 to k
+  const kx=vx*kEff, ky=vy*kEff;
+  let s=grid2d();
+  // reference v (thin)
+  s+=arrow(gx(0),gy(0),gx(vx),gy(vy),{color:COL.A,w:2.6,label:'v',opacity:0.55});
+  // k*v
+  if(Math.hypot(kx,ky)>0.3){
+    s+=arrow(gx(0),gy(0),gx(kx),gy(ky),{color:COL.R,w:3.8,label:p>0.5?'k·v':''});
+  }
+  document.getElementById('svgScal').innerHTML=s;
+  const mod=Math.hypot(vx,vy);
+  document.getElementById('rdScal').innerHTML=`<div class="it"><span class="l">v</span><span class="v">(${vx} ; ${vy})</span></div>
+    <div class="it"><span class="l">k</span><span class="v">${fmt(k)}</span></div>
+    <div class="it"><span class="l">k·v</span><span class="v">(${fmt(vx*k,1)} ; ${fmt(vy*k,1)})</span></div>
+    <div class="it"><span class="l">|k·v| = |k||v|</span><span class="v">${fmt(Math.abs(k)*mod)}</span></div>`;
+  const st=document.getElementById('scStat');
+  if(Math.abs(k)<1e-6){ st.className='eqs lim'; st.textContent='k = 0 → vettore nullo'; }
+  else if(k>0){ st.className='eqs ok'; st.textContent=k>=1?'k > 0 → stesso verso, vettore allungato':'k > 0 → stesso verso, vettore accorciato'; }
+  else { st.className='eqs no'; st.textContent=k<=-1?'k < 0 → verso opposto, vettore allungato':'k < 0 → verso opposto, vettore accorciato'; }
+}
+['scX','scY','scK'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderScal(1)));
+bindRange('scX','scXv'); bindRange('scY','scYv'); bindRange('scK','scKv',v=>v.toFixed(2));
+document.getElementById('scAnim').addEventListener('click',e=>runAnim('scal',1500,renderScal,e.target));
+
+/* ===================== PRODOTTO SCALARE ===================== */
+function renderPsc(p){
+  if(p==null)p=1;
+  const ax=+document.getElementById('psAx').value, ay=+document.getElementById('psAy').value;
+  const bx=+document.getElementById('psBx').value, by=+document.getElementById('psBy').value;
+  const dot=ax*bx+ay*by;
+  const ma=Math.hypot(ax,ay), mb=Math.hypot(bx,by);
+  let s=grid2d();
+  // projection of b onto a
+  let footX=0,footY=0,proj=0;
+  if(ma>1e-6){
+    proj=dot/ma;                 // signed projection length
+    const ux=ax/ma, uy=ay/ma;
+    footX=proj*ux; footY=proj*uy;
+    // perpendicular from tip of b descending to foot
+    const px=bx+(footX-bx)*p, py=by+(footY-by)*p;
+    s+=`<line x1="${gx(bx)}" y1="${gy(by)}" x2="${gx(px)}" y2="${gy(py)}" stroke="${COL.P}" stroke-width="1.8" stroke-dasharray="5 3"/>`;
+    // projection vector along a
+    s+=arrow(gx(0),gy(0),gx(footX*p),gy(footY*p),{color:COL.P,w:5,opacity:0.6});
+  }
+  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
+  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b'});
+  document.getElementById('svgPsc').innerHTML=s;
+  const cos=(ma>0&&mb>0)?dot/(ma*mb):0;
+  const ang=(ma>0&&mb>0)?Math.acos(clamp(cos,-1,1))*180/Math.PI:0;
+  document.getElementById('rdPsc').innerHTML=`<div class="it"><span class="l">a·b = aₓbₓ+a_yb_y</span><span class="v">${fmt(dot,1)}</span></div>
+    <div class="it"><span class="l">|a| · |b|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
+    <div class="it"><span class="l">cos θ</span><span class="v">${(ma>0&&mb>0)?fmt(cos,3):'—'}</span></div>
+    <div class="it"><span class="l">angolo θ</span><span class="v">${(ma>0&&mb>0)?fmt(ang,1)+'°':'—'}</span></div>
+    <div class="it"><span class="l">proiez. di b su a</span><span class="v">${ma>0?fmt(proj):'—'}</span></div>`;
+  const st=document.getElementById('psStat');
+  if(ma<1e-6||mb<1e-6){ st.className='eqs lim'; st.textContent='Un vettore è nullo: a·b = 0'; }
+  else if(Math.abs(dot)<1e-6){ st.className='eqs lim'; st.textContent='a·b = 0 → vettori perpendicolari (θ = 90°)'; }
+  else if(dot>0){ st.className='eqs ok'; st.textContent='a·b > 0 → angolo acuto tra i vettori'; }
+  else { st.className='eqs no'; st.textContent='a·b < 0 → angolo ottuso tra i vettori'; }
+}
+['psAx','psAy','psBx','psBy'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderPsc(1)));
+bindRange('psAx','psAxv'); bindRange('psAy','psAyv'); bindRange('psBx','psBxv'); bindRange('psBy','psByv');
+document.getElementById('psAnim').addEventListener('click',e=>runAnim('psc',1700,renderPsc,e.target));
+
+/* ===================== PRODOTTO VETTORIALE (3D) ===================== */
+const O3={ox:200,oy:240,u:23}, EL=0.46;
+function proj3(x,y,z,az){
+  const ca=Math.cos(az), sa=Math.sin(az);
+  const x1=x*ca-y*sa, y1=x*sa+y*ca;
+  const ce=Math.cos(EL), se=Math.sin(EL);
+  return {x:O3.ox+x1*O3.u, y:O3.oy-(z*ce-y1*se)*O3.u, d:z*se+y1*ce};
+}
+function renderPvt(p){
+  if(p==null)p=1;
+  const ax=+document.getElementById('pvAx').value, ay=+document.getElementById('pvAy').value, az=+document.getElementById('pvAz').value;
+  const bx=+document.getElementById('pvBx').value, by=+document.getElementById('pvBy').value, bz=+document.getElementById('pvBz').value;
+  const azBase=(+document.getElementById('pvAz2').value)*Math.PI/180;
+  const A=(anims['pvt']!=null)?azBase+2*Math.PI*p:azBase;
+  // cross product
+  const cx=ay*bz-az*by, cy=az*bx-ax*bz, cz=ax*by-ay*bx;
+  const cMod=Math.hypot(cx,cy,cz);
+  const cScale=cMod>5?5/cMod:1;
+  const pj=(x,y,z)=>proj3(x,y,z,A);
+  const O=pj(0,0,0);
+  let s='';
+  // ground grid on z=0
+  for(let i=-5;i<=5;i++){
+    const a1=pj(i,-5,0),a2=pj(i,5,0),b1=pj(-5,i,0),b2=pj(5,i,0);
+    s+=`<line x1="${a1.x.toFixed(1)}" y1="${a1.y.toFixed(1)}" x2="${a2.x.toFixed(1)}" y2="${a2.y.toFixed(1)}" stroke="#e9ecf5" stroke-width="1"/>`;
+    s+=`<line x1="${b1.x.toFixed(1)}" y1="${b1.y.toFixed(1)}" x2="${b2.x.toFixed(1)}" y2="${b2.y.toFixed(1)}" stroke="#e9ecf5" stroke-width="1"/>`;
+  }
+  // axes
+  const axEnd=[pj(6,0,0),pj(0,6,0),pj(0,0,6)];
+  const axNames=['x','y','z'];
+  axEnd.forEach((e,i)=>{
+    s+=`<line x1="${O.x.toFixed(1)}" y1="${O.y.toFixed(1)}" x2="${e.x.toFixed(1)}" y2="${e.y.toFixed(1)}" stroke="#aab2c4" stroke-width="1.4"/>`;
+    s+=`<text x="${e.x.toFixed(1)}" y="${(e.y-4).toFixed(1)}" font-size="11" fill="#7a8296" font-style="italic" text-anchor="middle">${axNames[i]}</text>`;
+  });
+  // parallelogram a,b
+  const pa=pj(ax,ay,az), pb=pj(bx,by,bz), pab=pj(ax+bx,ay+by,az+bz);
+  s+=`<polygon points="${O.x.toFixed(1)},${O.y.toFixed(1)} ${pa.x.toFixed(1)},${pa.y.toFixed(1)} ${pab.x.toFixed(1)},${pab.y.toFixed(1)} ${pb.x.toFixed(1)},${pb.y.toFixed(1)}" fill="${COL.P}" fill-opacity="0.16" stroke="${COL.P}" stroke-width="1.3" stroke-dasharray="4 3"/>`;
+  // vectors
+  s+=arrow(O.x,O.y,pa.x,pa.y,{color:COL.A,w:3.2,label:'a'});
+  s+=arrow(O.x,O.y,pb.x,pb.y,{color:COL.B,w:3.2,label:'b'});
+  if(cMod>1e-6){
+    const pc=pj(cx*cScale,cy*cScale,cz*cScale);
+    s+=arrow(O.x,O.y,pc.x,pc.y,{color:COL.R,w:3.8,label:'a×b'});
+  }
+  document.getElementById('svgPvt').innerHTML=s;
+  const ma=Math.hypot(ax,ay,az), mb=Math.hypot(bx,by,bz);
+  const cosT=(ma>0&&mb>0)?(ax*bx+ay*by+az*bz)/(ma*mb):1;
+  const ang=Math.acos(clamp(cosT,-1,1))*180/Math.PI;
+  document.getElementById('rdPvt').innerHTML=`<div class="it"><span class="l">a×b</span><span class="v">(${cx} ; ${cy} ; ${cz})</span></div>
+    <div class="it"><span class="l">|a×b|</span><span class="v">${fmt(cMod)}</span></div>
+    <div class="it"><span class="l">area parallelogr.</span><span class="v">${fmt(cMod)}</span></div>
+    <div class="it"><span class="l">|a| · |b|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
+    <div class="it"><span class="l">angolo θ</span><span class="v">${(ma>0&&mb>0)?fmt(ang,1)+'°':'—'}</span></div>
+    <div class="it"><span class="l">|a||b|sin θ</span><span class="v">${fmt(ma*mb*Math.sin(ang*Math.PI/180))}</span></div>`;
+}
+['pvAx','pvAy','pvAz','pvBx','pvBy','pvBz','pvAz2'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderPvt(1)));
+bindRange('pvAx','pvAxv'); bindRange('pvAy','pvAyv'); bindRange('pvAz','pvAzv');
+bindRange('pvBx','pvBxv'); bindRange('pvBy','pvByv'); bindRange('pvBz','pvBzv');
+bindRange('pvAz2','pvAz2v');
+document.getElementById('pvAnim').addEventListener('click',e=>runAnim('pvt',4200,renderPvt,e.target));
+
+/* ===================== QUIZ DATA ===================== */
+const QUIZ={
+vettori:{
+ teoria:[
+  {q:'Quali tre informazioni definiscono completamente una grandezza vettoriale?',
+   opts:['Solo il modulo','Modulo e direzione','Modulo, direzione e verso','Direzione, verso e unità di misura'],ans:2,
+   exp:'Un vettore è definito da modulo (intensità), direzione (la retta) e verso (l\'orientamento su quella retta).'},
+  {q:'Quale tra le seguenti è una grandezza SCALARE?',
+   opts:['La forza','La velocità','La temperatura','L\'accelerazione'],ans:2,
+   exp:'La temperatura è definita da un solo numero: è scalare. Forza, velocità e accelerazione sono vettoriali.'},
+  {q:'Il modulo di un vettore è una quantità...',
+   opts:['Sempre positiva o nulla','Che può essere negativa','Sempre uguale a 1','Senza unità di misura'],ans:0,
+   exp:'Il modulo è la lunghezza del vettore: è sempre maggiore o uguale a zero, mai negativo.'},
+  {q:'Come si calcola la componente vₓ noti il modulo |v| e l\'angolo θ?',
+   opts:['vₓ = |v| · sin θ','vₓ = |v| · cos θ','vₓ = |v| / cos θ','vₓ = |v| · tan θ'],ans:1,
+   exp:'La componente lungo x è la proiezione sul semiasse x: vₓ = |v| cos θ. La componente y è vᵧ = |v| sin θ.'},
+  {q:'Come si ottiene il modulo di un vettore dalle sue componenti (vₓ ; vᵧ)?',
+   opts:['|v| = vₓ + vᵧ','|v| = vₓ · vᵧ','|v| = √(vₓ² + vᵧ²)','|v| = (vₓ² + vᵧ²)'],ans:2,
+   exp:'Per il teorema di Pitagora il modulo è la radice quadrata della somma dei quadrati delle componenti.'},
+  {q:'Che modulo ha il versore di un vettore?',
+   opts:['0','1','Uguale al vettore','Dipende dal vettore'],ans:1,
+   exp:'Il versore è il vettore unitario che dà direzione e verso: il suo modulo è sempre esattamente 1.'},
+  {q:'Quando due vettori si dicono uguali?',
+   opts:['Quando hanno lo stesso punto di applicazione','Quando hanno stesso modulo, direzione e verso','Quando hanno solo lo stesso modulo','Quando giacciono sulla stessa retta'],ans:1,
+   exp:'Due vettori sono uguali se hanno stesso modulo, direzione e verso, indipendentemente dal punto di applicazione.'},
+  {q:'Il vettore opposto −v rispetto a v ha:',
+   opts:['Modulo opposto','Stesso modulo e direzione, verso contrario','Direzione contraria e stesso verso','Modulo doppio'],ans:1,
+   exp:'Il vettore opposto ha lo stesso modulo e la stessa direzione di v, ma verso contrario.'},
+  {q:'Rispetto a quale riferimento si misura convenzionalmente l\'angolo θ di un vettore nel piano?',
+   opts:['Dal semiasse y positivo','Dal semiasse x positivo, in senso antiorario','Dalla bisettrice del primo quadrante','Da un asse a scelta'],ans:1,
+   exp:'Per convenzione θ si misura a partire dal semiasse x positivo, ruotando in senso antiorario.'},
+  {q:'Che cosa caratterizza il vettore nullo?',
+   opts:['Modulo 1 e direzione qualsiasi','Modulo 0 e direzione indeterminata','Modulo grande e verso nullo','Non esiste'],ans:1,
+   exp:'Il vettore nullo ha modulo zero; la sua direzione e il suo verso sono indeterminati.'}
+ ],
+ calcolo:[
+  {q:'Dato v = (3 ; 4), quanto vale il modulo |v|?',
+   opts:['5','7','12','25'],ans:0,
+   exp:'|v| = √(3² + 4²) = √(9 + 16) = √25 = 5.'},
+  {q:'Dato v = (−6 ; 8), quanto vale il modulo |v|?',
+   opts:['2','10','14','100'],ans:1,
+   exp:'|v| = √((−6)² + 8²) = √(36 + 64) = √100 = 10. Il segno non cambia il modulo.'},
+  {q:'Un vettore ha |v| = 20 e θ = 60°. Quanto vale la componente vₓ?',
+   opts:['10','17,3','20','40'],ans:0,
+   exp:'vₓ = |v| cos θ = 20 · cos 60° = 20 · 0,5 = 10.'},
+  {q:'Un vettore ha |v| = 20 e θ = 60°. Quanto vale la componente vᵧ?',
+   opts:['10','17,3','20','34,6'],ans:1,
+   exp:'vᵧ = |v| sin θ = 20 · sin 60° = 20 · 0,866 ≈ 17,3.'},
+  {q:'Dato v = (5 ; 5), quanto vale l\'angolo θ?',
+   opts:['30°','45°','60°','90°'],ans:1,
+   exp:'θ = arctan(vᵧ/vₓ) = arctan(5/5) = arctan(1) = 45°.'},
+  {q:'Dato v = (0 ; −4), quanto vale l\'angolo θ?',
+   opts:['0°','90°','180°','270°'],ans:3,
+   exp:'Il vettore punta verso il basso lungo l\'asse y: θ = 270° (equivalente a −90°).'},
+  {q:'Qual è il versore del vettore v = (8 ; 6)?',
+   opts:['(0,8 ; 0,6)','(8 ; 6)','(0,6 ; 0,8)','(1 ; 1)'],ans:0,
+   exp:'|v| = √(64+36) = 10. Versore = v/|v| = (8/10 ; 6/10) = (0,8 ; 0,6).'},
+  {q:'Un vettore ha |v| = 12 e θ = 150°. Quanto vale la componente vₓ?',
+   opts:['+10,4','−10,4','+6','−6'],ans:1,
+   exp:'vₓ = 12 · cos 150° = 12 · (−0,866) ≈ −10,4. Nel secondo quadrante la componente x è negativa.'},
+  {q:'Dato v = (7 ; 0), quanto vale l\'angolo θ?',
+   opts:['0°','45°','90°','180°'],ans:0,
+   exp:'Il vettore giace sul semiasse x positivo: θ = 0°. Il modulo vale 7.'},
+  {q:'Dato v = (−3 ; −3), quanto vale l\'angolo θ?',
+   opts:['45°','135°','225°','315°'],ans:2,
+   exp:'Entrambe le componenti sono negative: il vettore è nel terzo quadrante. θ = 180° + 45° = 225°.'}
+ ]
+},
+somma:{
+ teoria:[
+  {q:'Con la regola punta-coda, come si costruisce la risultante a + b?',
+   opts:['Si uniscono le due punte','Si trasla b con la coda sulla punta di a; la risultante va dalla coda di a alla punta di b','Si sommano i moduli','Si trasla a sulla punta di b e si uniscono le code'],ans:1,
+   exp:'Si trasla b mantenendone direzione e verso, con la coda sulla punta di a. La risultante unisce la coda di a alla punta di b.'},
+  {q:'La somma di vettori è commutativa?',
+   opts:['Sì, a + b = b + a','No, l\'ordine conta','Solo per vettori paralleli','Solo per vettori perpendicolari'],ans:0,
+   exp:'La somma vettoriale è commutativa: a + b = b + a. Lo si vede dalla regola del parallelogramma.'},
+  {q:'Come si calcola la componente x della somma a + b?',
+   opts:['(a+b)ₓ = aₓ · bₓ','(a+b)ₓ = aₓ + bₓ','(a+b)ₓ = aₓ − bₓ','(a+b)ₓ = √(aₓ² + bₓ²)'],ans:1,
+   exp:'Le componenti si sommano separatamente: (a+b)ₓ = aₓ + bₓ e (a+b)ᵧ = aᵧ + bᵧ.'},
+  {q:'Come si definisce la differenza a − b?',
+   opts:['a − b = a + (−b)','a − b = −(a + b)','a − b = b − a','a − b = |a| − |b|'],ans:0,
+   exp:'La differenza è la somma di a con il vettore opposto di b: a − b = a + (−b).'},
+  {q:'Il modulo della somma |a + b| è sempre uguale a |a| + |b|?',
+   opts:['Sì, sempre','No, vale |a|+|b| solo se a e b sono paralleli e concordi','Sì, ma solo se sono perpendicolari','No, è sempre minore'],ans:1,
+   exp:'|a+b| = |a|+|b| solo quando i vettori hanno stessa direzione e stesso verso (paralleli concordi).'},
+  {q:'Quanto vale al massimo il modulo della somma di due vettori di moduli |a| e |b|?',
+   opts:['|a| · |b|','|a| + |b| (vettori concordi)','√(|a|² + |b|²)','| |a| − |b| |'],ans:1,
+   exp:'Il modulo massimo è |a|+|b|, ottenuto quando i vettori sono paralleli e concordi; il minimo è ||a|−|b||.'},
+  {q:'Se a e b sono perpendicolari, quanto vale |a + b|?',
+   opts:['|a| + |b|','|a| − |b|','√(|a|² + |b|²)','0'],ans:2,
+   exp:'Con vettori perpendicolari la risultante è l\'ipotenusa: |a+b| = √(|a|²+|b|²), per il teorema di Pitagora.'},
+  {q:'Quanto vale a + (−a)?',
+   opts:['2a','Il vettore nullo','a','−a'],ans:1,
+   exp:'Sommando un vettore al suo opposto si ottiene il vettore nullo: a + (−a) = 0.'},
+  {q:'Nella regola punta-coda, da dove a dove va la risultante?',
+   opts:['Dalla punta del primo alla coda del secondo','Dalla coda del primo alla punta del secondo','Tra le due punte','Tra le due code'],ans:1,
+   exp:'La risultante chiude la spezzata: va dalla coda del primo vettore alla punta dell\'ultimo.'},
+  {q:'Considerando a e b applicati nello stesso punto, il vettore a − b:',
+   opts:['Va dalla punta di b alla punta di a','Va dalla punta di a alla punta di b','Coincide con a + b','È sempre nullo'],ans:0,
+   exp:'Il vettore differenza a − b unisce la punta di b alla punta di a (con a e b applicati nello stesso punto).'}
+ ],
+ calcolo:[
+  {q:'Date a = (2 ; 3) e b = (4 ; 1), quanto vale a + b?',
+   opts:['(6 ; 4)','(8 ; 3)','(2 ; 2)','(6 ; 3)'],ans:0,
+   exp:'a + b = (2+4 ; 3+1) = (6 ; 4).'},
+  {q:'Date a = (5 ; 2) e b = (−3 ; 4), quanto vale a + b?',
+   opts:['(8 ; 6)','(2 ; 6)','(2 ; −2)','(−15 ; 8)'],ans:1,
+   exp:'a + b = (5+(−3) ; 2+4) = (2 ; 6).'},
+  {q:'Date a = (7 ; 3) e b = (2 ; 1), quanto vale a − b?',
+   opts:['(9 ; 4)','(5 ; 2)','(−5 ; −2)','(5 ; 4)'],ans:1,
+   exp:'a − b = (7−2 ; 3−1) = (5 ; 2).'},
+  {q:'Date a = (1 ; 6) e b = (4 ; 2), quanto vale a − b?',
+   opts:['(5 ; 8)','(3 ; 4)','(−3 ; 4)','(−3 ; −4)'],ans:2,
+   exp:'a − b = (1−4 ; 6−2) = (−3 ; 4).'},
+  {q:'Date a = (3 ; 0) e b = (0 ; 4) (perpendicolari), quanto vale |a + b|?',
+   opts:['7','5','1','12'],ans:1,
+   exp:'a+b = (3 ; 4); |a+b| = √(3²+4²) = √25 = 5. Coincide con √(|a|²+|b|²).'},
+  {q:'Date a = (6 ; 0) e b = (2 ; 0) (paralleli concordi), quanto vale |a + b|?',
+   opts:['4','8','√40','6'],ans:1,
+   exp:'a+b = (8 ; 0); |a+b| = 8 = |a| + |b|, perché i vettori sono concordi.'},
+  {q:'Date a = (6 ; 0) e b = (−2 ; 0) (paralleli discordi), quanto vale |a + b|?',
+   opts:['8','4','2','√40'],ans:1,
+   exp:'a+b = (4 ; 0); |a+b| = 4 = | |a| − |b| | = |6 − 2|.'},
+  {q:'Date a = (3 ; 4) e b = (3 ; 4), quanto vale |a + b|?',
+   opts:['5','7','10','25'],ans:2,
+   exp:'a+b = (6 ; 8); |a+b| = √(36+64) = √100 = 10. (È il doppio di |a| = 5.)'},
+  {q:'Date a = (−2 ; 5) e b = (2 ; −5), quanto vale a + b?',
+   opts:['(0 ; 0)','(4 ; 10)','(−4 ; 0)','(0 ; 10)'],ans:0,
+   exp:'a + b = (−2+2 ; 5−5) = (0 ; 0): b è il vettore opposto di a.'},
+  {q:'Date a = (8 ; 1) e b = (−3 ; −5), quanto vale a − b?',
+   opts:['(5 ; −4)','(11 ; 6)','(11 ; −4)','(5 ; 6)'],ans:1,
+   exp:'a − b = (8−(−3) ; 1−(−5)) = (8+3 ; 1+5) = (11 ; 6).'}
+ ]
+},
+scalare:{
+ teoria:[
+  {q:'Il prodotto di uno scalare per un vettore dà come risultato:',
+   opts:['Uno scalare','Un vettore','Un numero negativo','Una matrice'],ans:1,
+   exp:'k·v è ancora un vettore: ha le componenti di v moltiplicate per k.'},
+  {q:'Se k > 0, il vettore k·v rispetto a v ha:',
+   opts:['Verso opposto','Lo stesso verso','Direzione perpendicolare','Modulo invariato'],ans:1,
+   exp:'Con k positivo il vettore k·v mantiene direzione e verso di v; cambia solo il modulo (|k|·|v|).'},
+  {q:'Se k < 0, il vettore k·v rispetto a v ha:',
+   opts:['Lo stesso verso','Verso opposto','Modulo nullo','Direzione diversa'],ans:1,
+   exp:'Con k negativo il vettore k·v ha verso opposto a v (ma resta sulla stessa direzione).'},
+  {q:'Come si calcola il modulo di k·v?',
+   opts:['|k·v| = k · |v|','|k·v| = |k| · |v|','|k·v| = k + |v|','|k·v| = |v| / |k|'],ans:1,
+   exp:'Il modulo è |k·v| = |k|·|v|: si usa il valore assoluto di k, perché il modulo non è mai negativo.'},
+  {q:'Quanto vale k·v se k = 0?',
+   opts:['v','Il vettore nullo','−v','Indeterminato'],ans:1,
+   exp:'Moltiplicando per lo scalare 0 si ottiene il vettore nullo: 0·v = 0.'},
+  {q:'Se |k| > 1, rispetto a v il vettore k·v risulta:',
+   opts:['Più corto','Più lungo','Di uguale lunghezza','Perpendicolare'],ans:1,
+   exp:'Con |k| > 1 il modulo |k|·|v| aumenta: il vettore si allunga. Con |k| < 1 si accorcia.'},
+  {q:'Il vettore k·v rispetto a v è sempre:',
+   opts:['Perpendicolare','Parallelo','Opposto','Di modulo uguale'],ans:1,
+   exp:'k·v giace sempre sulla stessa retta di v: i due vettori sono paralleli (concordi o discordi a seconda del segno di k).'},
+  {q:'Quale uguaglianza esprime la proprietà distributiva del prodotto per uno scalare?',
+   opts:['k(a + b) = ka + kb','k(a + b) = ka','k(a + b) = k + a + b','k(a · b) = ka · kb'],ans:0,
+   exp:'Il prodotto per uno scalare è distributivo rispetto alla somma di vettori: k(a + b) = ka + kb.'},
+  {q:'A che cosa è uguale (k₁ + k₂)·v?',
+   opts:['k₁·k₂·v','k₁·v + k₂·v','(k₁ + k₂) + v','v / (k₁ + k₂)'],ans:1,
+   exp:'Vale la distributività rispetto alla somma di scalari: (k₁ + k₂)·v = k₁·v + k₂·v.'},
+  {q:'Dividere un vettore v per il suo modulo |v| equivale a:',
+   opts:['Annullare il vettore','Ottenere il versore di v','Raddoppiare il vettore','Invertire il verso'],ans:1,
+   exp:'v/|v| = (1/|v|)·v è un prodotto per uno scalare positivo: dà il versore, vettore di modulo 1.'}
+ ],
+ calcolo:[
+  {q:'Dato v = (2 ; 3) e k = 3, quanto vale k·v?',
+   opts:['(6 ; 9)','(5 ; 6)','(6 ; 3)','(2 ; 9)'],ans:0,
+   exp:'k·v = (3·2 ; 3·3) = (6 ; 9).'},
+  {q:'Dato v = (4 ; −2) e k = −2, quanto vale k·v?',
+   opts:['(8 ; −4)','(−8 ; 4)','(−8 ; −4)','(2 ; −4)'],ans:1,
+   exp:'k·v = (−2·4 ; −2·(−2)) = (−8 ; 4).'},
+  {q:'Dato v = (6 ; 8) e k = 0,5, quanto vale k·v?',
+   opts:['(3 ; 4)','(12 ; 16)','(6,5 ; 8,5)','(3 ; 8)'],ans:0,
+   exp:'k·v = (0,5·6 ; 0,5·8) = (3 ; 4).'},
+  {q:'Un vettore ha |v| = 10. Quanto vale |k·v| se k = −3?',
+   opts:['−30','30','7','13'],ans:1,
+   exp:'|k·v| = |k|·|v| = |−3|·10 = 3·10 = 30. Il modulo è sempre positivo.'},
+  {q:'Dato v = (3 ; 4) e k = 2, quanto vale il modulo |k·v|?',
+   opts:['5','7','10','25'],ans:2,
+   exp:'|v| = √(9+16) = 5; |k·v| = |k|·|v| = 2·5 = 10.'},
+  {q:'Dato v = (5 ; 0) e k = −1, quanto vale k·v?',
+   opts:['(5 ; 0)','(−5 ; 0)','(0 ; −5)','(0 ; 0)'],ans:1,
+   exp:'k·v = (−1·5 ; −1·0) = (−5 ; 0): è il vettore opposto di v.'},
+  {q:'Dato v = (10 ; −6) e k = 0,1, quanto vale k·v?',
+   opts:['(1 ; −0,6)','(10,1 ; −5,9)','(1 ; −6)','(0,1 ; −0,1)'],ans:0,
+   exp:'k·v = (0,1·10 ; 0,1·(−6)) = (1 ; −0,6).'},
+  {q:'Qual è il versore del vettore v = (6 ; 8)?',
+   opts:['(0,6 ; 0,8)','(6 ; 8)','(0,75 ; 1)','(3 ; 4)'],ans:0,
+   exp:'|v| = √(36+64) = 10. Versore = (1/10)·v = (0,6 ; 0,8).'},
+  {q:'Dato v = (1 ; 2), quanto vale 2v + 3v?',
+   opts:['(5 ; 10)','(6 ; 12)','(2 ; 6)','(5 ; 5)'],ans:0,
+   exp:'2v + 3v = (2+3)v = 5v = (5·1 ; 5·2) = (5 ; 10).'},
+  {q:'Dato v = (−4 ; 6) e k = −0,5, quanto vale k·v?',
+   opts:['(2 ; −3)','(−2 ; 3)','(2 ; 3)','(−4,5 ; 5,5)'],ans:0,
+   exp:'k·v = (−0,5·(−4) ; −0,5·6) = (2 ; −3).'}
+ ]
+},
+pscalare:{
+ teoria:[
+  {q:'Il prodotto scalare di due vettori a·b è:',
+   opts:['Un vettore','Un numero (scalare)','Una matrice','Un versore'],ans:1,
+   exp:'Il prodotto scalare restituisce un numero, non un vettore: per questo si chiama "scalare".'},
+  {q:'Quale formula esprime il prodotto scalare con modulo e angolo?',
+   opts:['a·b = |a| |b| sin θ','a·b = |a| |b| cos θ','a·b = |a| + |b|','a·b = |a| / |b|'],ans:1,
+   exp:'a·b = |a| |b| cos θ, dove θ è l\'angolo compreso tra i due vettori.'},
+  {q:'Quale formula esprime il prodotto scalare con le componenti?',
+   opts:['a·b = aₓ + bₓ + aᵧ + bᵧ','a·b = aₓbₓ + aᵧbᵧ','a·b = aₓbᵧ − aᵧbₓ','a·b = aₓbₓ − aᵧbᵧ'],ans:1,
+   exp:'Con le componenti: a·b = aₓ·bₓ + aᵧ·bᵧ (somma dei prodotti delle componenti omologhe).'},
+  {q:'Se due vettori (non nulli) sono perpendicolari, il loro prodotto scalare è:',
+   opts:['Massimo','Uguale a 0','Negativo','Uguale a |a||b|'],ans:1,
+   exp:'Se θ = 90°, cos θ = 0, quindi a·b = 0. Vettori perpendicolari hanno prodotto scalare nullo.'},
+  {q:'Se a·b > 0, l\'angolo θ tra i due vettori è:',
+   opts:['Acuto (< 90°)','Retto (= 90°)','Ottuso (> 90°)','Sempre 0°'],ans:0,
+   exp:'a·b > 0 ⇔ cos θ > 0 ⇔ θ < 90°: l\'angolo è acuto.'},
+  {q:'A che cosa è uguale a·a?',
+   opts:['0','|a|','|a|²','2|a|'],ans:2,
+   exp:'a·a = |a||a| cos 0° = |a|². Il prodotto scalare di un vettore per sé stesso è il quadrato del modulo.'},
+  {q:'Il prodotto scalare è commutativo?',
+   opts:['No, a·b ≠ b·a','Sì, a·b = b·a','Solo per vettori perpendicolari','Solo per versori'],ans:1,
+   exp:'Il prodotto scalare è commutativo: a·b = b·a.'},
+  {q:'Qual è il significato geometrico del prodotto scalare a·b?',
+   opts:['L\'area del parallelogramma','|a| moltiplicato per la proiezione di b sulla direzione di a','La somma dei moduli','La differenza degli angoli'],ans:1,
+   exp:'a·b = |a| · (proiezione di b su a). La proiezione è |b| cos θ.'},
+  {q:'Come si ricava il coseno dell\'angolo θ tra due vettori?',
+   opts:['cos θ = a·b','cos θ = (a·b)/(|a| |b|)','cos θ = |a| |b| / (a·b)','cos θ = (a·b) · |a| |b|'],ans:1,
+   exp:'Da a·b = |a||b| cos θ si ricava cos θ = (a·b)/(|a| |b|).'},
+  {q:'Per due vettori paralleli e concordi, quanto vale a·b?',
+   opts:['0','−|a||b|','|a||b|','1'],ans:2,
+   exp:'Se θ = 0°, cos θ = 1, quindi a·b = |a||b| (valore massimo). Se sono antiparalleli vale −|a||b|.'}
+ ],
+ calcolo:[
+  {q:'Date a = (3 ; 4) e b = (2 ; 1), quanto vale a·b?',
+   opts:['10','7','14','5'],ans:0,
+   exp:'a·b = aₓbₓ + aᵧbᵧ = 3·2 + 4·1 = 6 + 4 = 10.'},
+  {q:'Date a = (5 ; 0) e b = (0 ; 7), quanto vale a·b?',
+   opts:['35','12','0','5'],ans:2,
+   exp:'a·b = 5·0 + 0·7 = 0: i vettori sono perpendicolari.'},
+  {q:'Date a = (2 ; 3) e b = (−3 ; 2), quanto vale a·b?',
+   opts:['12','0','−6','13'],ans:1,
+   exp:'a·b = 2·(−3) + 3·2 = −6 + 6 = 0: i vettori sono perpendicolari.'},
+  {q:'Date a = (1 ; 2) e b = (3 ; 4), quanto vale a·b?',
+   opts:['7','11','14','3'],ans:1,
+   exp:'a·b = 1·3 + 2·4 = 3 + 8 = 11.'},
+  {q:'Due vettori hanno |a| = 4, |b| = 5 e formano un angolo θ = 60°. Quanto vale a·b?',
+   opts:['20','10','17,3','9'],ans:1,
+   exp:'a·b = |a||b| cos θ = 4·5·cos 60° = 20·0,5 = 10.'},
+  {q:'Dato a = (3 ; 4), quanto vale a·a?',
+   opts:['7','5','25','12'],ans:2,
+   exp:'a·a = |a|² = 3² + 4² = 9 + 16 = 25.'},
+  {q:'Date a = (2 ; 2) e b = (−1 ; −1), quanto vale a·b?',
+   opts:['4','0','−4','−2'],ans:2,
+   exp:'a·b = 2·(−1) + 2·(−1) = −2 − 2 = −4. Il segno negativo indica un angolo ottuso (qui 180°).'},
+  {q:'Due vettori hanno |a| = 6, |b| = 2 e θ = 180°. Quanto vale a·b?',
+   opts:['12','−12','0','8'],ans:1,
+   exp:'a·b = |a||b| cos 180° = 6·2·(−1) = −12.'},
+  {q:'Date a = (4 ; 3) e b = (4 ; 3), quanto vale l\'angolo θ tra i due vettori?',
+   opts:['0°','45°','90°','180°'],ans:0,
+   exp:'cos θ = (a·b)/(|a||b|) = 25/(5·5) = 1 → θ = 0°: i vettori coincidono in direzione e verso.'},
+  {q:'Date a = (1 ; 0) e b = (1 ; 1), quanto vale l\'angolo θ tra i due vettori?',
+   opts:['30°','45°','60°','90°'],ans:1,
+   exp:'a·b = 1; |a| = 1, |b| = √2. cos θ = 1/√2 ≈ 0,707 → θ = 45°.'}
+ ]
+},
+pvett:{
+ teoria:[
+  {q:'Il prodotto vettoriale a×b dà come risultato:',
+   opts:['Un numero','Un vettore','Una matrice','Un angolo'],ans:1,
+   exp:'a×b è un vettore: ha modulo, direzione e verso ben definiti.'},
+  {q:'Qual è la direzione del vettore a×b?',
+   opts:['Parallela ad a','Parallela a b','Perpendicolare al piano di a e b','La bisettrice tra a e b'],ans:2,
+   exp:'a×b è perpendicolare al piano individuato dai due vettori a e b.'},
+  {q:'Come si determina il verso del vettore a×b?',
+   opts:['Con la regola della mano destra','È sempre verso l\'alto','È sempre verso il basso','Con il teorema di Pitagora'],ans:0,
+   exp:'Il verso di a×b si trova con la regola della mano destra (da a verso b).'},
+  {q:'Quale formula dà il modulo del prodotto vettoriale?',
+   opts:['|a×b| = |a||b| cos θ','|a×b| = |a||b| sin θ','|a×b| = |a| + |b|','|a×b| = |a|/|b|'],ans:1,
+   exp:'|a×b| = |a| |b| sin θ, dove θ è l\'angolo compreso tra i due vettori.'},
+  {q:'Qual è il significato geometrico del modulo |a×b|?',
+   opts:['Il perimetro del triangolo','L\'area del parallelogramma di lati a e b','La diagonale del rettangolo','La somma dei moduli'],ans:1,
+   exp:'|a×b| è numericamente uguale all\'area del parallelogramma che ha a e b come lati.'},
+  {q:'Se a e b sono paralleli, quanto vale a×b?',
+   opts:['Massimo','Il vettore nullo','|a||b|','1'],ans:1,
+   exp:'Se a∥b allora θ = 0° o 180°, quindi sin θ = 0 e a×b = 0 (vettore nullo).'},
+  {q:'Quale proprietà ha il prodotto vettoriale rispetto allo scambio dei fattori?',
+   opts:['È commutativo: a×b = b×a','È anticommutativo: a×b = −(b×a)','Non cambia mai','Si annulla sempre'],ans:1,
+   exp:'Il prodotto vettoriale è anticommutativo: scambiando l\'ordine cambia il verso, a×b = −(b×a).'},
+  {q:'Quanto vale a×a?',
+   opts:['|a|²','Il vettore nullo','2a','a'],ans:1,
+   exp:'Un vettore è parallelo a sé stesso (θ = 0°), quindi a×a = 0.'},
+  {q:'Per quale angolo θ il modulo |a×b| è massimo?',
+   opts:['θ = 0°','θ = 45°','θ = 90°','θ = 180°'],ans:2,
+   exp:'|a×b| = |a||b| sin θ è massimo quando sin θ = 1, cioè θ = 90° (vettori perpendicolari).'},
+  {q:'Qual è la prima componente (lungo x) di a×b?',
+   opts:['aₓbₓ − aᵧbᵧ','aᵧb_z − a_zbᵧ','aₓbᵧ − aᵧbₓ','a_zbₓ − aₓb_z'],ans:1,
+   exp:'La componente x di a×b è (aᵧb_z − a_zbᵧ).'}
+ ],
+ calcolo:[
+  {q:'Dati a = (1 ; 0 ; 0) e b = (0 ; 1 ; 0), quanto vale a×b?',
+   opts:['(0 ; 0 ; 1)','(0 ; 0 ; −1)','(1 ; 1 ; 0)','(0 ; 0 ; 0)'],ans:0,
+   exp:'a×b = (0·0−0·1 ; 0·0−1·0 ; 1·1−0·0) = (0 ; 0 ; 1). È il versore dell\'asse z.'},
+  {q:'Dati a = (0 ; 1 ; 0) e b = (0 ; 0 ; 1), quanto vale a×b?',
+   opts:['(0 ; 1 ; 0)','(1 ; 0 ; 0)','(0 ; 0 ; 1)','(−1 ; 0 ; 0)'],ans:1,
+   exp:'a×b = (1·1−0·0 ; 0·0−0·1 ; 0·0−1·0) = (1 ; 0 ; 0).'},
+  {q:'Dati a = (2 ; 0 ; 0) e b = (0 ; 3 ; 0), quanto vale il modulo |a×b|?',
+   opts:['5','6','0','12'],ans:1,
+   exp:'a×b = (0 ; 0 ; 6); |a×b| = 6. Coincide con l\'area del rettangolo 2×3.'},
+  {q:'Due vettori hanno |a| = 4, |b| = 5 e θ = 30°. Quanto vale |a×b|?',
+   opts:['20','10','17,3','9'],ans:1,
+   exp:'|a×b| = |a||b| sin θ = 4·5·sin 30° = 20·0,5 = 10.'},
+  {q:'Due vettori hanno |a| = 3, |b| = 3 e θ = 90°. Quanto vale |a×b|?',
+   opts:['3','6','9','0'],ans:2,
+   exp:'|a×b| = |a||b| sin 90° = 3·3·1 = 9 (valore massimo, vettori perpendicolari).'},
+  {q:'Dati a = (1 ; 2 ; 3) e b = (4 ; 5 ; 6), quanto vale a×b?',
+   opts:['(−3 ; 6 ; −3)','(3 ; −6 ; 3)','(−3 ; −6 ; −3)','(12 ; 30 ; 18)'],ans:0,
+   exp:'a×b = (2·6−3·5 ; 3·4−1·6 ; 1·5−2·4) = (−3 ; 6 ; −3).'},
+  {q:'Dati a = (2 ; 2 ; 2) e b = (1 ; 1 ; 1), quanto vale a×b?',
+   opts:['(0 ; 0 ; 0)','(2 ; 2 ; 2)','(1 ; 1 ; 1)','(6 ; 6 ; 6)'],ans:0,
+   exp:'a e b sono paralleli (b = 0,5·a), quindi a×b = (0 ; 0 ; 0).'},
+  {q:'Dati a = (1 ; 0 ; 0) e b = (2 ; 0 ; 0), quanto vale a×b?',
+   opts:['(2 ; 0 ; 0)','(0 ; 0 ; 0)','(0 ; 0 ; 2)','(3 ; 0 ; 0)'],ans:1,
+   exp:'I due vettori giacciono sulla stessa retta (paralleli): a×b = (0 ; 0 ; 0).'},
+  {q:'Qual è l\'area del parallelogramma di lati a = (3 ; 0 ; 0) e b = (0 ; 4 ; 0)?',
+   opts:['7','12','5','24'],ans:1,
+   exp:'L\'area è |a×b|. a×b = (0 ; 0 ; 12), quindi area = 12 (rettangolo 3×4).'},
+  {q:'Dati a = (0 ; 0 ; 5) e b = (0 ; 2 ; 0), quanto vale il modulo |a×b|?',
+   opts:['10','7','0','25'],ans:0,
+   exp:'a×b = (0·0−5·2 ; 5·0−0·0 ; 0·2−0·0) = (−10 ; 0 ; 0); |a×b| = 10.'}
+ ]
+}};
+
+/* ===================== QUIZ ENGINE ===================== */
+const TOPICS=['vettori','somma','scalare','pscalare','pvett'];
+const TITLES={vettori:'Vettori',somma:'Somma e differenza',scalare:'Prodotto per scalare',pscalare:'Prodotto scalare',pvett:'Prodotto vettoriale'};
+const qState={}, qKind={};
+TOPICS.forEach(t=>{
+  qKind[t]='teoria';
+  ['teoria','calcolo'].forEach(k=>{ qState[t+'-'+k]={idx:0,score:0,answered:false,done:false}; });
+});
+
+function renderQuiz(topic){
+  const el=document.getElementById('qz-'+topic);
+  if(!el) return;
+  const kind=qKind[topic];
+  const st=qState[topic+'-'+kind];
+  const qs=QUIZ[topic][kind];
+  const tabs=`<div class="quiz-kinds">
+    <button class="${kind==='teoria'?'active':''}" onclick="switchKind('${topic}','teoria')">📖 Teoria (10)</button>
+    <button class="${kind==='calcolo'?'active':''}" onclick="switchKind('${topic}','calcolo')">🧮 Calcolo (10)</button>
+  </div>`;
+  let body;
+  if(st.done){
+    const mi=st.score<=3?0:st.score<=5?1:st.score<=8?2:st.score<=9?3:4;
+    const icons=['😕','🙂','😊','🎉','🏆'];
+    const msgs=['Da rivedere — rileggi la teoria e riprova.','Sufficiente — qualche lacuna da colmare.','Buono — ancora un piccolo sforzo!','Ottimo risultato!','Perfetto — nessun errore!'];
+    body=`<div class="quiz-done">
+      <span class="quiz-score-big">${icons[mi]} ${st.score}/10</span>
+      <p class="quiz-msg">${msgs[mi]}</p>
+      <button class="quiz-restart" onclick="restartQuiz('${topic}')">🔄 Ricomincia questo quiz</button>
+    </div>`;
+  } else {
+    const q=qs[st.idx], pct=st.idx/qs.length*100;
+    body=`<div class="quiz-hd">
+        <span style="color:var(--muted)">Domanda ${st.idx+1} / ${qs.length}</span>
+        <span style="font-weight:700;color:var(--primary-d)">Punteggio: ${st.score}</span>
+      </div>
+      <div class="quiz-bar-wrap"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
+      <p class="quiz-q">${q.q}</p>
+      <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-btn" id="qb-${topic}-${i}" onclick="answerQuiz('${topic}',${i})">${'ABCD'[i]}) ${o}</button>`).join('')}</div>
+      <div class="quiz-exp" id="qexp-${topic}" style="display:none"></div>
+      <button class="quiz-next" id="qnxt-${topic}" style="display:none" onclick="nextQuiz('${topic}')">${st.idx+1<qs.length?'Prossima domanda →':'Vedi il risultato finale →'}</button>`;
+  }
+  el.innerHTML=`<div class="card"><h2>🧩 Quiz — ${TITLES[topic]}</h2>${tabs}${body}</div>`;
+}
+function switchKind(topic,kind){ qKind[topic]=kind; renderQuiz(topic); }
+function answerQuiz(topic,chosen){
+  const kind=qKind[topic], st=qState[topic+'-'+kind];
+  if(st.answered) return; st.answered=true;
+  const q=QUIZ[topic][kind][st.idx], correct=chosen===q.ans;
+  if(correct) st.score++;
+  for(let i=0;i<4;i++){
+    const b=document.getElementById(`qb-${topic}-${i}`); if(!b) continue;
+    b.disabled=true;
+    if(i===q.ans) b.classList.add('correct');
+    else if(i===chosen) b.classList.add('wrong');
+  }
+  const exp=document.getElementById(`qexp-${topic}`);
+  exp.style.display=''; exp.className=`quiz-exp ${correct?'ok':'no'}`;
+  exp.innerHTML=`<strong>${correct?'✓ Corretto!':'✗ Sbagliato.'}</strong> ${q.exp}`;
+  document.getElementById(`qnxt-${topic}`).style.display='';
+}
+function nextQuiz(topic){
+  const kind=qKind[topic], st=qState[topic+'-'+kind];
+  st.idx++; st.answered=false;
+  if(st.idx>=QUIZ[topic][kind].length) st.done=true;
+  renderQuiz(topic);
+}
+function restartQuiz(topic){
+  const kind=qKind[topic];
+  qState[topic+'-'+kind]={idx:0,score:0,answered:false,done:false};
+  renderQuiz(topic);
+}
+window.switchKind=switchKind; window.answerQuiz=answerQuiz;
+window.nextQuiz=nextQuiz; window.restartQuiz=restartQuiz;
+
+/* ===================== INIT ===================== */
+const _hdr=document.querySelector('header'), _nav=document.querySelector('nav.main');
+function _navTop(){ _nav.style.top=_hdr.offsetHeight+'px'; }
+new ResizeObserver(_navTop).observe(_hdr); _navTop();
+
+renderVett(1); renderSomma(1); renderScal(1); renderPsc(1); renderPvt(1);
+TOPICS.forEach(renderQuiz);
+</script>
+</body>
+</html>
