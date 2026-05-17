@@ -147,7 +147,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h2>Che cos'è un vettore?</h2>
     <p>Una <strong>grandezza vettoriale</strong> è completamente definita da tre informazioni: <strong>modulo</strong> (l'intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento su quella retta). Esempi: spostamento, velocità, forza, accelerazione.</p>
     <p>Le <strong>grandezze scalari</strong>, invece, sono definite da un solo numero: massa, temperatura, tempo, energia.</p>
-    <div class="formula"><b>v</b> = (v<sub>x</sub> ; v<sub>y</sub>)   ·   |<b>v</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)</div>
+    <div class="formula"><b>v⃗</b> = (v<sub>x</sub> ; v<sub>y</sub>)   ·   |<b>v⃗</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)</div>
     <p>In questa app esplori cinque argomenti. Per ognuno trovi una breve teoria, una <strong>rappresentazione grafica interattiva e animata</strong> (muovi i cursori, premi <em>▶ Anima</em>) e due quiz: <strong>10 domande di teoria</strong> e <strong>10 di calcolo</strong>.</p>
     <div class="tip">💡 Suggerimento: dopo aver letto la teoria, premi <em>▶ Anima</em> per vedere la costruzione passo-passo, poi prova valori estremi con i cursori prima di affrontare i quiz.</div>
   </div>
@@ -155,8 +155,8 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <button class="home-card" data-go="vettori"><span class="ico">➳</span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span></button>
     <button class="home-card" data-go="somma"><span class="ico">➕</span><strong>Somma e differenza</strong><span>Regola punta-coda e parallelogramma</span></button>
     <button class="home-card" data-go="scalare"><span class="ico">✕</span><strong>Prodotto per uno scalare</strong><span>Allungare, accorciare e invertire un vettore</span></button>
-    <button class="home-card" data-go="pscalare"><span class="ico">·</span><strong>Prodotto scalare</strong><span>a·b, proiezioni e angolo tra vettori</span></button>
-    <button class="home-card" data-go="pvett"><span class="ico">⊗</span><strong>Prodotto vettoriale</strong><span>a×b in 3D, regola della mano destra</span></button>
+    <button class="home-card" data-go="pscalare"><span class="ico">·</span><strong>Prodotto scalare</strong><span>a⃗·b⃗, proiezioni e angolo tra vettori</span></button>
+    <button class="home-card" data-go="pvett"><span class="ico">⊗</span><strong>Prodotto vettoriale</strong><span>a⃗×b⃗ in 3D, regola della mano destra</span></button>
   </div>
 </section>
 
@@ -164,14 +164,14 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
 <section class="scene" id="vettori">
   <div class="card">
     <h2>➳ Il vettore e le sue componenti</h2>
-    <p>Nel piano cartesiano un vettore <b>v</b> applicato nell'origine raggiunge il punto (v<sub>x</sub>; v<sub>y</sub>). Le due <strong>componenti</strong> sono le proiezioni del vettore sugli assi.</p>
+    <p>Nel piano cartesiano un vettore <b>v⃗</b> applicato nell'origine raggiunge il punto (v<sub>x</sub>; v<sub>y</sub>). Le due <strong>componenti</strong> sono le proiezioni del vettore sugli assi.</p>
     <h3>Da componenti a modulo e angolo</h3>
-    <div class="formula">|<b>v</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
+    <div class="formula">|<b>v⃗</b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
     <h3>Da modulo e angolo a componenti</h3>
-    <div class="formula">v<sub>x</sub> = |<b>v</b>| cos θ        v<sub>y</sub> = |<b>v</b>| sin θ</div>
+    <div class="formula">v<sub>x</sub> = |<b>v⃗</b>| cos θ        v<sub>y</sub> = |<b>v⃗</b>| sin θ</div>
     <h3>Il versore</h3>
-    <p>Il <strong>versore</strong> v&#770; è il vettore di modulo 1 che indica la direzione e il verso di <b>v</b>:</p>
-    <div class="formula">v&#770; = <b>v</b> / |<b>v</b>|        |v&#770;| = 1</div>
+    <p>Il <strong>versore</strong> v&#770; è il vettore di modulo 1 che indica la direzione e il verso di <b>v⃗</b>:</p>
+    <div class="formula">v&#770; = <b>v⃗</b> / |<b>v⃗</b>|        |v&#770;| = 1</div>
     <div class="tip">📐 L'angolo θ si misura a partire dal semiasse x positivo, in senso antiorario. Due vettori sono uguali se hanno stesso modulo, direzione e verso, ovunque siano applicati.</div>
   </div>
   <div class="simwrap">
@@ -179,7 +179,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="panel-lbl">Visualizzazione</div>
       <svg class="sim" id="svgVett" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend">
-        <span style="color:var(--vA)"><i></i>vettore v</span>
+        <span style="color:var(--vA)"><i></i>vettore v⃗</span>
         <span style="color:var(--vN)"><i></i>componente v<sub>x</sub></span>
         <span style="color:var(--vR)"><i></i>componente v<sub>y</sub></span>
       </div>
@@ -202,22 +202,22 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
   <div class="card">
     <h2>➕ Somma e differenza di vettori</h2>
     <h3>Regola punta-coda</h3>
-    <p>Per sommare <b>a</b> + <b>b</b> si trasla <b>b</b> in modo che la sua coda coincida con la punta di <b>a</b>. La <strong>risultante</strong> va dalla coda di <b>a</b> alla punta di <b>b</b>.</p>
+    <p>Per sommare <b>a⃗</b> + <b>b⃗</b> si trasla <b>b⃗</b> in modo che la sua coda coincida con la punta di <b>a⃗</b>. La <strong>risultante</strong> va dalla coda di <b>a⃗</b> alla punta di <b>b⃗</b>.</p>
     <h3>Per componenti</h3>
-    <div class="formula">(<b>a</b>+<b>b</b>)<sub>x</sub> = a<sub>x</sub>+b<sub>x</sub>        (<b>a</b>+<b>b</b>)<sub>y</sub> = a<sub>y</sub>+b<sub>y</sub></div>
-    <p>La somma è <strong>commutativa</strong> (<b>a</b>+<b>b</b> = <b>b</b>+<b>a</b>) e si può costruire anche con la <strong>regola del parallelogramma</strong>.</p>
+    <div class="formula">(<b>a⃗</b>+<b>b⃗</b>)<sub>x</sub> = a<sub>x</sub>+b<sub>x</sub>        (<b>a⃗</b>+<b>b⃗</b>)<sub>y</sub> = a<sub>y</sub>+b<sub>y</sub></div>
+    <p>La somma è <strong>commutativa</strong> (<b>a⃗</b>+<b>b⃗</b> = <b>b⃗</b>+<b>a⃗</b>) e si può costruire anche con la <strong>regola del parallelogramma</strong>.</p>
     <h3>La differenza</h3>
-    <div class="formula"><b>a</b> − <b>b</b> = <b>a</b> + (−<b>b</b>)</div>
-    <p>Si somma ad <b>a</b> il vettore opposto di <b>b</b>. Applicati nello stesso punto, <b>a</b>−<b>b</b> è il vettore che va dalla punta di <b>b</b> alla punta di <b>a</b>.</p>
-    <div class="tip">🔺 Il modulo della somma NON è in generale |<b>a</b>|+|<b>b</b>|: vale |<b>a</b>|+|<b>b</b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b>a</b>+<b>b</b>| = √(|<b>a</b>|²+|<b>b</b>|²).</div>
+    <div class="formula"><b>a⃗</b> − <b>b⃗</b> = <b>a⃗</b> + (−<b>b⃗</b>)</div>
+    <p>Si somma ad <b>a⃗</b> il vettore opposto di <b>b⃗</b>. Applicati nello stesso punto, <b>a⃗</b>−<b>b⃗</b> è il vettore che va dalla punta di <b>b⃗</b> alla punta di <b>a⃗</b>.</p>
+    <div class="tip">🔺 Il modulo della somma NON è in generale |<b>a⃗</b>|+|<b>b⃗</b>|: vale |<b>a⃗</b>|+|<b>b⃗</b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b>a⃗</b>+<b>b⃗</b>| = √(|<b>a⃗</b>|²+|<b>b⃗</b>|²).</div>
   </div>
   <div class="simwrap">
     <div class="panel">
       <div class="panel-lbl">Visualizzazione</div>
       <svg class="sim" id="svgSomma" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend">
-        <span style="color:var(--vA)"><i></i>a</span>
-        <span style="color:var(--vB)"><i></i>b</span>
+        <span style="color:var(--vA)"><i></i>a⃗</span>
+        <span style="color:var(--vB)"><i></i>b⃗</span>
         <span style="color:var(--vR)"><i></i>risultante</span>
       </div>
       <button class="anim-btn" id="soAnim">▶ Anima la costruzione</button>
@@ -227,8 +227,8 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="ctrl">
         <label><span class="nm">Operazione</span>
           <select id="soMode">
-            <option value="somma">a + b  (somma)</option>
-            <option value="diff">a − b  (differenza)</option>
+            <option value="somma">a⃗ + b⃗  (somma)</option>
+            <option value="diff">a⃗ − b⃗  (differenza)</option>
           </select>
         </label>
         <label><span class="nm">a<sub>x</sub></span><input type="range" id="soAx" min="-6" max="6" step="1" value="4"><span class="v" id="soAxv">4</span></label>
@@ -246,24 +246,24 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
 <section class="scene" id="scalare">
   <div class="card">
     <h2>✕ Prodotto di un vettore per uno scalare</h2>
-    <p>Moltiplicando un vettore <b>v</b> per un numero (scalare) <em>k</em> si ottiene un nuovo <strong>vettore</strong> k<b>v</b>:</p>
-    <div class="formula">|k<b>v</b>| = |k| · |<b>v</b>|        (k<b>v</b>)<sub>x</sub> = k·v<sub>x</sub>   ;   (k<b>v</b>)<sub>y</sub> = k·v<sub>y</sub></div>
+    <p>Moltiplicando un vettore <b>v⃗</b> per un numero (scalare) <em>k</em> si ottiene un nuovo <strong>vettore</strong> k<b>v⃗</b>:</p>
+    <div class="formula">|k<b>v⃗</b>| = |k| · |<b>v⃗</b>|        (k<b>v⃗</b>)<sub>x</sub> = k·v<sub>x</sub>   ;   (k<b>v⃗</b>)<sub>y</sub> = k·v<sub>y</sub></div>
     <ul>
-      <li>se <strong>k &gt; 0</strong>: k<b>v</b> ha lo <em>stesso verso</em> di <b>v</b>;</li>
-      <li>se <strong>k &lt; 0</strong>: k<b>v</b> ha <em>verso opposto</em>;</li>
+      <li>se <strong>k &gt; 0</strong>: k<b>v⃗</b> ha lo <em>stesso verso</em> di <b>v⃗</b>;</li>
+      <li>se <strong>k &lt; 0</strong>: k<b>v⃗</b> ha <em>verso opposto</em>;</li>
       <li>se <strong>|k| &gt; 1</strong> il vettore si allunga, se <strong>|k| &lt; 1</strong> si accorcia;</li>
       <li>se <strong>k = 0</strong> si ottiene il vettore nullo.</li>
     </ul>
-    <p>Il vettore k<b>v</b> è sempre <strong>parallelo</strong> a <b>v</b>. Vale la proprietà distributiva: k(<b>a</b>+<b>b</b>) = k<b>a</b> + k<b>b</b>.</p>
-    <div class="tip">🎯 Dividendo un vettore per il suo modulo si ottiene il versore: v&#770; = <b>v</b>/|<b>v</b>| = (1/|<b>v</b>|)·<b>v</b>. È un prodotto per lo scalare 1/|<b>v</b>|.</div>
+    <p>Il vettore k<b>v⃗</b> è sempre <strong>parallelo</strong> a <b>v⃗</b>. Vale la proprietà distributiva: k(<b>a⃗</b>+<b>b⃗</b>) = k<b>a⃗</b> + k<b>b⃗</b>.</p>
+    <div class="tip">🎯 Dividendo un vettore per il suo modulo si ottiene il versore: v&#770; = <b>v⃗</b>/|<b>v⃗</b>| = (1/|<b>v⃗</b>|)·<b>v⃗</b>. È un prodotto per lo scalare 1/|<b>v⃗</b>|.</div>
   </div>
   <div class="simwrap">
     <div class="panel">
       <div class="panel-lbl">Visualizzazione</div>
       <svg class="sim" id="svgScal" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend">
-        <span style="color:var(--vA)"><i></i>vettore v</span>
-        <span style="color:var(--vR)"><i></i>vettore k·v</span>
+        <span style="color:var(--vA)"><i></i>vettore v⃗</span>
+        <span style="color:var(--vR)"><i></i>vettore k·v⃗</span>
       </div>
       <button class="anim-btn" id="scAnim">▶ Anima il prodotto</button>
     </div>
@@ -286,27 +286,27 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
   <div class="card">
     <h2>· Prodotto scalare</h2>
     <p>Il <strong>prodotto scalare</strong> di due vettori è un <strong>numero</strong> (uno scalare), non un vettore. Si può calcolare in due modi equivalenti:</p>
-    <div class="formula"><b>a</b>·<b>b</b> = |<b>a</b>| |<b>b</b>| cos θ        <b>a</b>·<b>b</b> = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub></div>
+    <div class="formula"><b>a⃗</b>·<b>b⃗</b> = |<b>a⃗</b>| |<b>b⃗</b>| cos θ        <b>a⃗</b>·<b>b⃗</b> = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub></div>
     <p>dove θ è l'angolo compreso tra i due vettori.</p>
     <h3>Segno e angolo</h3>
     <ul>
-      <li><b>a</b>·<b>b</b> &gt; 0 → angolo <em>acuto</em>;</li>
-      <li><b>a</b>·<b>b</b> = 0 → vettori <em>perpendicolari</em>;</li>
-      <li><b>a</b>·<b>b</b> &lt; 0 → angolo <em>ottuso</em>.</li>
+      <li><b>a⃗</b>·<b>b⃗</b> &gt; 0 → angolo <em>acuto</em>;</li>
+      <li><b>a⃗</b>·<b>b⃗</b> = 0 → vettori <em>perpendicolari</em>;</li>
+      <li><b>a⃗</b>·<b>b⃗</b> &lt; 0 → angolo <em>ottuso</em>.</li>
     </ul>
     <h3>Significato geometrico</h3>
-    <p>Il prodotto scalare è il modulo di <b>a</b> moltiplicato per la <strong>proiezione</strong> di <b>b</b> sulla direzione di <b>a</b>:</p>
-    <div class="formula">proiezione di <b>b</b> su <b>a</b> = (<b>a</b>·<b>b</b>) / |<b>a</b>|        cos θ = (<b>a</b>·<b>b</b>) / (|<b>a</b>| |<b>b</b>|)</div>
-    <div class="tip">📌 Proprietà utili: <b>a</b>·<b>a</b> = |<b>a</b>|²  ed è commutativo: <b>a</b>·<b>b</b> = <b>b</b>·<b>a</b>.</div>
+    <p>Il prodotto scalare è il modulo di <b>a⃗</b> moltiplicato per la <strong>proiezione</strong> di <b>b⃗</b> sulla direzione di <b>a⃗</b>:</p>
+    <div class="formula">proiezione di <b>b⃗</b> su <b>a⃗</b> = (<b>a⃗</b>·<b>b⃗</b>) / |<b>a⃗</b>|        cos θ = (<b>a⃗</b>·<b>b⃗</b>) / (|<b>a⃗</b>| |<b>b⃗</b>|)</div>
+    <div class="tip">📌 Proprietà utili: <b>a⃗</b>·<b>a⃗</b> = |<b>a⃗</b>|²  ed è commutativo: <b>a⃗</b>·<b>b⃗</b> = <b>b⃗</b>·<b>a⃗</b>.</div>
   </div>
   <div class="simwrap">
     <div class="panel">
       <div class="panel-lbl">Visualizzazione</div>
       <svg class="sim" id="svgPsc" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend">
-        <span style="color:var(--vA)"><i></i>a</span>
-        <span style="color:var(--vB)"><i></i>b</span>
-        <span style="color:var(--vP)"><i></i>proiezione di b su a</span>
+        <span style="color:var(--vA)"><i></i>a⃗</span>
+        <span style="color:var(--vB)"><i></i>b⃗</span>
+        <span style="color:var(--vP)"><i></i>proiezione di b⃗ su a⃗</span>
       </div>
       <button class="anim-btn" id="psAnim">▶ Anima la proiezione</button>
     </div>
@@ -329,28 +329,28 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
 <section class="scene" id="pvett">
   <div class="card">
     <h2>⊗ Prodotto vettoriale</h2>
-    <p>Il <strong>prodotto vettoriale</strong> <b>a</b>×<b>b</b> di due vettori è un <strong>vettore</strong>. È un'operazione intrinsecamente <strong>tridimensionale</strong>.</p>
+    <p>Il <strong>prodotto vettoriale</strong> <b>a⃗</b>×<b>b⃗</b> di due vettori è un <strong>vettore</strong>. È un'operazione intrinsecamente <strong>tridimensionale</strong>.</p>
     <h3>Direzione e verso</h3>
-    <p>Il vettore <b>a</b>×<b>b</b> è <strong>perpendicolare al piano</strong> individuato da <b>a</b> e <b>b</b>; il suo verso è dato dalla <strong>regola della mano destra</strong>.</p>
+    <p>Il vettore <b>a⃗</b>×<b>b⃗</b> è <strong>perpendicolare al piano</strong> individuato da <b>a⃗</b> e <b>b⃗</b>; il suo verso è dato dalla <strong>regola della mano destra</strong>.</p>
     <h3>Modulo</h3>
-    <div class="formula">|<b>a</b>×<b>b</b>| = |<b>a</b>| |<b>b</b>| sin θ</div>
-    <p>Il modulo è uguale all'<strong>area del parallelogramma</strong> di lati <b>a</b> e <b>b</b>.</p>
+    <div class="formula">|<b>a⃗</b>×<b>b⃗</b>| = |<b>a⃗</b>| |<b>b⃗</b>| sin θ</div>
+    <p>Il modulo è uguale all'<strong>area del parallelogramma</strong> di lati <b>a⃗</b> e <b>b⃗</b>.</p>
     <h3>Componenti</h3>
-    <div class="formula">a×b = ( a<sub>y</sub>b<sub>z</sub>−a<sub>z</sub>b<sub>y</sub> ;  a<sub>z</sub>b<sub>x</sub>−a<sub>x</sub>b<sub>z</sub> ;  a<sub>x</sub>b<sub>y</sub>−a<sub>y</sub>b<sub>x</sub> )</div>
-    <div class="tip">🔄 Il prodotto vettoriale è <strong>anticommutativo</strong>: <b>a</b>×<b>b</b> = −(<b>b</b>×<b>a</b>). Se <b>a</b> e <b>b</b> sono paralleli (θ = 0° o 180°) allora <b>a</b>×<b>b</b> = <b>0</b>; in particolare <b>a</b>×<b>a</b> = <b>0</b>.</div>
+    <div class="formula">a⃗×b⃗ = ( a<sub>y</sub>b<sub>z</sub>−a<sub>z</sub>b<sub>y</sub> ;  a<sub>z</sub>b<sub>x</sub>−a<sub>x</sub>b<sub>z</sub> ;  a<sub>x</sub>b<sub>y</sub>−a<sub>y</sub>b<sub>x</sub> )</div>
+    <div class="tip">🔄 Il prodotto vettoriale è <strong>anticommutativo</strong>: <b>a⃗</b>×<b>b⃗</b> = −(<b>b⃗</b>×<b>a⃗</b>). Se <b>a⃗</b> e <b>b⃗</b> sono paralleli (θ = 0° o 180°) allora <b>a⃗</b>×<b>b⃗</b> = <b>0⃗</b>; in particolare <b>a⃗</b>×<b>a⃗</b> = <b>0⃗</b>.</div>
   </div>
   <div class="simwrap">
     <div class="panel">
       <div class="panel-lbl">Visualizzazione 3D</div>
       <svg class="sim" id="svgPvt" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend">
-        <span style="color:var(--vA)"><i></i>a</span>
-        <span style="color:var(--vB)"><i></i>b</span>
-        <span style="color:var(--vR)"><i></i>a×b</span>
+        <span style="color:var(--vA)"><i></i>a⃗</span>
+        <span style="color:var(--vB)"><i></i>b⃗</span>
+        <span style="color:var(--vR)"><i></i>a⃗×b⃗</span>
         <span style="color:var(--vP)"><i></i>parallelogramma</span>
       </div>
       <button class="anim-btn" id="pvAnim">▶ Anima la rotazione 3D</button>
-      <div class="warn" id="pvNote" style="font-size:.83em">Il vettore a×b è disegnato in scala ridotta quando è molto lungo: il valore reale del modulo è nella tabella.</div>
+      <div class="warn" id="pvNote" style="font-size:.83em">Il vettore a⃗×b⃗ è disegnato in scala ridotta quando è molto lungo: il valore reale del modulo è nella tabella.</div>
     </div>
     <div class="panel">
       <div class="panel-lbl">Controlli e misure</div>
@@ -471,13 +471,13 @@ function renderVett(p){
     s+=`<text x="${gx(vx)+(vx>=0?16:-16)}" y="${gy(vy/2)}" font-size="11" fill="${COL.R}" text-anchor="middle" opacity="${compA}">v<tspan baseline-shift="sub" font-size="8.5">y</tspan> = ${vy}</text>`;
   }
   // vector
-  s+=arrow(gx(0),gy(0),gx(ex),gy(ey),{color:COL.A,w:3.4,label:p>0.5?'v':''});
+  s+=arrow(gx(0),gy(0),gx(ex),gy(ey),{color:COL.A,w:3.4,label:p>0.5?'v⃗':''});
   document.getElementById('svgVett').innerHTML=s;
   const rd=document.getElementById('rdVett');
   const ang=mod>0?angleDeg(vx,vy):0;
   const vers=mod>0?`(${fmt(vx/mod)} ; ${fmt(vy/mod)})`:'—';
   rd.innerHTML=`<div class="it"><span class="l">componenti</span><span class="v">(${vx} ; ${vy})</span></div>
-    <div class="it"><span class="l">modulo |v|</span><span class="v">${fmt(mod)}</span></div>
+    <div class="it"><span class="l">modulo |v⃗|</span><span class="v">${fmt(mod)}</span></div>
     <div class="it"><span class="l">angolo θ</span><span class="v">${mod>0?fmt(ang,1)+'°':'—'}</span></div>
     <div class="it"><span class="l">versore v&#770;</span><span class="v">${vers}</span></div>`;
 }
@@ -504,12 +504,12 @@ function renderSomma(p){
     s+=`<line x1="${gx(ax)}" y1="${gy(ay)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#bdbdbd" stroke-width="1.4" stroke-dasharray="4 3"/>`;
   }
   // a
-  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
+  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a⃗'});
   // b from origin
-  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b',opacity:mode==='diff'?0.5:1});
+  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b⃗',opacity:mode==='diff'?0.5:1});
   // for differenza: -b from origin
   if(mode==='diff'){
-    s+=arrow(gx(0),gy(0),gx(-bx),gy(-by),{color:COL.B,w:2.6,label:'−b',dash:'5 3'});
+    s+=arrow(gx(0),gy(0),gx(-bx),gy(-by),{color:COL.B,w:2.6,label:'−b⃗',dash:'5 3'});
   }
   // chained vector (b or -b) sliding toward tip of a
   if(slide>0.02){
@@ -517,12 +517,12 @@ function renderSomma(p){
   }
   // resultant
   if(grow>0.01){
-    s+=arrow(gx(0),gy(0),gx(rx*grow),gy(ry*grow),{color:COL.R,w:3.8,label:grow>0.6?(mode==='somma'?'a+b':'a−b'):''});
+    s+=arrow(gx(0),gy(0),gx(rx*grow),gy(ry*grow),{color:COL.R,w:3.8,label:grow>0.6?(mode==='somma'?'a⃗+b⃗':'a⃗−b⃗'):''});
   }
   document.getElementById('svgSomma').innerHTML=s;
-  const op=mode==='somma'?'a + b':'a − b';
-  document.getElementById('rdSomma').innerHTML=`<div class="it"><span class="l">a</span><span class="v">(${ax} ; ${ay})</span></div>
-    <div class="it"><span class="l">b</span><span class="v">(${bx} ; ${by})</span></div>
+  const op=mode==='somma'?'a⃗ + b⃗':'a⃗ − b⃗';
+  document.getElementById('rdSomma').innerHTML=`<div class="it"><span class="l">a⃗</span><span class="v">(${ax} ; ${ay})</span></div>
+    <div class="it"><span class="l">b⃗</span><span class="v">(${bx} ; ${by})</span></div>
     <div class="it"><span class="l">${op}</span><span class="v">(${rx} ; ${ry})</span></div>
     <div class="it"><span class="l">|${op}|</span><span class="v">${fmt(Math.hypot(rx,ry))}</span></div>`;
 }
@@ -539,17 +539,17 @@ function renderScal(p){
   const kx=vx*kEff, ky=vy*kEff;
   let s=grid2d();
   // reference v (thin)
-  s+=arrow(gx(0),gy(0),gx(vx),gy(vy),{color:COL.A,w:2.6,label:'v',opacity:0.55});
+  s+=arrow(gx(0),gy(0),gx(vx),gy(vy),{color:COL.A,w:2.6,label:'v⃗',opacity:0.55});
   // k*v
   if(Math.hypot(kx,ky)>0.3){
-    s+=arrow(gx(0),gy(0),gx(kx),gy(ky),{color:COL.R,w:3.8,label:p>0.5?'k·v':''});
+    s+=arrow(gx(0),gy(0),gx(kx),gy(ky),{color:COL.R,w:3.8,label:p>0.5?'k·v⃗':''});
   }
   document.getElementById('svgScal').innerHTML=s;
   const mod=Math.hypot(vx,vy);
-  document.getElementById('rdScal').innerHTML=`<div class="it"><span class="l">v</span><span class="v">(${vx} ; ${vy})</span></div>
+  document.getElementById('rdScal').innerHTML=`<div class="it"><span class="l">v⃗</span><span class="v">(${vx} ; ${vy})</span></div>
     <div class="it"><span class="l">k</span><span class="v">${fmt(k)}</span></div>
-    <div class="it"><span class="l">k·v</span><span class="v">(${fmt(vx*k,1)} ; ${fmt(vy*k,1)})</span></div>
-    <div class="it"><span class="l">|k·v| = |k||v|</span><span class="v">${fmt(Math.abs(k)*mod)}</span></div>`;
+    <div class="it"><span class="l">k·v⃗</span><span class="v">(${fmt(vx*k,1)} ; ${fmt(vy*k,1)})</span></div>
+    <div class="it"><span class="l">|k·v⃗| = |k||v⃗|</span><span class="v">${fmt(Math.abs(k)*mod)}</span></div>`;
   const st=document.getElementById('scStat');
   if(Math.abs(k)<1e-6){ st.className='eqs lim'; st.textContent='k = 0 → vettore nullo'; }
   else if(k>0){ st.className='eqs ok'; st.textContent=k>=1?'k > 0 → stesso verso, vettore allungato':'k > 0 → stesso verso, vettore accorciato'; }
@@ -579,21 +579,21 @@ function renderPsc(p){
     // projection vector along a
     s+=arrow(gx(0),gy(0),gx(footX*p),gy(footY*p),{color:COL.P,w:5,opacity:0.6});
   }
-  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
-  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b'});
+  s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a⃗'});
+  s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b⃗'});
   document.getElementById('svgPsc').innerHTML=s;
   const cos=(ma>0&&mb>0)?dot/(ma*mb):0;
   const ang=(ma>0&&mb>0)?Math.acos(clamp(cos,-1,1))*180/Math.PI:0;
-  document.getElementById('rdPsc').innerHTML=`<div class="it"><span class="l">a·b = a<sub>x</sub>b<sub>x</sub>+a<sub>y</sub>b<sub>y</sub></span><span class="v">${fmt(dot,1)}</span></div>
-    <div class="it"><span class="l">|a| · |b|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
+  document.getElementById('rdPsc').innerHTML=`<div class="it"><span class="l">a⃗·b⃗ = a<sub>x</sub>b<sub>x</sub>+a<sub>y</sub>b<sub>y</sub></span><span class="v">${fmt(dot,1)}</span></div>
+    <div class="it"><span class="l">|a⃗| · |b⃗|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
     <div class="it"><span class="l">cos θ</span><span class="v">${(ma>0&&mb>0)?fmt(cos,3):'—'}</span></div>
     <div class="it"><span class="l">angolo θ</span><span class="v">${(ma>0&&mb>0)?fmt(ang,1)+'°':'—'}</span></div>
-    <div class="it"><span class="l">proiez. di b su a</span><span class="v">${ma>0?fmt(proj):'—'}</span></div>`;
+    <div class="it"><span class="l">proiez. di b⃗ su a⃗</span><span class="v">${ma>0?fmt(proj):'—'}</span></div>`;
   const st=document.getElementById('psStat');
-  if(ma<1e-6||mb<1e-6){ st.className='eqs lim'; st.textContent='Un vettore è nullo: a·b = 0'; }
-  else if(Math.abs(dot)<1e-6){ st.className='eqs lim'; st.textContent='a·b = 0 → vettori perpendicolari (θ = 90°)'; }
-  else if(dot>0){ st.className='eqs ok'; st.textContent='a·b > 0 → angolo acuto tra i vettori'; }
-  else { st.className='eqs no'; st.textContent='a·b < 0 → angolo ottuso tra i vettori'; }
+  if(ma<1e-6||mb<1e-6){ st.className='eqs lim'; st.textContent='Un vettore è nullo: a⃗·b⃗ = 0'; }
+  else if(Math.abs(dot)<1e-6){ st.className='eqs lim'; st.textContent='a⃗·b⃗ = 0 → vettori perpendicolari (θ = 90°)'; }
+  else if(dot>0){ st.className='eqs ok'; st.textContent='a⃗·b⃗ > 0 → angolo acuto tra i vettori'; }
+  else { st.className='eqs no'; st.textContent='a⃗·b⃗ < 0 → angolo ottuso tra i vettori'; }
 }
 ['psAx','psAy','psBx','psBy'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderPsc(1)));
 bindRange('psAx','psAxv'); bindRange('psAy','psAyv'); bindRange('psBx','psBxv'); bindRange('psBy','psByv');
@@ -637,22 +637,22 @@ function renderPvt(p){
   const pa=pj(ax,ay,az), pb=pj(bx,by,bz), pab=pj(ax+bx,ay+by,az+bz);
   s+=`<polygon points="${O.x.toFixed(1)},${O.y.toFixed(1)} ${pa.x.toFixed(1)},${pa.y.toFixed(1)} ${pab.x.toFixed(1)},${pab.y.toFixed(1)} ${pb.x.toFixed(1)},${pb.y.toFixed(1)}" fill="${COL.P}" fill-opacity="0.16" stroke="${COL.P}" stroke-width="1.3" stroke-dasharray="4 3"/>`;
   // vectors
-  s+=arrow(O.x,O.y,pa.x,pa.y,{color:COL.A,w:3.2,label:'a'});
-  s+=arrow(O.x,O.y,pb.x,pb.y,{color:COL.B,w:3.2,label:'b'});
+  s+=arrow(O.x,O.y,pa.x,pa.y,{color:COL.A,w:3.2,label:'a⃗'});
+  s+=arrow(O.x,O.y,pb.x,pb.y,{color:COL.B,w:3.2,label:'b⃗'});
   if(cMod>1e-6){
     const pc=pj(cx*cScale,cy*cScale,cz*cScale);
-    s+=arrow(O.x,O.y,pc.x,pc.y,{color:COL.R,w:3.8,label:'a×b'});
+    s+=arrow(O.x,O.y,pc.x,pc.y,{color:COL.R,w:3.8,label:'a⃗×b⃗'});
   }
   document.getElementById('svgPvt').innerHTML=s;
   const ma=Math.hypot(ax,ay,az), mb=Math.hypot(bx,by,bz);
   const cosT=(ma>0&&mb>0)?(ax*bx+ay*by+az*bz)/(ma*mb):1;
   const ang=Math.acos(clamp(cosT,-1,1))*180/Math.PI;
-  document.getElementById('rdPvt').innerHTML=`<div class="it"><span class="l">a×b</span><span class="v">(${cx} ; ${cy} ; ${cz})</span></div>
-    <div class="it"><span class="l">|a×b|</span><span class="v">${fmt(cMod)}</span></div>
+  document.getElementById('rdPvt').innerHTML=`<div class="it"><span class="l">a⃗×b⃗</span><span class="v">(${cx} ; ${cy} ; ${cz})</span></div>
+    <div class="it"><span class="l">|a⃗×b⃗|</span><span class="v">${fmt(cMod)}</span></div>
     <div class="it"><span class="l">area parallelogr.</span><span class="v">${fmt(cMod)}</span></div>
-    <div class="it"><span class="l">|a| · |b|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
+    <div class="it"><span class="l">|a⃗| · |b⃗|</span><span class="v">${fmt(ma)} · ${fmt(mb)}</span></div>
     <div class="it"><span class="l">angolo θ</span><span class="v">${(ma>0&&mb>0)?fmt(ang,1)+'°':'—'}</span></div>
-    <div class="it"><span class="l">|a||b|sin θ</span><span class="v">${fmt(ma*mb*Math.sin(ang*Math.PI/180))}</span></div>`;
+    <div class="it"><span class="l">|a⃗||b⃗|sin θ</span><span class="v">${fmt(ma*mb*Math.sin(ang*Math.PI/180))}</span></div>`;
 }
 ['pvAx','pvAy','pvAz','pvBx','pvBy','pvBz','pvAz2'].forEach(id=>document.getElementById(id).addEventListener('input',()=>renderPvt(1)));
 bindRange('pvAx','pvAxv'); bindRange('pvAy','pvAyv'); bindRange('pvAz','pvAzv');
@@ -673,11 +673,11 @@ vettori:{
   {q:'Il modulo di un vettore è una quantità...',
    opts:['Sempre positiva o nulla','Che può essere negativa','Sempre uguale a 1','Senza unità di misura'],ans:0,
    exp:'Il modulo è la lunghezza del vettore: è sempre maggiore o uguale a zero, mai negativo.'},
-  {q:'Come si calcola la componente v<sub>x</sub> noti il modulo |v| e l\'angolo θ?',
-   opts:['v<sub>x</sub> = |v| · sin θ','v<sub>x</sub> = |v| · cos θ','v<sub>x</sub> = |v| / cos θ','v<sub>x</sub> = |v| · tan θ'],ans:1,
-   exp:'La componente lungo x è la proiezione sul semiasse x: v<sub>x</sub> = |v| cos θ. La componente y è v<sub>y</sub> = |v| sin θ.'},
+  {q:'Come si calcola la componente v<sub>x</sub> noti il modulo |v⃗| e l\'angolo θ?',
+   opts:['v<sub>x</sub> = |v⃗| · sin θ','v<sub>x</sub> = |v⃗| · cos θ','v<sub>x</sub> = |v⃗| / cos θ','v<sub>x</sub> = |v⃗| · tan θ'],ans:1,
+   exp:'La componente lungo x è la proiezione sul semiasse x: v<sub>x</sub> = |v⃗| cos θ. La componente y è v<sub>y</sub> = |v⃗| sin θ.'},
   {q:'Come si ottiene il modulo di un vettore dalle sue componenti (v<sub>x</sub> ; v<sub>y</sub>)?',
-   opts:['|v| = v<sub>x</sub> + v<sub>y</sub>','|v| = v<sub>x</sub> · v<sub>y</sub>','|v| = √(v<sub>x</sub>² + v<sub>y</sub>²)','|v| = (v<sub>x</sub>² + v<sub>y</sub>²)'],ans:2,
+   opts:['|v⃗| = v<sub>x</sub> + v<sub>y</sub>','|v⃗| = v<sub>x</sub> · v<sub>y</sub>','|v⃗| = √(v<sub>x</sub>² + v<sub>y</sub>²)','|v⃗| = (v<sub>x</sub>² + v<sub>y</sub>²)'],ans:2,
    exp:'Per il teorema di Pitagora il modulo è la radice quadrata della somma dei quadrati delle componenti.'},
   {q:'Che modulo ha il versore di un vettore?',
    opts:['0','1','Uguale al vettore','Dipende dal vettore'],ans:1,
@@ -685,9 +685,9 @@ vettori:{
   {q:'Quando due vettori si dicono uguali?',
    opts:['Quando hanno lo stesso punto di applicazione','Quando hanno stesso modulo, direzione e verso','Quando hanno solo lo stesso modulo','Quando giacciono sulla stessa retta'],ans:1,
    exp:'Due vettori sono uguali se hanno stesso modulo, direzione e verso, indipendentemente dal punto di applicazione.'},
-  {q:'Il vettore opposto −v rispetto a v ha:',
+  {q:'Il vettore opposto −v⃗ rispetto a v⃗ ha:',
    opts:['Modulo opposto','Stesso modulo e direzione, verso contrario','Direzione contraria e stesso verso','Modulo doppio'],ans:1,
-   exp:'Il vettore opposto ha lo stesso modulo e la stessa direzione di v, ma verso contrario.'},
+   exp:'Il vettore opposto ha lo stesso modulo e la stessa direzione di v⃗, ma verso contrario.'},
   {q:'Rispetto a quale riferimento si misura convenzionalmente l\'angolo θ di un vettore nel piano?',
    opts:['Dal semiasse y positivo','Dal semiasse x positivo, in senso antiorario','Dalla bisettrice del primo quadrante','Da un asse a scelta'],ans:1,
    exp:'Per convenzione θ si misura a partire dal semiasse x positivo, ruotando in senso antiorario.'},
@@ -696,300 +696,300 @@ vettori:{
    exp:'Il vettore nullo ha modulo zero; la sua direzione e il suo verso sono indeterminati.'}
  ],
  calcolo:[
-  {q:'Dato v = (3 ; 4), quanto vale il modulo |v|?',
+  {q:'Dato v⃗ = (3 ; 4), quanto vale il modulo |v⃗|?',
    opts:['5','7','12','25'],ans:0,
-   exp:'|v| = √(3² + 4²) = √(9 + 16) = √25 = 5.'},
-  {q:'Dato v = (−6 ; 8), quanto vale il modulo |v|?',
+   exp:'|v⃗| = √(3² + 4²) = √(9 + 16) = √25 = 5.'},
+  {q:'Dato v⃗ = (−6 ; 8), quanto vale il modulo |v⃗|?',
    opts:['2','10','14','100'],ans:1,
-   exp:'|v| = √((−6)² + 8²) = √(36 + 64) = √100 = 10. Il segno non cambia il modulo.'},
-  {q:'Un vettore ha |v| = 20 e θ = 60°. Quanto vale la componente v<sub>x</sub>?',
+   exp:'|v⃗| = √((−6)² + 8²) = √(36 + 64) = √100 = 10. Il segno non cambia il modulo.'},
+  {q:'Un vettore ha |v⃗| = 20 e θ = 60°. Quanto vale la componente v<sub>x</sub>?',
    opts:['10','17,3','20','40'],ans:0,
-   exp:'v<sub>x</sub> = |v| cos θ = 20 · cos 60° = 20 · 0,5 = 10.'},
-  {q:'Un vettore ha |v| = 20 e θ = 60°. Quanto vale la componente v<sub>y</sub>?',
+   exp:'v<sub>x</sub> = |v⃗| cos θ = 20 · cos 60° = 20 · 0,5 = 10.'},
+  {q:'Un vettore ha |v⃗| = 20 e θ = 60°. Quanto vale la componente v<sub>y</sub>?',
    opts:['10','17,3','20','34,6'],ans:1,
-   exp:'v<sub>y</sub> = |v| sin θ = 20 · sin 60° = 20 · 0,866 ≈ 17,3.'},
-  {q:'Dato v = (5 ; 5), quanto vale l\'angolo θ?',
+   exp:'v<sub>y</sub> = |v⃗| sin θ = 20 · sin 60° = 20 · 0,866 ≈ 17,3.'},
+  {q:'Dato v⃗ = (5 ; 5), quanto vale l\'angolo θ?',
    opts:['30°','45°','60°','90°'],ans:1,
    exp:'θ = arctan(v<sub>y</sub>/v<sub>x</sub>) = arctan(5/5) = arctan(1) = 45°.'},
-  {q:'Dato v = (0 ; −4), quanto vale l\'angolo θ?',
+  {q:'Dato v⃗ = (0 ; −4), quanto vale l\'angolo θ?',
    opts:['0°','90°','180°','270°'],ans:3,
-   exp:'Il vettore punta verso il basso lungo l\'asse y: θ = 270° (equivalente a −90°).'},
-  {q:'Qual è il versore del vettore v = (8 ; 6)?',
+   exp:'Il vettore punta verso il basso lungo l\'asse y: θ = 270° (equivalente a⃗ −90°).'},
+  {q:'Qual è il versore del vettore v⃗ = (8 ; 6)?',
    opts:['(0,8 ; 0,6)','(8 ; 6)','(0,6 ; 0,8)','(1 ; 1)'],ans:0,
-   exp:'|v| = √(64+36) = 10. Versore = v/|v| = (8/10 ; 6/10) = (0,8 ; 0,6).'},
-  {q:'Un vettore ha |v| = 12 e θ = 150°. Quanto vale la componente v<sub>x</sub>?',
+   exp:'|v⃗| = √(64+36) = 10. Versore = v⃗/|v⃗| = (8/10 ; 6/10) = (0,8 ; 0,6).'},
+  {q:'Un vettore ha |v⃗| = 12 e θ = 150°. Quanto vale la componente v<sub>x</sub>?',
    opts:['+10,4','−10,4','+6','−6'],ans:1,
    exp:'v<sub>x</sub> = 12 · cos 150° = 12 · (−0,866) ≈ −10,4. Nel secondo quadrante la componente x è negativa.'},
-  {q:'Dato v = (7 ; 0), quanto vale l\'angolo θ?',
+  {q:'Dato v⃗ = (7 ; 0), quanto vale l\'angolo θ?',
    opts:['0°','45°','90°','180°'],ans:0,
    exp:'Il vettore giace sul semiasse x positivo: θ = 0°. Il modulo vale 7.'},
-  {q:'Dato v = (−3 ; −3), quanto vale l\'angolo θ?',
+  {q:'Dato v⃗ = (−3 ; −3), quanto vale l\'angolo θ?',
    opts:['45°','135°','225°','315°'],ans:2,
    exp:'Entrambe le componenti sono negative: il vettore è nel terzo quadrante. θ = 180° + 45° = 225°.'}
  ]
 },
 somma:{
  teoria:[
-  {q:'Con la regola punta-coda, come si costruisce la risultante a + b?',
-   opts:['Si uniscono le due punte','Si trasla b con la coda sulla punta di a; la risultante va dalla coda di a alla punta di b','Si sommano i moduli','Si trasla a sulla punta di b e si uniscono le code'],ans:1,
-   exp:'Si trasla b mantenendone direzione e verso, con la coda sulla punta di a. La risultante unisce la coda di a alla punta di b.'},
+  {q:'Con la regola punta-coda, come si costruisce la risultante a⃗ + b⃗?',
+   opts:['Si uniscono le due punte','Si trasla b⃗ con la coda sulla punta di a⃗; la risultante va dalla coda di a⃗ alla punta di b⃗','Si sommano i moduli','Si trasla a⃗ sulla punta di b⃗ e si uniscono le code'],ans:1,
+   exp:'Si trasla b⃗ mantenendone direzione e verso, con la coda sulla punta di a⃗. La risultante unisce la coda di a⃗ alla punta di b⃗.'},
   {q:'La somma di vettori è commutativa?',
-   opts:['Sì, a + b = b + a','No, l\'ordine conta','Solo per vettori paralleli','Solo per vettori perpendicolari'],ans:0,
-   exp:'La somma vettoriale è commutativa: a + b = b + a. Lo si vede dalla regola del parallelogramma.'},
-  {q:'Come si calcola la componente x della somma a + b?',
-   opts:['(a+b)<sub>x</sub> = a<sub>x</sub> · b<sub>x</sub>','(a+b)<sub>x</sub> = a<sub>x</sub> + b<sub>x</sub>','(a+b)<sub>x</sub> = a<sub>x</sub> − b<sub>x</sub>','(a+b)<sub>x</sub> = √(a<sub>x</sub>² + b<sub>x</sub>²)'],ans:1,
-   exp:'Le componenti si sommano separatamente: (a+b)<sub>x</sub> = a<sub>x</sub> + b<sub>x</sub> e (a+b)<sub>y</sub> = a<sub>y</sub> + b<sub>y</sub>.'},
-  {q:'Come si definisce la differenza a − b?',
-   opts:['a − b = a + (−b)','a − b = −(a + b)','a − b = b − a','a − b = |a| − |b|'],ans:0,
-   exp:'La differenza è la somma di a con il vettore opposto di b: a − b = a + (−b).'},
-  {q:'Il modulo della somma |a + b| è sempre uguale a |a| + |b|?',
-   opts:['Sì, sempre','No, vale |a|+|b| solo se a e b sono paralleli e concordi','Sì, ma solo se sono perpendicolari','No, è sempre minore'],ans:1,
-   exp:'|a+b| = |a|+|b| solo quando i vettori hanno stessa direzione e stesso verso (paralleli concordi).'},
-  {q:'Quanto vale al massimo il modulo della somma di due vettori di moduli |a| e |b|?',
-   opts:['|a| · |b|','|a| + |b| (vettori concordi)','√(|a|² + |b|²)','| |a| − |b| |'],ans:1,
-   exp:'Il modulo massimo è |a|+|b|, ottenuto quando i vettori sono paralleli e concordi; il minimo è ||a|−|b||.'},
-  {q:'Se a e b sono perpendicolari, quanto vale |a + b|?',
-   opts:['|a| + |b|','|a| − |b|','√(|a|² + |b|²)','0'],ans:2,
-   exp:'Con vettori perpendicolari la risultante è l\'ipotenusa: |a+b| = √(|a|²+|b|²), per il teorema di Pitagora.'},
-  {q:'Quanto vale a + (−a)?',
-   opts:['2a','Il vettore nullo','a','−a'],ans:1,
-   exp:'Sommando un vettore al suo opposto si ottiene il vettore nullo: a + (−a) = 0.'},
+   opts:['Sì, a⃗ + b⃗ = b⃗ + a⃗','No, l\'ordine conta','Solo per vettori paralleli','Solo per vettori perpendicolari'],ans:0,
+   exp:'La somma vettoriale è commutativa: a⃗ + b⃗ = b⃗ + a⃗. Lo si vede dalla regola del parallelogramma.'},
+  {q:'Come si calcola la componente x della somma a⃗ + b⃗?',
+   opts:['(a⃗+b⃗)<sub>x</sub> = a<sub>x</sub> · b<sub>x</sub>','(a⃗+b⃗)<sub>x</sub> = a<sub>x</sub> + b<sub>x</sub>','(a⃗+b⃗)<sub>x</sub> = a<sub>x</sub> − b<sub>x</sub>','(a⃗+b⃗)<sub>x</sub> = √(a<sub>x</sub>² + b<sub>x</sub>²)'],ans:1,
+   exp:'Le componenti si sommano separatamente: (a⃗+b⃗)<sub>x</sub> = a<sub>x</sub> + b<sub>x</sub> e (a⃗+b⃗)<sub>y</sub> = a<sub>y</sub> + b<sub>y</sub>.'},
+  {q:'Come si definisce la differenza a⃗ − b⃗?',
+   opts:['a⃗ − b⃗ = a⃗ + (−b⃗)','a⃗ − b⃗ = −(a⃗ + b⃗)','a⃗ − b⃗ = b⃗ − a⃗','a⃗ − b⃗ = |a⃗| − |b⃗|'],ans:0,
+   exp:'La differenza è la somma di a⃗ con il vettore opposto di b⃗: a⃗ − b⃗ = a⃗ + (−b⃗).'},
+  {q:'Il modulo della somma |a⃗ + b⃗| è sempre uguale a⃗ |a⃗| + |b⃗|?',
+   opts:['Sì, sempre','No, vale |a⃗|+|b⃗| solo se a⃗ e b⃗ sono paralleli e concordi','Sì, ma solo se sono perpendicolari','No, è sempre minore'],ans:1,
+   exp:'|a⃗+b⃗| = |a⃗|+|b⃗| solo quando i vettori hanno stessa direzione e stesso verso (paralleli concordi).'},
+  {q:'Quanto vale al massimo il modulo della somma di due vettori di moduli |a⃗| e |b⃗|?',
+   opts:['|a⃗| · |b⃗|','|a⃗| + |b⃗| (vettori concordi)','√(|a⃗|² + |b⃗|²)','| |a⃗| − |b⃗| |'],ans:1,
+   exp:'Il modulo massimo è |a⃗|+|b⃗|, ottenuto quando i vettori sono paralleli e concordi; il minimo è ||a⃗|−|b⃗||.'},
+  {q:'Se a⃗ e b⃗ sono perpendicolari, quanto vale |a⃗ + b⃗|?',
+   opts:['|a⃗| + |b⃗|','|a⃗| − |b⃗|','√(|a⃗|² + |b⃗|²)','0'],ans:2,
+   exp:'Con vettori perpendicolari la risultante è l\'ipotenusa: |a⃗+b⃗| = √(|a⃗|²+|b⃗|²), per il teorema di Pitagora.'},
+  {q:'Quanto vale a⃗ + (−a⃗)?',
+   opts:['2a⃗','Il vettore nullo','a⃗','−a⃗'],ans:1,
+   exp:'Sommando un vettore al suo opposto si ottiene il vettore nullo: a⃗ + (−a⃗) = 0.'},
   {q:'Nella regola punta-coda, da dove a dove va la risultante?',
    opts:['Dalla punta del primo alla coda del secondo','Dalla coda del primo alla punta del secondo','Tra le due punte','Tra le due code'],ans:1,
    exp:'La risultante chiude la spezzata: va dalla coda del primo vettore alla punta dell\'ultimo.'},
-  {q:'Considerando a e b applicati nello stesso punto, il vettore a − b:',
-   opts:['Va dalla punta di b alla punta di a','Va dalla punta di a alla punta di b','Coincide con a + b','È sempre nullo'],ans:0,
-   exp:'Il vettore differenza a − b unisce la punta di b alla punta di a (con a e b applicati nello stesso punto).'}
+  {q:'Considerando a⃗ e b⃗ applicati nello stesso punto, il vettore a⃗ − b⃗:',
+   opts:['Va dalla punta di b⃗ alla punta di a⃗','Va dalla punta di a⃗ alla punta di b⃗','Coincide con a⃗ + b⃗','È sempre nullo'],ans:0,
+   exp:'Il vettore differenza a⃗ − b⃗ unisce la punta di b⃗ alla punta di a⃗ (con a⃗ e b⃗ applicati nello stesso punto).'}
  ],
  calcolo:[
-  {q:'Date a = (2 ; 3) e b = (4 ; 1), quanto vale a + b?',
+  {q:'Date a⃗ = (2 ; 3) e b⃗ = (4 ; 1), quanto vale a⃗ + b⃗?',
    opts:['(6 ; 4)','(8 ; 3)','(2 ; 2)','(6 ; 3)'],ans:0,
-   exp:'a + b = (2+4 ; 3+1) = (6 ; 4).'},
-  {q:'Date a = (5 ; 2) e b = (−3 ; 4), quanto vale a + b?',
+   exp:'a⃗ + b⃗ = (2+4 ; 3+1) = (6 ; 4).'},
+  {q:'Date a⃗ = (5 ; 2) e b⃗ = (−3 ; 4), quanto vale a⃗ + b⃗?',
    opts:['(8 ; 6)','(2 ; 6)','(2 ; −2)','(−15 ; 8)'],ans:1,
-   exp:'a + b = (5+(−3) ; 2+4) = (2 ; 6).'},
-  {q:'Date a = (7 ; 3) e b = (2 ; 1), quanto vale a − b?',
+   exp:'a⃗ + b⃗ = (5+(−3) ; 2+4) = (2 ; 6).'},
+  {q:'Date a⃗ = (7 ; 3) e b⃗ = (2 ; 1), quanto vale a⃗ − b⃗?',
    opts:['(9 ; 4)','(5 ; 2)','(−5 ; −2)','(5 ; 4)'],ans:1,
-   exp:'a − b = (7−2 ; 3−1) = (5 ; 2).'},
-  {q:'Date a = (1 ; 6) e b = (4 ; 2), quanto vale a − b?',
+   exp:'a⃗ − b⃗ = (7−2 ; 3−1) = (5 ; 2).'},
+  {q:'Date a⃗ = (1 ; 6) e b⃗ = (4 ; 2), quanto vale a⃗ − b⃗?',
    opts:['(5 ; 8)','(3 ; 4)','(−3 ; 4)','(−3 ; −4)'],ans:2,
-   exp:'a − b = (1−4 ; 6−2) = (−3 ; 4).'},
-  {q:'Date a = (3 ; 0) e b = (0 ; 4) (perpendicolari), quanto vale |a + b|?',
+   exp:'a⃗ − b⃗ = (1−4 ; 6−2) = (−3 ; 4).'},
+  {q:'Date a⃗ = (3 ; 0) e b⃗ = (0 ; 4) (perpendicolari), quanto vale |a⃗ + b⃗|?',
    opts:['7','5','1','12'],ans:1,
-   exp:'a+b = (3 ; 4); |a+b| = √(3²+4²) = √25 = 5. Coincide con √(|a|²+|b|²).'},
-  {q:'Date a = (6 ; 0) e b = (2 ; 0) (paralleli concordi), quanto vale |a + b|?',
+   exp:'a⃗+b⃗ = (3 ; 4); |a⃗+b⃗| = √(3²+4²) = √25 = 5. Coincide con √(|a⃗|²+|b⃗|²).'},
+  {q:'Date a⃗ = (6 ; 0) e b⃗ = (2 ; 0) (paralleli concordi), quanto vale |a⃗ + b⃗|?',
    opts:['4','8','√40','6'],ans:1,
-   exp:'a+b = (8 ; 0); |a+b| = 8 = |a| + |b|, perché i vettori sono concordi.'},
-  {q:'Date a = (6 ; 0) e b = (−2 ; 0) (paralleli discordi), quanto vale |a + b|?',
+   exp:'a⃗+b⃗ = (8 ; 0); |a⃗+b⃗| = 8 = |a⃗| + |b⃗|, perché i vettori sono concordi.'},
+  {q:'Date a⃗ = (6 ; 0) e b⃗ = (−2 ; 0) (paralleli discordi), quanto vale |a⃗ + b⃗|?',
    opts:['8','4','2','√40'],ans:1,
-   exp:'a+b = (4 ; 0); |a+b| = 4 = | |a| − |b| | = |6 − 2|.'},
-  {q:'Date a = (3 ; 4) e b = (3 ; 4), quanto vale |a + b|?',
+   exp:'a⃗+b⃗ = (4 ; 0); |a⃗+b⃗| = 4 = | |a⃗| − |b⃗| | = |6 − 2|.'},
+  {q:'Date a⃗ = (3 ; 4) e b⃗ = (3 ; 4), quanto vale |a⃗ + b⃗|?',
    opts:['5','7','10','25'],ans:2,
-   exp:'a+b = (6 ; 8); |a+b| = √(36+64) = √100 = 10. (È il doppio di |a| = 5.)'},
-  {q:'Date a = (−2 ; 5) e b = (2 ; −5), quanto vale a + b?',
+   exp:'a⃗+b⃗ = (6 ; 8); |a⃗+b⃗| = √(36+64) = √100 = 10. (È il doppio di |a⃗| = 5.)'},
+  {q:'Date a⃗ = (−2 ; 5) e b⃗ = (2 ; −5), quanto vale a⃗ + b⃗?',
    opts:['(0 ; 0)','(4 ; 10)','(−4 ; 0)','(0 ; 10)'],ans:0,
-   exp:'a + b = (−2+2 ; 5−5) = (0 ; 0): b è il vettore opposto di a.'},
-  {q:'Date a = (8 ; 1) e b = (−3 ; −5), quanto vale a − b?',
+   exp:'a⃗ + b⃗ = (−2+2 ; 5−5) = (0 ; 0): b⃗ è il vettore opposto di a⃗.'},
+  {q:'Date a⃗ = (8 ; 1) e b⃗ = (−3 ; −5), quanto vale a⃗ − b⃗?',
    opts:['(5 ; −4)','(11 ; 6)','(11 ; −4)','(5 ; 6)'],ans:1,
-   exp:'a − b = (8−(−3) ; 1−(−5)) = (8+3 ; 1+5) = (11 ; 6).'}
+   exp:'a⃗ − b⃗ = (8−(−3) ; 1−(−5)) = (8+3 ; 1+5) = (11 ; 6).'}
  ]
 },
 scalare:{
  teoria:[
   {q:'Il prodotto di uno scalare per un vettore dà come risultato:',
    opts:['Uno scalare','Un vettore','Un numero negativo','Una matrice'],ans:1,
-   exp:'k·v è ancora un vettore: ha le componenti di v moltiplicate per k.'},
-  {q:'Se k > 0, il vettore k·v rispetto a v ha:',
+   exp:'k·v⃗ è ancora un vettore: ha le componenti di v⃗ moltiplicate per k.'},
+  {q:'Se k > 0, il vettore k·v⃗ rispetto a v⃗ ha:',
    opts:['Verso opposto','Lo stesso verso','Direzione perpendicolare','Modulo invariato'],ans:1,
-   exp:'Con k positivo il vettore k·v mantiene direzione e verso di v; cambia solo il modulo (|k|·|v|).'},
-  {q:'Se k < 0, il vettore k·v rispetto a v ha:',
+   exp:'Con k positivo il vettore k·v⃗ mantiene direzione e verso di v⃗; cambia solo il modulo (|k|·|v⃗|).'},
+  {q:'Se k < 0, il vettore k·v⃗ rispetto a v⃗ ha:',
    opts:['Lo stesso verso','Verso opposto','Modulo nullo','Direzione diversa'],ans:1,
-   exp:'Con k negativo il vettore k·v ha verso opposto a v (ma resta sulla stessa direzione).'},
-  {q:'Come si calcola il modulo di k·v?',
-   opts:['|k·v| = k · |v|','|k·v| = |k| · |v|','|k·v| = k + |v|','|k·v| = |v| / |k|'],ans:1,
-   exp:'Il modulo è |k·v| = |k|·|v|: si usa il valore assoluto di k, perché il modulo non è mai negativo.'},
-  {q:'Quanto vale k·v se k = 0?',
-   opts:['v','Il vettore nullo','−v','Indeterminato'],ans:1,
-   exp:'Moltiplicando per lo scalare 0 si ottiene il vettore nullo: 0·v = 0.'},
-  {q:'Se |k| > 1, rispetto a v il vettore k·v risulta:',
+   exp:'Con k negativo il vettore k·v⃗ ha verso opposto a v⃗ (ma resta sulla stessa direzione).'},
+  {q:'Come si calcola il modulo di k·v⃗?',
+   opts:['|k·v⃗| = k · |v⃗|','|k·v⃗| = |k| · |v⃗|','|k·v⃗| = k + |v⃗|','|k·v⃗| = |v⃗| / |k|'],ans:1,
+   exp:'Il modulo è |k·v⃗| = |k|·|v⃗|: si usa il valore assoluto di k, perché il modulo non è mai negativo.'},
+  {q:'Quanto vale k·v⃗ se k = 0?',
+   opts:['v⃗','Il vettore nullo','−v⃗','Indeterminato'],ans:1,
+   exp:'Moltiplicando per lo scalare 0 si ottiene il vettore nullo: 0·v⃗ = 0.'},
+  {q:'Se |k| > 1, rispetto a v⃗ il vettore k·v⃗ risulta:',
    opts:['Più corto','Più lungo','Di uguale lunghezza','Perpendicolare'],ans:1,
-   exp:'Con |k| > 1 il modulo |k|·|v| aumenta: il vettore si allunga. Con |k| < 1 si accorcia.'},
-  {q:'Il vettore k·v rispetto a v è sempre:',
+   exp:'Con |k| > 1 il modulo |k|·|v⃗| aumenta: il vettore si allunga. Con |k| < 1 si accorcia.'},
+  {q:'Il vettore k·v⃗ rispetto a v⃗ è sempre:',
    opts:['Perpendicolare','Parallelo','Opposto','Di modulo uguale'],ans:1,
-   exp:'k·v giace sempre sulla stessa retta di v: i due vettori sono paralleli (concordi o discordi a seconda del segno di k).'},
+   exp:'k·v⃗ giace sempre sulla stessa retta di v⃗: i due vettori sono paralleli (concordi o discordi a seconda del segno di k).'},
   {q:'Quale uguaglianza esprime la proprietà distributiva del prodotto per uno scalare?',
-   opts:['k(a + b) = ka + kb','k(a + b) = ka','k(a + b) = k + a + b','k(a · b) = ka · kb'],ans:0,
-   exp:'Il prodotto per uno scalare è distributivo rispetto alla somma di vettori: k(a + b) = ka + kb.'},
-  {q:'A che cosa è uguale (k<sub>1</sub> + k<sub>2</sub>)·v?',
-   opts:['k<sub>1</sub>·k<sub>2</sub>·v','k<sub>1</sub>·v + k<sub>2</sub>·v','(k<sub>1</sub> + k<sub>2</sub>) + v','v / (k<sub>1</sub> + k<sub>2</sub>)'],ans:1,
-   exp:'Vale la distributività rispetto alla somma di scalari: (k<sub>1</sub> + k<sub>2</sub>)·v = k<sub>1</sub>·v + k<sub>2</sub>·v.'},
-  {q:'Dividere un vettore v per il suo modulo |v| equivale a:',
-   opts:['Annullare il vettore','Ottenere il versore di v','Raddoppiare il vettore','Invertire il verso'],ans:1,
-   exp:'v/|v| = (1/|v|)·v è un prodotto per uno scalare positivo: dà il versore, vettore di modulo 1.'}
+   opts:['k(a⃗ + b⃗) = ka⃗ + kb⃗','k(a⃗ + b⃗) = ka⃗','k(a⃗ + b⃗) = k + a⃗ + b⃗','k(a⃗ · b⃗) = ka⃗ · kb⃗'],ans:0,
+   exp:'Il prodotto per uno scalare è distributivo rispetto alla somma di vettori: k(a⃗ + b⃗) = ka⃗ + kb⃗.'},
+  {q:'A che cosa è uguale (k<sub>1</sub> + k<sub>2</sub>)·v⃗?',
+   opts:['k<sub>1</sub>·k<sub>2</sub>·v⃗','k<sub>1</sub>·v⃗ + k<sub>2</sub>·v⃗','(k<sub>1</sub> + k<sub>2</sub>) + v⃗','v⃗ / (k<sub>1</sub> + k<sub>2</sub>)'],ans:1,
+   exp:'Vale la distributività rispetto alla somma di scalari: (k<sub>1</sub> + k<sub>2</sub>)·v⃗ = k<sub>1</sub>·v⃗ + k<sub>2</sub>·v⃗.'},
+  {q:'Dividere un vettore v⃗ per il suo modulo |v⃗| equivale a⃗:',
+   opts:['Annullare il vettore','Ottenere il versore di v⃗','Raddoppiare il vettore','Invertire il verso'],ans:1,
+   exp:'v⃗/|v⃗| = (1/|v⃗|)·v⃗ è un prodotto per uno scalare positivo: dà il versore, vettore di modulo 1.'}
  ],
  calcolo:[
-  {q:'Dato v = (2 ; 3) e k = 3, quanto vale k·v?',
+  {q:'Dato v⃗ = (2 ; 3) e k = 3, quanto vale k·v⃗?',
    opts:['(6 ; 9)','(5 ; 6)','(6 ; 3)','(2 ; 9)'],ans:0,
-   exp:'k·v = (3·2 ; 3·3) = (6 ; 9).'},
-  {q:'Dato v = (4 ; −2) e k = −2, quanto vale k·v?',
+   exp:'k·v⃗ = (3·2 ; 3·3) = (6 ; 9).'},
+  {q:'Dato v⃗ = (4 ; −2) e k = −2, quanto vale k·v⃗?',
    opts:['(8 ; −4)','(−8 ; 4)','(−8 ; −4)','(2 ; −4)'],ans:1,
-   exp:'k·v = (−2·4 ; −2·(−2)) = (−8 ; 4).'},
-  {q:'Dato v = (6 ; 8) e k = 0,5, quanto vale k·v?',
+   exp:'k·v⃗ = (−2·4 ; −2·(−2)) = (−8 ; 4).'},
+  {q:'Dato v⃗ = (6 ; 8) e k = 0,5, quanto vale k·v⃗?',
    opts:['(3 ; 4)','(12 ; 16)','(6,5 ; 8,5)','(3 ; 8)'],ans:0,
-   exp:'k·v = (0,5·6 ; 0,5·8) = (3 ; 4).'},
-  {q:'Un vettore ha |v| = 10. Quanto vale |k·v| se k = −3?',
+   exp:'k·v⃗ = (0,5·6 ; 0,5·8) = (3 ; 4).'},
+  {q:'Un vettore ha |v⃗| = 10. Quanto vale |k·v⃗| se k = −3?',
    opts:['−30','30','7','13'],ans:1,
-   exp:'|k·v| = |k|·|v| = |−3|·10 = 3·10 = 30. Il modulo è sempre positivo.'},
-  {q:'Dato v = (3 ; 4) e k = 2, quanto vale il modulo |k·v|?',
+   exp:'|k·v⃗| = |k|·|v⃗| = |−3|·10 = 3·10 = 30. Il modulo è sempre positivo.'},
+  {q:'Dato v⃗ = (3 ; 4) e k = 2, quanto vale il modulo |k·v⃗|?',
    opts:['5','7','10','25'],ans:2,
-   exp:'|v| = √(9+16) = 5; |k·v| = |k|·|v| = 2·5 = 10.'},
-  {q:'Dato v = (5 ; 0) e k = −1, quanto vale k·v?',
+   exp:'|v⃗| = √(9+16) = 5; |k·v⃗| = |k|·|v⃗| = 2·5 = 10.'},
+  {q:'Dato v⃗ = (5 ; 0) e k = −1, quanto vale k·v⃗?',
    opts:['(5 ; 0)','(−5 ; 0)','(0 ; −5)','(0 ; 0)'],ans:1,
-   exp:'k·v = (−1·5 ; −1·0) = (−5 ; 0): è il vettore opposto di v.'},
-  {q:'Dato v = (10 ; −6) e k = 0,1, quanto vale k·v?',
+   exp:'k·v⃗ = (−1·5 ; −1·0) = (−5 ; 0): è il vettore opposto di v⃗.'},
+  {q:'Dato v⃗ = (10 ; −6) e k = 0,1, quanto vale k·v⃗?',
    opts:['(1 ; −0,6)','(10,1 ; −5,9)','(1 ; −6)','(0,1 ; −0,1)'],ans:0,
-   exp:'k·v = (0,1·10 ; 0,1·(−6)) = (1 ; −0,6).'},
-  {q:'Qual è il versore del vettore v = (6 ; 8)?',
+   exp:'k·v⃗ = (0,1·10 ; 0,1·(−6)) = (1 ; −0,6).'},
+  {q:'Qual è il versore del vettore v⃗ = (6 ; 8)?',
    opts:['(0,6 ; 0,8)','(6 ; 8)','(0,75 ; 1)','(3 ; 4)'],ans:0,
-   exp:'|v| = √(36+64) = 10. Versore = (1/10)·v = (0,6 ; 0,8).'},
-  {q:'Dato v = (1 ; 2), quanto vale 2v + 3v?',
+   exp:'|v⃗| = √(36+64) = 10. Versore = (1/10)·v⃗ = (0,6 ; 0,8).'},
+  {q:'Dato v⃗ = (1 ; 2), quanto vale 2v⃗ + 3v⃗?',
    opts:['(5 ; 10)','(6 ; 12)','(2 ; 6)','(5 ; 5)'],ans:0,
-   exp:'2v + 3v = (2+3)v = 5v = (5·1 ; 5·2) = (5 ; 10).'},
-  {q:'Dato v = (−4 ; 6) e k = −0,5, quanto vale k·v?',
+   exp:'2v⃗ + 3v⃗ = (2+3)v⃗ = 5v⃗ = (5·1 ; 5·2) = (5 ; 10).'},
+  {q:'Dato v⃗ = (−4 ; 6) e k = −0,5, quanto vale k·v⃗?',
    opts:['(2 ; −3)','(−2 ; 3)','(2 ; 3)','(−4,5 ; 5,5)'],ans:0,
-   exp:'k·v = (−0,5·(−4) ; −0,5·6) = (2 ; −3).'}
+   exp:'k·v⃗ = (−0,5·(−4) ; −0,5·6) = (2 ; −3).'}
  ]
 },
 pscalare:{
  teoria:[
-  {q:'Il prodotto scalare di due vettori a·b è:',
+  {q:'Il prodotto scalare di due vettori a⃗·b⃗ è:',
    opts:['Un vettore','Un numero (scalare)','Una matrice','Un versore'],ans:1,
    exp:'Il prodotto scalare restituisce un numero, non un vettore: per questo si chiama "scalare".'},
   {q:'Quale formula esprime il prodotto scalare con modulo e angolo?',
-   opts:['a·b = |a| |b| sin θ','a·b = |a| |b| cos θ','a·b = |a| + |b|','a·b = |a| / |b|'],ans:1,
-   exp:'a·b = |a| |b| cos θ, dove θ è l\'angolo compreso tra i due vettori.'},
+   opts:['a⃗·b⃗ = |a⃗| |b⃗| sin θ','a⃗·b⃗ = |a⃗| |b⃗| cos θ','a⃗·b⃗ = |a⃗| + |b⃗|','a⃗·b⃗ = |a⃗| / |b⃗|'],ans:1,
+   exp:'a⃗·b⃗ = |a⃗| |b⃗| cos θ, dove θ è l\'angolo compreso tra i due vettori.'},
   {q:'Quale formula esprime il prodotto scalare con le componenti?',
-   opts:['a·b = a<sub>x</sub> + b<sub>x</sub> + a<sub>y</sub> + b<sub>y</sub>','a·b = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub>','a·b = a<sub>x</sub>b<sub>y</sub> − a<sub>y</sub>b<sub>x</sub>','a·b = a<sub>x</sub>b<sub>x</sub> − a<sub>y</sub>b<sub>y</sub>'],ans:1,
-   exp:'Con le componenti: a·b = a<sub>x</sub>·b<sub>x</sub> + a<sub>y</sub>·b<sub>y</sub> (somma dei prodotti delle componenti omologhe).'},
+   opts:['a⃗·b⃗ = a<sub>x</sub> + b<sub>x</sub> + a<sub>y</sub> + b<sub>y</sub>','a⃗·b⃗ = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub>','a⃗·b⃗ = a<sub>x</sub>b<sub>y</sub> − a<sub>y</sub>b<sub>x</sub>','a⃗·b⃗ = a<sub>x</sub>b<sub>x</sub> − a<sub>y</sub>b<sub>y</sub>'],ans:1,
+   exp:'Con le componenti: a⃗·b⃗ = a<sub>x</sub>·b<sub>x</sub> + a<sub>y</sub>·b<sub>y</sub> (somma dei prodotti delle componenti omologhe).'},
   {q:'Se due vettori (non nulli) sono perpendicolari, il loro prodotto scalare è:',
-   opts:['Massimo','Uguale a 0','Negativo','Uguale a |a||b|'],ans:1,
-   exp:'Se θ = 90°, cos θ = 0, quindi a·b = 0. Vettori perpendicolari hanno prodotto scalare nullo.'},
-  {q:'Se a·b > 0, l\'angolo θ tra i due vettori è:',
+   opts:['Massimo','Uguale a 0','Negativo','Uguale a⃗ |a⃗||b⃗|'],ans:1,
+   exp:'Se θ = 90°, cos θ = 0, quindi a⃗·b⃗ = 0. Vettori perpendicolari hanno prodotto scalare nullo.'},
+  {q:'Se a⃗·b⃗ > 0, l\'angolo θ tra i due vettori è:',
    opts:['Acuto (< 90°)','Retto (= 90°)','Ottuso (> 90°)','Sempre 0°'],ans:0,
-   exp:'a·b > 0 ⇔ cos θ > 0 ⇔ θ < 90°: l\'angolo è acuto.'},
-  {q:'A che cosa è uguale a·a?',
-   opts:['0','|a|','|a|²','2|a|'],ans:2,
-   exp:'a·a = |a||a| cos 0° = |a|². Il prodotto scalare di un vettore per sé stesso è il quadrato del modulo.'},
+   exp:'a⃗·b⃗ > 0 ⇔ cos θ > 0 ⇔ θ < 90°: l\'angolo è acuto.'},
+  {q:'A che cosa è uguale a⃗·a⃗?',
+   opts:['0','|a⃗|','|a⃗|²','2|a⃗|'],ans:2,
+   exp:'a⃗·a⃗ = |a⃗||a⃗| cos 0° = |a⃗|². Il prodotto scalare di un vettore per sé stesso è il quadrato del modulo.'},
   {q:'Il prodotto scalare è commutativo?',
-   opts:['No, a·b ≠ b·a','Sì, a·b = b·a','Solo per vettori perpendicolari','Solo per versori'],ans:1,
-   exp:'Il prodotto scalare è commutativo: a·b = b·a.'},
-  {q:'Qual è il significato geometrico del prodotto scalare a·b?',
-   opts:['L\'area del parallelogramma','|a| moltiplicato per la proiezione di b sulla direzione di a','La somma dei moduli','La differenza degli angoli'],ans:1,
-   exp:'a·b = |a| · (proiezione di b su a). La proiezione è |b| cos θ.'},
+   opts:['No, a⃗·b⃗ ≠ b⃗·a⃗','Sì, a⃗·b⃗ = b⃗·a⃗','Solo per vettori perpendicolari','Solo per versori'],ans:1,
+   exp:'Il prodotto scalare è commutativo: a⃗·b⃗ = b⃗·a⃗.'},
+  {q:'Qual è il significato geometrico del prodotto scalare a⃗·b⃗?',
+   opts:['L\'area del parallelogramma','|a⃗| moltiplicato per la proiezione di b⃗ sulla direzione di a⃗','La somma dei moduli','La differenza degli angoli'],ans:1,
+   exp:'a⃗·b⃗ = |a⃗| · (proiezione di b⃗ su a⃗). La proiezione è |b⃗| cos θ.'},
   {q:'Come si ricava il coseno dell\'angolo θ tra due vettori?',
-   opts:['cos θ = a·b','cos θ = (a·b)/(|a| |b|)','cos θ = |a| |b| / (a·b)','cos θ = (a·b) · |a| |b|'],ans:1,
-   exp:'Da a·b = |a||b| cos θ si ricava cos θ = (a·b)/(|a| |b|).'},
-  {q:'Per due vettori paralleli e concordi, quanto vale a·b?',
-   opts:['0','−|a||b|','|a||b|','1'],ans:2,
-   exp:'Se θ = 0°, cos θ = 1, quindi a·b = |a||b| (valore massimo). Se sono antiparalleli vale −|a||b|.'}
+   opts:['cos θ = a⃗·b⃗','cos θ = (a⃗·b⃗)/(|a⃗| |b⃗|)','cos θ = |a⃗| |b⃗| / (a⃗·b⃗)','cos θ = (a⃗·b⃗) · |a⃗| |b⃗|'],ans:1,
+   exp:'Da a⃗·b⃗ = |a⃗||b⃗| cos θ si ricava cos θ = (a⃗·b⃗)/(|a⃗| |b⃗|).'},
+  {q:'Per due vettori paralleli e concordi, quanto vale a⃗·b⃗?',
+   opts:['0','−|a⃗||b⃗|','|a⃗||b⃗|','1'],ans:2,
+   exp:'Se θ = 0°, cos θ = 1, quindi a⃗·b⃗ = |a⃗||b⃗| (valore massimo). Se sono antiparalleli vale −|a⃗||b⃗|.'}
  ],
  calcolo:[
-  {q:'Date a = (3 ; 4) e b = (2 ; 1), quanto vale a·b?',
+  {q:'Date a⃗ = (3 ; 4) e b⃗ = (2 ; 1), quanto vale a⃗·b⃗?',
    opts:['10','7','14','5'],ans:0,
-   exp:'a·b = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub> = 3·2 + 4·1 = 6 + 4 = 10.'},
-  {q:'Date a = (5 ; 0) e b = (0 ; 7), quanto vale a·b?',
+   exp:'a⃗·b⃗ = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub> = 3·2 + 4·1 = 6 + 4 = 10.'},
+  {q:'Date a⃗ = (5 ; 0) e b⃗ = (0 ; 7), quanto vale a⃗·b⃗?',
    opts:['35','12','0','5'],ans:2,
-   exp:'a·b = 5·0 + 0·7 = 0: i vettori sono perpendicolari.'},
-  {q:'Date a = (2 ; 3) e b = (−3 ; 2), quanto vale a·b?',
+   exp:'a⃗·b⃗ = 5·0 + 0·7 = 0: i vettori sono perpendicolari.'},
+  {q:'Date a⃗ = (2 ; 3) e b⃗ = (−3 ; 2), quanto vale a⃗·b⃗?',
    opts:['12','0','−6','13'],ans:1,
-   exp:'a·b = 2·(−3) + 3·2 = −6 + 6 = 0: i vettori sono perpendicolari.'},
-  {q:'Date a = (1 ; 2) e b = (3 ; 4), quanto vale a·b?',
+   exp:'a⃗·b⃗ = 2·(−3) + 3·2 = −6 + 6 = 0: i vettori sono perpendicolari.'},
+  {q:'Date a⃗ = (1 ; 2) e b⃗ = (3 ; 4), quanto vale a⃗·b⃗?',
    opts:['7','11','14','3'],ans:1,
-   exp:'a·b = 1·3 + 2·4 = 3 + 8 = 11.'},
-  {q:'Due vettori hanno |a| = 4, |b| = 5 e formano un angolo θ = 60°. Quanto vale a·b?',
+   exp:'a⃗·b⃗ = 1·3 + 2·4 = 3 + 8 = 11.'},
+  {q:'Due vettori hanno |a⃗| = 4, |b⃗| = 5 e formano un angolo θ = 60°. Quanto vale a⃗·b⃗?',
    opts:['20','10','17,3','9'],ans:1,
-   exp:'a·b = |a||b| cos θ = 4·5·cos 60° = 20·0,5 = 10.'},
-  {q:'Dato a = (3 ; 4), quanto vale a·a?',
+   exp:'a⃗·b⃗ = |a⃗||b⃗| cos θ = 4·5·cos 60° = 20·0,5 = 10.'},
+  {q:'Dato a⃗ = (3 ; 4), quanto vale a⃗·a⃗?',
    opts:['7','5','25','12'],ans:2,
-   exp:'a·a = |a|² = 3² + 4² = 9 + 16 = 25.'},
-  {q:'Date a = (2 ; 2) e b = (−1 ; −1), quanto vale a·b?',
+   exp:'a⃗·a⃗ = |a⃗|² = 3² + 4² = 9 + 16 = 25.'},
+  {q:'Date a⃗ = (2 ; 2) e b⃗ = (−1 ; −1), quanto vale a⃗·b⃗?',
    opts:['4','0','−4','−2'],ans:2,
-   exp:'a·b = 2·(−1) + 2·(−1) = −2 − 2 = −4. Il segno negativo indica un angolo ottuso (qui 180°).'},
-  {q:'Due vettori hanno |a| = 6, |b| = 2 e θ = 180°. Quanto vale a·b?',
+   exp:'a⃗·b⃗ = 2·(−1) + 2·(−1) = −2 − 2 = −4. Il segno negativo indica un angolo ottuso (qui 180°).'},
+  {q:'Due vettori hanno |a⃗| = 6, |b⃗| = 2 e θ = 180°. Quanto vale a⃗·b⃗?',
    opts:['12','−12','0','8'],ans:1,
-   exp:'a·b = |a||b| cos 180° = 6·2·(−1) = −12.'},
-  {q:'Date a = (4 ; 3) e b = (4 ; 3), quanto vale l\'angolo θ tra i due vettori?',
+   exp:'a⃗·b⃗ = |a⃗||b⃗| cos 180° = 6·2·(−1) = −12.'},
+  {q:'Date a⃗ = (4 ; 3) e b⃗ = (4 ; 3), quanto vale l\'angolo θ tra i due vettori?',
    opts:['0°','45°','90°','180°'],ans:0,
-   exp:'cos θ = (a·b)/(|a||b|) = 25/(5·5) = 1 → θ = 0°: i vettori coincidono in direzione e verso.'},
-  {q:'Date a = (1 ; 0) e b = (1 ; 1), quanto vale l\'angolo θ tra i due vettori?',
+   exp:'cos θ = (a⃗·b⃗)/(|a⃗||b⃗|) = 25/(5·5) = 1 → θ = 0°: i vettori coincidono in direzione e verso.'},
+  {q:'Date a⃗ = (1 ; 0) e b⃗ = (1 ; 1), quanto vale l\'angolo θ tra i due vettori?',
    opts:['30°','45°','60°','90°'],ans:1,
-   exp:'a·b = 1; |a| = 1, |b| = √2. cos θ = 1/√2 ≈ 0,707 → θ = 45°.'}
+   exp:'a⃗·b⃗ = 1; |a⃗| = 1, |b⃗| = √2. cos θ = 1/√2 ≈ 0,707 → θ = 45°.'}
  ]
 },
 pvett:{
  teoria:[
-  {q:'Il prodotto vettoriale a×b dà come risultato:',
+  {q:'Il prodotto vettoriale a⃗×b⃗ dà come risultato:',
    opts:['Un numero','Un vettore','Una matrice','Un angolo'],ans:1,
-   exp:'a×b è un vettore: ha modulo, direzione e verso ben definiti.'},
-  {q:'Qual è la direzione del vettore a×b?',
-   opts:['Parallela ad a','Parallela a b','Perpendicolare al piano di a e b','La bisettrice tra a e b'],ans:2,
-   exp:'a×b è perpendicolare al piano individuato dai due vettori a e b.'},
-  {q:'Come si determina il verso del vettore a×b?',
+   exp:'a⃗×b⃗ è un vettore: ha modulo, direzione e verso ben definiti.'},
+  {q:'Qual è la direzione del vettore a⃗×b⃗?',
+   opts:['Parallela ad a⃗','Parallela a⃗ b⃗','Perpendicolare al piano di a⃗ e b⃗','La bisettrice tra a⃗ e b⃗'],ans:2,
+   exp:'a⃗×b⃗ è perpendicolare al piano individuato dai due vettori a⃗ e b⃗.'},
+  {q:'Come si determina il verso del vettore a⃗×b⃗?',
    opts:['Con la regola della mano destra','È sempre verso l\'alto','È sempre verso il basso','Con il teorema di Pitagora'],ans:0,
-   exp:'Il verso di a×b si trova con la regola della mano destra (da a verso b).'},
+   exp:'Il verso di a⃗×b⃗ si trova con la regola della mano destra (da a⃗ verso b⃗).'},
   {q:'Quale formula dà il modulo del prodotto vettoriale?',
-   opts:['|a×b| = |a||b| cos θ','|a×b| = |a||b| sin θ','|a×b| = |a| + |b|','|a×b| = |a|/|b|'],ans:1,
-   exp:'|a×b| = |a| |b| sin θ, dove θ è l\'angolo compreso tra i due vettori.'},
-  {q:'Qual è il significato geometrico del modulo |a×b|?',
-   opts:['Il perimetro del triangolo','L\'area del parallelogramma di lati a e b','La diagonale del rettangolo','La somma dei moduli'],ans:1,
-   exp:'|a×b| è numericamente uguale all\'area del parallelogramma che ha a e b come lati.'},
-  {q:'Se a e b sono paralleli, quanto vale a×b?',
-   opts:['Massimo','Il vettore nullo','|a||b|','1'],ans:1,
-   exp:'Se a∥b allora θ = 0° o 180°, quindi sin θ = 0 e a×b = 0 (vettore nullo).'},
+   opts:['|a⃗×b⃗| = |a⃗||b⃗| cos θ','|a⃗×b⃗| = |a⃗||b⃗| sin θ','|a⃗×b⃗| = |a⃗| + |b⃗|','|a⃗×b⃗| = |a⃗|/|b⃗|'],ans:1,
+   exp:'|a⃗×b⃗| = |a⃗| |b⃗| sin θ, dove θ è l\'angolo compreso tra i due vettori.'},
+  {q:'Qual è il significato geometrico del modulo |a⃗×b⃗|?',
+   opts:['Il perimetro del triangolo','L\'area del parallelogramma di lati a⃗ e b⃗','La diagonale del rettangolo','La somma dei moduli'],ans:1,
+   exp:'|a⃗×b⃗| è numericamente uguale all\'area del parallelogramma che ha a⃗ e b⃗ come lati.'},
+  {q:'Se a⃗ e b⃗ sono paralleli, quanto vale a⃗×b⃗?',
+   opts:['Massimo','Il vettore nullo','|a⃗||b⃗|','1'],ans:1,
+   exp:'Se a⃗∥b⃗ allora θ = 0° o 180°, quindi sin θ = 0 e a⃗×b⃗ = 0 (vettore nullo).'},
   {q:'Quale proprietà ha il prodotto vettoriale rispetto allo scambio dei fattori?',
-   opts:['È commutativo: a×b = b×a','È anticommutativo: a×b = −(b×a)','Non cambia mai','Si annulla sempre'],ans:1,
-   exp:'Il prodotto vettoriale è anticommutativo: scambiando l\'ordine cambia il verso, a×b = −(b×a).'},
-  {q:'Quanto vale a×a?',
-   opts:['|a|²','Il vettore nullo','2a','a'],ans:1,
-   exp:'Un vettore è parallelo a sé stesso (θ = 0°), quindi a×a = 0.'},
-  {q:'Per quale angolo θ il modulo |a×b| è massimo?',
+   opts:['È commutativo: a⃗×b⃗ = b⃗×a⃗','È anticommutativo: a⃗×b⃗ = −(b⃗×a⃗)','Non cambia mai','Si annulla sempre'],ans:1,
+   exp:'Il prodotto vettoriale è anticommutativo: scambiando l\'ordine cambia il verso, a⃗×b⃗ = −(b⃗×a⃗).'},
+  {q:'Quanto vale a⃗×a⃗?',
+   opts:['|a⃗|²','Il vettore nullo','2a⃗','a⃗'],ans:1,
+   exp:'Un vettore è parallelo a sé stesso (θ = 0°), quindi a⃗×a⃗ = 0.'},
+  {q:'Per quale angolo θ il modulo |a⃗×b⃗| è massimo?',
    opts:['θ = 0°','θ = 45°','θ = 90°','θ = 180°'],ans:2,
-   exp:'|a×b| = |a||b| sin θ è massimo quando sin θ = 1, cioè θ = 90° (vettori perpendicolari).'},
-  {q:'Qual è la prima componente (lungo x) di a×b?',
+   exp:'|a⃗×b⃗| = |a⃗||b⃗| sin θ è massimo quando sin θ = 1, cioè θ = 90° (vettori perpendicolari).'},
+  {q:'Qual è la prima componente (lungo x) di a⃗×b⃗?',
    opts:['a<sub>x</sub>b<sub>x</sub> − a<sub>y</sub>b<sub>y</sub>','a<sub>y</sub>b<sub>z</sub> − a<sub>z</sub>b<sub>y</sub>','a<sub>x</sub>b<sub>y</sub> − a<sub>y</sub>b<sub>x</sub>','a<sub>z</sub>b<sub>x</sub> − a<sub>x</sub>b<sub>z</sub>'],ans:1,
-   exp:'La componente x di a×b è (a<sub>y</sub>b<sub>z</sub> − a<sub>z</sub>b<sub>y</sub>).'}
+   exp:'La componente x di a⃗×b⃗ è (a<sub>y</sub>b<sub>z</sub> − a<sub>z</sub>b<sub>y</sub>).'}
  ],
  calcolo:[
-  {q:'Dati a = (1 ; 0 ; 0) e b = (0 ; 1 ; 0), quanto vale a×b?',
+  {q:'Dati a⃗ = (1 ; 0 ; 0) e b⃗ = (0 ; 1 ; 0), quanto vale a⃗×b⃗?',
    opts:['(0 ; 0 ; 1)','(0 ; 0 ; −1)','(1 ; 1 ; 0)','(0 ; 0 ; 0)'],ans:0,
-   exp:'a×b = (0·0−0·1 ; 0·0−1·0 ; 1·1−0·0) = (0 ; 0 ; 1). È il versore dell\'asse z.'},
-  {q:'Dati a = (0 ; 1 ; 0) e b = (0 ; 0 ; 1), quanto vale a×b?',
+   exp:'a⃗×b⃗ = (0·0−0·1 ; 0·0−1·0 ; 1·1−0·0) = (0 ; 0 ; 1). È il versore dell\'asse z.'},
+  {q:'Dati a⃗ = (0 ; 1 ; 0) e b⃗ = (0 ; 0 ; 1), quanto vale a⃗×b⃗?',
    opts:['(0 ; 1 ; 0)','(1 ; 0 ; 0)','(0 ; 0 ; 1)','(−1 ; 0 ; 0)'],ans:1,
-   exp:'a×b = (1·1−0·0 ; 0·0−0·1 ; 0·0−1·0) = (1 ; 0 ; 0).'},
-  {q:'Dati a = (2 ; 0 ; 0) e b = (0 ; 3 ; 0), quanto vale il modulo |a×b|?',
+   exp:'a⃗×b⃗ = (1·1−0·0 ; 0·0−0·1 ; 0·0−1·0) = (1 ; 0 ; 0).'},
+  {q:'Dati a⃗ = (2 ; 0 ; 0) e b⃗ = (0 ; 3 ; 0), quanto vale il modulo |a⃗×b⃗|?',
    opts:['5','6','0','12'],ans:1,
-   exp:'a×b = (0 ; 0 ; 6); |a×b| = 6. Coincide con l\'area del rettangolo 2×3.'},
-  {q:'Due vettori hanno |a| = 4, |b| = 5 e θ = 30°. Quanto vale |a×b|?',
+   exp:'a⃗×b⃗ = (0 ; 0 ; 6); |a⃗×b⃗| = 6. Coincide con l\'area del rettangolo 2×3.'},
+  {q:'Due vettori hanno |a⃗| = 4, |b⃗| = 5 e θ = 30°. Quanto vale |a⃗×b⃗|?',
    opts:['20','10','17,3','9'],ans:1,
-   exp:'|a×b| = |a||b| sin θ = 4·5·sin 30° = 20·0,5 = 10.'},
-  {q:'Due vettori hanno |a| = 3, |b| = 3 e θ = 90°. Quanto vale |a×b|?',
+   exp:'|a⃗×b⃗| = |a⃗||b⃗| sin θ = 4·5·sin 30° = 20·0,5 = 10.'},
+  {q:'Due vettori hanno |a⃗| = 3, |b⃗| = 3 e θ = 90°. Quanto vale |a⃗×b⃗|?',
    opts:['3','6','9','0'],ans:2,
-   exp:'|a×b| = |a||b| sin 90° = 3·3·1 = 9 (valore massimo, vettori perpendicolari).'},
-  {q:'Dati a = (1 ; 2 ; 3) e b = (4 ; 5 ; 6), quanto vale a×b?',
+   exp:'|a⃗×b⃗| = |a⃗||b⃗| sin 90° = 3·3·1 = 9 (valore massimo, vettori perpendicolari).'},
+  {q:'Dati a⃗ = (1 ; 2 ; 3) e b⃗ = (4 ; 5 ; 6), quanto vale a⃗×b⃗?',
    opts:['(−3 ; 6 ; −3)','(3 ; −6 ; 3)','(−3 ; −6 ; −3)','(12 ; 30 ; 18)'],ans:0,
-   exp:'a×b = (2·6−3·5 ; 3·4−1·6 ; 1·5−2·4) = (−3 ; 6 ; −3).'},
-  {q:'Dati a = (2 ; 2 ; 2) e b = (1 ; 1 ; 1), quanto vale a×b?',
+   exp:'a⃗×b⃗ = (2·6−3·5 ; 3·4−1·6 ; 1·5−2·4) = (−3 ; 6 ; −3).'},
+  {q:'Dati a⃗ = (2 ; 2 ; 2) e b⃗ = (1 ; 1 ; 1), quanto vale a⃗×b⃗?',
    opts:['(0 ; 0 ; 0)','(2 ; 2 ; 2)','(1 ; 1 ; 1)','(6 ; 6 ; 6)'],ans:0,
-   exp:'a e b sono paralleli (b = 0,5·a), quindi a×b = (0 ; 0 ; 0).'},
-  {q:'Dati a = (1 ; 0 ; 0) e b = (2 ; 0 ; 0), quanto vale a×b?',
+   exp:'a⃗ e b⃗ sono paralleli (b⃗ = 0,5·a⃗), quindi a⃗×b⃗ = (0 ; 0 ; 0).'},
+  {q:'Dati a⃗ = (1 ; 0 ; 0) e b⃗ = (2 ; 0 ; 0), quanto vale a⃗×b⃗?',
    opts:['(2 ; 0 ; 0)','(0 ; 0 ; 0)','(0 ; 0 ; 2)','(3 ; 0 ; 0)'],ans:1,
-   exp:'I due vettori giacciono sulla stessa retta (paralleli): a×b = (0 ; 0 ; 0).'},
-  {q:'Qual è l\'area del parallelogramma di lati a = (3 ; 0 ; 0) e b = (0 ; 4 ; 0)?',
+   exp:'I due vettori giacciono sulla stessa retta (paralleli): a⃗×b⃗ = (0 ; 0 ; 0).'},
+  {q:'Qual è l\'area del parallelogramma di lati a⃗ = (3 ; 0 ; 0) e b⃗ = (0 ; 4 ; 0)?',
    opts:['7','12','5','24'],ans:1,
-   exp:'L\'area è |a×b|. a×b = (0 ; 0 ; 12), quindi area = 12 (rettangolo 3×4).'},
-  {q:'Dati a = (0 ; 0 ; 5) e b = (0 ; 2 ; 0), quanto vale il modulo |a×b|?',
+   exp:'L\'area è |a⃗×b⃗|. a⃗×b⃗ = (0 ; 0 ; 12), quindi area = 12 (rettangolo 3×4).'},
+  {q:'Dati a⃗ = (0 ; 0 ; 5) e b⃗ = (0 ; 2 ; 0), quanto vale il modulo |a⃗×b⃗|?',
    opts:['10','7','0','25'],ans:0,
-   exp:'a×b = (0·0−5·2 ; 5·0−0·0 ; 0·2−0·0) = (−10 ; 0 ; 0); |a×b| = 10.'}
+   exp:'a⃗×b⃗ = (0·0−5·2 ; 5·0−0·0 ; 0·2−0·0) = (−10 ; 0 ; 0); |a⃗×b⃗| = 10.'}
  ]
 }};
 
