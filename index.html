@@ -42,12 +42,13 @@ section.scene.active{display:block}
 .formula{background:var(--soft);border-left:3px solid var(--primary);
   padding:.65rem .85rem;margin:.8rem 0;border-radius:6px;
   font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05em;
-  overflow-x:auto;white-space:nowrap;text-align:center}
+  overflow-x:auto;white-space:pre;text-align:center}
 .formula + .formula{margin-top:1.15rem}
 .vec{position:relative;display:inline-block;line-height:inherit}
 .vec::after{content:"→";position:absolute;left:-0.12em;right:-0.12em;
   top:-0.66em;font-size:0.6em;font-weight:400;font-style:normal;
   text-align:center;line-height:1;pointer-events:none}
+.rad{border-top:1.7px solid currentColor;padding:.12em .28em 0 .16em}
 .tip{background:#eef7ee;border-left:3px solid #2e7d32;padding:.55rem .85rem;
   margin:.55rem 0;border-radius:6px;font-size:.92em}
 .warn{background:#fff7e6;border-left:3px solid #f0a020;padding:.55rem .85rem;
@@ -152,7 +153,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h2>Che cos'è un vettore?</h2>
     <p>Una <strong>grandezza vettoriale</strong> è completamente definita da tre informazioni: <strong>modulo</strong> (l'intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento su quella retta). Esempi: spostamento, velocità, forza, accelerazione.</p>
     <p>Le <strong>grandezze scalari</strong>, invece, sono definite da un solo numero: massa, temperatura, tempo, energia.</p>
-    <div class="formula"><b><span class=vec>v</span></b> = (v<sub>x</sub> ; v<sub>y</sub>)   ·   |<b><span class=vec>v</span></b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)</div>
+    <div class="formula"><b><span class=vec>v</span></b> = (v<sub>x</sub> ; v<sub>y</sub>)        |<b><span class=vec>v</span></b>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span></div>
     <p>In questa app esplori cinque argomenti. Per ognuno trovi una breve teoria, una <strong>rappresentazione grafica interattiva e animata</strong> (muovi i cursori, premi <em>▶ Anima</em>) e due quiz: <strong>10 domande di teoria</strong> e <strong>10 di calcolo</strong>.</p>
     <div class="tip">💡 Suggerimento: dopo aver letto la teoria, premi <em>▶ Anima</em> per vedere la costruzione passo-passo, poi prova valori estremi con i cursori prima di affrontare i quiz.</div>
   </div>
@@ -171,7 +172,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h2>➳ Il vettore e le sue componenti</h2>
     <p>Nel piano cartesiano un vettore <b><span class=vec>v</span></b> applicato nell'origine raggiunge il punto (v<sub>x</sub>; v<sub>y</sub>). Le due <strong>componenti</strong> sono le proiezioni del vettore sugli assi.</p>
     <h3>Da componenti a modulo e angolo</h3>
-    <div class="formula">|<b><span class=vec>v</span></b>| = √(v<sub>x</sub>² + v<sub>y</sub>²)        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
+    <div class="formula">|<b><span class=vec>v</span></b>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span>        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
     <h3>Da modulo e angolo a componenti</h3>
     <div class="formula">v<sub>x</sub> = |<b><span class=vec>v</span></b>| cos θ        v<sub>y</sub> = |<b><span class=vec>v</span></b>| sin θ</div>
     <h3>Il versore</h3>
@@ -214,7 +215,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h3>La differenza</h3>
     <div class="formula"><b><span class=vec>a</span></b> − <b><span class=vec>b</span></b> = <b><span class=vec>a</span></b> + (−<b><span class=vec>b</span></b>)</div>
     <p>Si somma ad <b><span class=vec>a</span></b> il vettore opposto di <b><span class=vec>b</span></b>. Applicati nello stesso punto, <b><span class=vec>a</span></b>−<b><span class=vec>b</span></b> è il vettore che va dalla punta di <b><span class=vec>b</span></b> alla punta di <b><span class=vec>a</span></b>.</p>
-    <div class="tip">🔺 Il modulo della somma NON è in generale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>|: vale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b>| = √(|<b><span class=vec>a</span></b>|²+|<b><span class=vec>b</span></b>|²).</div>
+    <div class="tip">🔺 Il modulo della somma NON è in generale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>|: vale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b>| = √<span class=rad>|<b><span class=vec>a</span></b>|²+|<b><span class=vec>b</span></b>|²</span>.</div>
   </div>
   <div class="simwrap">
     <div class="panel">
@@ -687,7 +688,7 @@ vettori:{
    opts:['v<sub>x</sub> = |<span class=vec>v</span>| · sin θ','v<sub>x</sub> = |<span class=vec>v</span>| · cos θ','v<sub>x</sub> = |<span class=vec>v</span>| / cos θ','v<sub>x</sub> = |<span class=vec>v</span>| · tan θ'],ans:1,
    exp:'La componente lungo x è la proiezione sul semiasse x: v<sub>x</sub> = |<span class=vec>v</span>| cos θ. La componente y è v<sub>y</sub> = |<span class=vec>v</span>| sin θ.'},
   {q:'Come si ottiene il modulo di un vettore dalle sue componenti (v<sub>x</sub> ; v<sub>y</sub>)?',
-   opts:['|<span class=vec>v</span>| = v<sub>x</sub> + v<sub>y</sub>','|<span class=vec>v</span>| = v<sub>x</sub> · v<sub>y</sub>','|<span class=vec>v</span>| = √(v<sub>x</sub>² + v<sub>y</sub>²)','|<span class=vec>v</span>| = (v<sub>x</sub>² + v<sub>y</sub>²)'],ans:2,
+   opts:['|<span class=vec>v</span>| = v<sub>x</sub> + v<sub>y</sub>','|<span class=vec>v</span>| = v<sub>x</sub> · v<sub>y</sub>','|<span class=vec>v</span>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span>','|<span class=vec>v</span>| = (v<sub>x</sub>² + v<sub>y</sub>²)'],ans:2,
    exp:'Per il teorema di Pitagora il modulo è la radice quadrata della somma dei quadrati delle componenti.'},
   {q:'Che modulo ha il versore di un vettore?',
    opts:['0','1','Uguale al vettore','Dipende dal vettore'],ans:1,
