@@ -187,15 +187,6 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <span style="color:var(--vN);font-weight:700">■ componente x</span>
       <span style="color:var(--vP);font-weight:700">■ componente y / proiezione</span>
     </div>
-    <div class="ctrl" style="margin-top:.8rem">
-      <label><span class="nm">Interpreta i vettori come</span>
-        <select id="physMode">
-          <option value="">grandezze geometriche (senza unità)</option>
-          <option value="N">forze (newton, N)</option>
-          <option value="m/s">velocità (m/s)</option>
-        </select>
-      </label>
-    </div>
   </div>
   <div class="home-grid">
     <button class="home-card" data-go="vettori"><span class="ico">➳</span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span></button>
@@ -791,8 +782,7 @@ bindRange('pvBx','pvBxv'); bindRange('pvBy','pvByv'); bindRange('pvBz','pvBzv');
 bindRange('pvAz2','pvAz2v');
 document.getElementById('pvAnim').addEventListener('click',e=>runAnim('pvt',4200,renderPvt,e.target));
 
-/* ===================== ESTENSIONI: captions, sfide, 3D drag, fisica, ghost ===================== */
-const PHYS=document.getElementById('physMode');
+/* ===================== ESTENSIONI: captions, sfide, 3D drag, ghost ===================== */
 const _S=(id,h)=>{const e=document.getElementById(id);if(e)e.innerHTML=h;};
 const _step=n=>`<span class="step">${n}</span>`;
 
@@ -832,28 +822,13 @@ const CAP={
   }
 };
 
-// ---- unità su readouts (Vettori, Somma, Scalare) ----
-function applyUnits(){
-  const u=PHYS.value;
-  ['rdVett','rdSomma','rdScal'].forEach(id=>{
-    document.querySelectorAll('#'+id+' .v').forEach(v=>{
-      const t=v.textContent.replace(/ (N|m\/s)$/,''); v.textContent=t;
-      if(!u) return;
-      if(t==='—' || t.includes('°')) return;
-      v.textContent = t + ' ' + u;
-    });
-  });
-}
-
-// ---- monkey-patch dei render per aggiornare didascalia + unità ----
+// ---- monkey-patch dei render per aggiornare didascalia ----
 const _rV=renderVett, _rS=renderSomma, _rSc=renderScal, _rPs=renderPsc, _rPv=renderPvt;
-renderVett=function(p){ _rV(p); _S('capVett',CAP.vett(p==null?1:p)); applyUnits(); };
-renderSomma=function(p){ _rS(p); _S('capSomma',CAP.somma(p==null?1:p)); applyUnits(); };
-renderScal=function(p){ _rSc(p); _S('capScal',CAP.scal(p==null?1:p)); applyUnits(); };
+renderVett=function(p){ _rV(p); _S('capVett',CAP.vett(p==null?1:p)); };
+renderSomma=function(p){ _rS(p); _S('capSomma',CAP.somma(p==null?1:p)); };
+renderScal=function(p){ _rSc(p); _S('capScal',CAP.scal(p==null?1:p)); };
 renderPsc=function(p){ _rPs(p); _S('capPsc',CAP.psc(p==null?1:p)); };
 renderPvt=function(p){ _rPv(p); _S('capPvt',CAP.pvt(p==null?1:p)); };
-
-PHYS.addEventListener('change',()=>{renderVett(1);renderSomma(1);renderScal(1);});
 
 // ---- soPar listener ----
 document.getElementById('soPar').addEventListener('input',()=>renderSomma(1));
