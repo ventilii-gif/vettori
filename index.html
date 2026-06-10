@@ -8,8 +8,8 @@
 <style>
 :root{
   --bg:#f4f5f8;--surface:#fff;--primary:#2563eb;--primary-d:#1d4ed8;--accent:#ff7043;
-  --text:#1f2430;--muted:#878d9e;--border:#e4e7ef;--soft:#f2f4f9;
-  --vA:#1565c0;--vB:#ef6c00;--vR:#2e7d32;--vP:#8e24aa;--vC:#00897b;--vN:#c62828;
+  --text:#1f2430;--muted:#6b7488;--border:#e4e7ef;--soft:#f2f4f9;
+  --vA:#1565c0;--vB:#ef6c00;--vR:#2e7d32;--vP:#8e24aa;--vC:#00897b;--vN:#0097a7;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
@@ -156,6 +156,14 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <div class="formula"><b><span class=vec>v</span></b> = (v<sub>x</sub> ; v<sub>y</sub>)        |<b><span class=vec>v</span></b>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span></div>
     <p>In questa app esplori cinque argomenti. Per ognuno trovi una breve teoria, una <strong>rappresentazione grafica interattiva e animata</strong> (muovi i cursori, premi <em>▶ Anima</em>) e due quiz: <strong>10 domande di teoria</strong> e <strong>10 di calcolo</strong>.</p>
     <div class="tip">💡 Suggerimento: dopo aver letto la teoria, premi <em>▶ Anima</em> per vedere la costruzione passo-passo, poi prova valori estremi con i cursori prima di affrontare i quiz.</div>
+    <div class="warn" style="display:flex;flex-wrap:wrap;gap:.7em .9em;align-items:center;font-size:.9em">
+      <strong>Legenda colori</strong> (valida in tutta l'app):
+      <span style="color:var(--vA);font-weight:700">■ <span class=vec>a</span></span>
+      <span style="color:var(--vB);font-weight:700">■ <span class=vec>b</span></span>
+      <span style="color:var(--vR);font-weight:700">■ risultante</span>
+      <span style="color:var(--vN);font-weight:700">■ componente x</span>
+      <span style="color:var(--vP);font-weight:700">■ componente y / proiezione</span>
+    </div>
   </div>
   <div class="home-grid">
     <button class="home-card" data-go="vettori"><span class="ico">➳</span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span></button>
@@ -187,7 +195,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="legend">
         <span style="color:var(--vA)"><i></i>vettore <span class=vec>v</span></span>
         <span style="color:var(--vN)"><i></i>componente v<sub>x</sub></span>
-        <span style="color:var(--vR)"><i></i>componente v<sub>y</sub></span>
+        <span style="color:var(--vP)"><i></i>componente v<sub>y</sub></span>
       </div>
       <button class="anim-btn" id="veAnim">▶ Anima la costruzione</button>
     </div>
@@ -407,7 +415,7 @@ function arrow(x1,y1,x2,y2,opt){
     `<polygon points="${x2.toFixed(1)},${y2.toFixed(1)} ${lx.toFixed(1)},${ly.toFixed(1)} ${rx.toFixed(1)},${ry.toFixed(1)}" fill="${color}"/>${lbl}</g>`;
 }
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const COL={A:'#1565c0',B:'#ef6c00',R:'#2e7d32',P:'#8e24aa',C:'#00897b',N:'#c62828'};
+const COL={A:'#1565c0',B:'#ef6c00',R:'#2e7d32',P:'#8e24aa',C:'#00897b',N:'#0097a7'};
 
 /* ----- 2D plotting ----- */
 const P2={ox:200,oy:188,u:20};
@@ -415,15 +423,15 @@ const gx=x=>P2.ox+x*P2.u;
 const gy=y=>P2.oy-y*P2.u;
 function grid2d(){
   let g='';
-  for(let x=-9;x<=9;x++) g+=`<line x1="${gx(x)}" y1="0" x2="${gx(x)}" y2="360" stroke="#e9ecf5" stroke-width="1"/>`;
-  for(let y=-8;y<=8;y++) g+=`<line x1="0" y1="${gy(y)}" x2="400" y2="${gy(y)}" stroke="#e9ecf5" stroke-width="1"/>`;
-  g+=`<line x1="0" y1="${gy(0)}" x2="400" y2="${gy(0)}" stroke="#9aa4b8" stroke-width="1.6"/>`;
-  g+=`<line x1="${gx(0)}" y1="0" x2="${gx(0)}" y2="360" stroke="#9aa4b8" stroke-width="1.6"/>`;
-  for(let x=-8;x<=8;x+=2){ if(x!==0) g+=`<text x="${gx(x)}" y="${gy(0)+13}" font-size="9" fill="#9aa4b8" text-anchor="middle">${x}</text>`; }
-  for(let y=-7;y<=7;y+=2){ if(y!==0) g+=`<text x="${gx(0)-6}" y="${gy(y)+3}" font-size="9" fill="#9aa4b8" text-anchor="end">${y}</text>`; }
-  g+=`<text x="394" y="${gy(0)-6}" font-size="12" fill="#6b7488" text-anchor="end" font-style="italic">x</text>`;
-  g+=`<text x="${gx(0)+7}" y="13" font-size="12" fill="#6b7488" font-style="italic">y</text>`;
-  g+=`<circle cx="${gx(0)}" cy="${gy(0)}" r="2.6" fill="#6b7488"/>`;
+  for(let x=-9;x<=9;x++) g+=`<line x1="${gx(x)}" y1="0" x2="${gx(x)}" y2="360" stroke="#dde2ec" stroke-width="1"/>`;
+  for(let y=-8;y<=8;y++) g+=`<line x1="0" y1="${gy(y)}" x2="400" y2="${gy(y)}" stroke="#dde2ec" stroke-width="1"/>`;
+  g+=`<line x1="0" y1="${gy(0)}" x2="400" y2="${gy(0)}" stroke="#5b6378" stroke-width="1.7"/>`;
+  g+=`<line x1="${gx(0)}" y1="0" x2="${gx(0)}" y2="360" stroke="#5b6378" stroke-width="1.7"/>`;
+  for(let x=-8;x<=8;x++){ if(x!==0) g+=`<text x="${gx(x)}" y="${gy(0)+14}" font-size="11" fill="#6b7488" text-anchor="middle">${x}</text>`; }
+  for(let y=-7;y<=7;y++){ if(y!==0) g+=`<text x="${gx(0)-7}" y="${gy(y)+4}" font-size="11" fill="#6b7488" text-anchor="end">${y}</text>`; }
+  g+=`<text x="394" y="${gy(0)-6}" font-size="13" fill="#5b6378" text-anchor="end" font-style="italic">x</text>`;
+  g+=`<text x="${gx(0)+8}" y="14" font-size="13" fill="#5b6378" font-style="italic">y</text>`;
+  g+=`<circle cx="${gx(0)}" cy="${gy(0)}" r="2.8" fill="#5b6378"/>`;
   return g;
 }
 function fmt(n,d){ return (Math.abs(n)<1e-9?0:n).toFixed(d==null?2:d); }
@@ -472,14 +480,29 @@ function renderVett(p){
   const compA=clamp((p-0.55)/0.45,0,1);
   const ex=vx*vScale, ey=vy*vScale;
   let s=grid2d();
+  // angle θ arc at origin
+  if(mod>0.6){
+    const ang=Math.atan2(vy,vx);
+    if(Math.abs(ang)>0.06){
+      const R=22, ox=gx(0), oy=gy(0);
+      const sx=ox+R, sy=oy;
+      const ex2=ox+R*Math.cos(ang), ey2=oy-R*Math.sin(ang);
+      const sweep=ang>0?0:1;
+      const arcA=clamp((p-0.55)/0.45,0,1);
+      s+=`<path d="M ${sx} ${sy} A ${R} ${R} 0 0 ${sweep} ${ex2.toFixed(1)} ${ey2.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.4" opacity="${arcA}"/>`;
+      const lblAng=ang/2;
+      const lx=ox+(R+13)*Math.cos(lblAng), ly=oy-(R+13)*Math.sin(lblAng);
+      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="#374151" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle" opacity="${arcA}">θ</text>`;
+    }
+  }
   // components (dashed)
   if(compA>0.01 && Math.abs(vx)>0){
     s+=`<line x1="${gx(0)}" y1="${gy(0)}" x2="${gx(vx)}" y2="${gy(0)}" stroke="${COL.N}" stroke-width="2.4" stroke-dasharray="5 3" opacity="${compA}"/>`;
     s+=`<text x="${gx(vx/2)}" y="${gy(0)+(vy>=0?15:-8)}" font-size="11" fill="${COL.N}" text-anchor="middle" opacity="${compA}">v<tspan baseline-shift="sub" font-size="8.5">x</tspan> = ${vx}</text>`;
   }
   if(compA>0.01 && Math.abs(vy)>0){
-    s+=`<line x1="${gx(vx)}" y1="${gy(0)}" x2="${gx(vx)}" y2="${gy(vy)}" stroke="${COL.R}" stroke-width="2.4" stroke-dasharray="5 3" opacity="${compA}"/>`;
-    s+=`<text x="${gx(vx)+(vx>=0?16:-16)}" y="${gy(vy/2)}" font-size="11" fill="${COL.R}" text-anchor="middle" opacity="${compA}">v<tspan baseline-shift="sub" font-size="8.5">y</tspan> = ${vy}</text>`;
+    s+=`<line x1="${gx(vx)}" y1="${gy(0)}" x2="${gx(vx)}" y2="${gy(vy)}" stroke="${COL.P}" stroke-width="2.4" stroke-dasharray="5 3" opacity="${compA}"/>`;
+    s+=`<text x="${gx(vx)+(vx>=0?16:-16)}" y="${gy(vy/2)}" font-size="11" fill="${COL.P}" text-anchor="middle" opacity="${compA}">v<tspan baseline-shift="sub" font-size="8.5">y</tspan> = ${vy}</text>`;
   }
   // vector
   s+=arrow(gx(0),gy(0),gx(ex),gy(ey),{color:COL.A,w:3.4,label:p>0.5?'v':''});
@@ -578,6 +601,32 @@ function renderPsc(p){
   const dot=ax*bx+ay*by;
   const ma=Math.hypot(ax,ay), mb=Math.hypot(bx,by);
   let s=grid2d();
+  // angle θ between a and b: arc or right-angle marker
+  if(ma>0.5 && mb>0.5){
+    const aA=Math.atan2(ay,ax), aB=Math.atan2(by,bx);
+    let dAng=aB-aA;
+    while(dAng>Math.PI) dAng-=2*Math.PI;
+    while(dAng<=-Math.PI) dAng+=2*Math.PI;
+    const ox=gx(0), oy=gy(0);
+    const isPerp=Math.abs(dot/(ma*mb))<0.04;
+    if(isPerp){
+      const sq=12;
+      const uax=ax/ma, uay=ay/ma, ubx=bx/mb, uby=by/mb;
+      const c1x=ox+uax*sq, c1y=oy-uay*sq;
+      const c2x=c1x+ubx*sq, c2y=c1y-uby*sq;
+      const c3x=ox+ubx*sq, c3y=oy-uby*sq;
+      s+=`<polyline points="${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${c3x.toFixed(1)},${c3y.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.5"/>`;
+    } else {
+      const R=22;
+      const sxA=ox+R*Math.cos(aA), syA=oy-R*Math.sin(aA);
+      const exB=ox+R*Math.cos(aA+dAng), eyB=oy-R*Math.sin(aA+dAng);
+      const sweep=dAng>0?0:1;
+      s+=`<path d="M ${sxA.toFixed(1)} ${syA.toFixed(1)} A ${R} ${R} 0 0 ${sweep} ${exB.toFixed(1)} ${eyB.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.4"/>`;
+      const mid=aA+dAng/2;
+      const lx=ox+(R+13)*Math.cos(mid), ly=oy-(R+13)*Math.sin(mid);
+      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="#374151" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle">θ</text>`;
+    }
+  }
   // projection of b onto a
   let footX=0,footY=0,proj=0;
   if(ma>1e-6){
@@ -589,6 +638,27 @@ function renderPsc(p){
     s+=`<line x1="${gx(bx)}" y1="${gy(by)}" x2="${gx(px)}" y2="${gy(py)}" stroke="${COL.P}" stroke-width="1.8" stroke-dasharray="5 3"/>`;
     // projection vector along a
     s+=arrow(gx(0),gy(0),gx(footX*p),gy(footY*p),{color:COL.P,w:5,opacity:0.6});
+    // right-angle marker at foot + numeric projection label
+    if(p>0.85 && mb>0.5 && Math.abs(proj)>0.25){
+      const fx=gx(footX), fy=gy(footY);
+      const pdx=bx-footX, pdy=by-footY, pl=Math.hypot(pdx,pdy);
+      if(pl>0.3){
+        const upx=pdx/pl, upy=pdy/pl;
+        const dirA=proj>0?-1:1;
+        const uax=ax/ma*dirA, uay=ay/ma*dirA;
+        const sq=10;
+        const c1x=fx+uax*sq, c1y=fy-uay*sq;
+        const c2x=c1x+upx*sq, c2y=c1y-upy*sq;
+        const c3x=fx+upx*sq, c3y=fy-upy*sq;
+        s+=`<polyline points="${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${c3x.toFixed(1)},${c3y.toFixed(1)}" fill="none" stroke="${COL.P}" stroke-width="1.3"/>`;
+      }
+      const upWx=-ay/ma, upWy=ax/ma;
+      const sideB=bx*upWx+by*upWy;
+      const sign=sideB>=0?-1:1;
+      const midX=footX/2, midY=footY/2, off=0.7;
+      const lx=gx(midX+sign*upWx*off), ly=gy(midY+sign*upWy*off);
+      s+=`<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" fill="${COL.P}" font-size="11" font-weight="700" text-anchor="middle">${fmt(proj,1)}</text>`;
+    }
   }
   s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
   s+=arrow(gx(0),gy(0),gx(bx),gy(by),{color:COL.B,w:3.2,label:'b'});
