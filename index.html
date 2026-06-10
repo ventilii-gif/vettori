@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5e35b1">
 <title>Vettori · Fisica Liceo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})"></script>
 <style>
 :root{
   --bg:#f4f5f8;--surface:#fff;--primary:#2563eb;--primary-d:#1d4ed8;--accent:#ff7043;
@@ -97,6 +100,26 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
 .home-card strong{color:var(--text);display:block;margin-bottom:.15rem}
 .home-card span{color:var(--muted);font-size:.87em}
 @media(max-width:480px){main{padding:.75rem}.card{padding:.9rem}.panel{padding:.85rem}}
+.caption{margin-top:.65rem;padding:.55rem .85rem;background:#fffaeb;border-left:3px solid #f0a020;
+  border-radius:6px;font-size:.88em;min-height:1.8em;color:#6b4900;line-height:1.45}
+.caption .step{display:inline-block;background:#f0a020;color:#fff;border-radius:50%;
+  width:1.45em;height:1.45em;line-height:1.45em;text-align:center;font-weight:700;
+  margin-right:.4em;font-size:.85em}
+.toggle{display:flex;align-items:center;gap:.55rem;font-size:.9em;cursor:pointer;padding:.35rem 0;color:var(--text)}
+.toggle input{accent-color:var(--primary);width:1.05em;height:1.05em;cursor:pointer}
+.rhr{font-size:.8em;color:var(--text);margin-top:.55rem;padding:.5rem .75rem;background:var(--soft);
+  border-radius:7px;line-height:1.4}
+.rhr b{color:var(--primary-d)}
+.prove{background:#f3e8ff;border:1px solid #d6b6f3;border-radius:14px;padding:1rem 1.15rem;margin-bottom:1rem}
+.prove h3{margin:0 0 .5rem;color:#5b21b6;font-size:1.05em}
+.prove .pq{font-weight:500;margin-bottom:.6rem;line-height:1.5}
+.prove .pq code{background:#e9d5ff;padding:.05em .35em;border-radius:4px;font-family:"Cambria Math",Georgia,serif;font-size:1em}
+.prove .pbtn{background:#7c3aed;color:#fff;border:0;border-radius:8px;padding:.5rem 1.1rem;
+  font-size:.9em;cursor:pointer;font-family:inherit;font-weight:600}
+.prove .pbtn:hover{background:#6d28d9}
+.prove .fb{margin-top:.55rem;padding:.5rem .85rem;border-radius:7px;font-size:.88em;display:none;line-height:1.45}
+.prove .fb.ok{background:#d6ecd7;color:#1b5e20;border-left:3px solid #2e7d32;display:block}
+.prove .fb.no{background:#f6d4d4;color:#b71c1c;border-left:3px solid #c62828;display:block}
 /* ----- Quiz ----- */
 .quiz-kinds{display:flex;gap:.4rem;margin-bottom:.7rem}
 .quiz-kinds button{flex:1;background:#f0f1f8;border:1.5px solid var(--border);
@@ -153,7 +176,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h2>Che cos'è un vettore?</h2>
     <p>Una <strong>grandezza vettoriale</strong> è completamente definita da tre informazioni: <strong>modulo</strong> (l'intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento su quella retta). Esempi: spostamento, velocità, forza, accelerazione.</p>
     <p>Le <strong>grandezze scalari</strong>, invece, sono definite da un solo numero: massa, temperatura, tempo, energia.</p>
-    <div class="formula"><b><span class=vec>v</span></b> = (v<sub>x</sub> ; v<sub>y</sub>)        |<b><span class=vec>v</span></b>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span></div>
+    <div class="formula">$$\vec{v} = (v_x \,;\, v_y) \qquad |\vec{v}| = \sqrt{v_x^2 + v_y^2}$$</div>
     <p>In questa app esplori cinque argomenti. Per ognuno trovi una breve teoria, una <strong>rappresentazione grafica interattiva e animata</strong> (muovi i cursori, premi <em>▶ Anima</em>) e due quiz: <strong>10 domande di teoria</strong> e <strong>10 di calcolo</strong>.</p>
     <div class="tip">💡 Suggerimento: dopo aver letto la teoria, premi <em>▶ Anima</em> per vedere la costruzione passo-passo, poi prova valori estremi con i cursori prima di affrontare i quiz.</div>
     <div class="warn" style="display:flex;flex-wrap:wrap;gap:.7em .9em;align-items:center;font-size:.9em">
@@ -163,6 +186,15 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <span style="color:var(--vR);font-weight:700">■ risultante</span>
       <span style="color:var(--vN);font-weight:700">■ componente x</span>
       <span style="color:var(--vP);font-weight:700">■ componente y / proiezione</span>
+    </div>
+    <div class="ctrl" style="margin-top:.8rem">
+      <label><span class="nm">Interpreta i vettori come</span>
+        <select id="physMode">
+          <option value="">grandezze geometriche (senza unità)</option>
+          <option value="N">forze (newton, N)</option>
+          <option value="m/s">velocità (m/s)</option>
+        </select>
+      </label>
     </div>
   </div>
   <div class="home-grid">
@@ -180,12 +212,12 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h2>➳ Il vettore e le sue componenti</h2>
     <p>Nel piano cartesiano un vettore <b><span class=vec>v</span></b> applicato nell'origine raggiunge il punto (v<sub>x</sub>; v<sub>y</sub>). Le due <strong>componenti</strong> sono le proiezioni del vettore sugli assi.</p>
     <h3>Da componenti a modulo e angolo</h3>
-    <div class="formula">|<b><span class=vec>v</span></b>| = √<span class=rad>v<sub>x</sub>² + v<sub>y</sub>²</span>        θ = arctan(v<sub>y</sub> / v<sub>x</sub>)</div>
+    <div class="formula">$$|\vec{v}| = \sqrt{v_x^2 + v_y^2} \qquad \theta = \arctan(v_y / v_x)$$</div>
     <h3>Da modulo e angolo a componenti</h3>
-    <div class="formula">v<sub>x</sub> = |<b><span class=vec>v</span></b>| cos θ        v<sub>y</sub> = |<b><span class=vec>v</span></b>| sin θ</div>
+    <div class="formula">$$v_x = |\vec{v}|\cos\theta \qquad v_y = |\vec{v}|\sin\theta$$</div>
     <h3>Il versore</h3>
     <p>Il <strong>versore</strong> v&#770; è il vettore di modulo 1 che indica la direzione e il verso di <b><span class=vec>v</span></b>:</p>
-    <div class="formula">v&#770; = <b><span class=vec>v</span></b> / |<b><span class=vec>v</span></b>|        |v&#770;| = 1</div>
+    <div class="formula">$$\hat{v} = \vec{v}/|\vec{v}| \qquad |\hat{v}| = 1$$</div>
     <div class="tip">📐 L'angolo θ si misura a partire dal semiasse x positivo, in senso antiorario. Due vettori sono uguali se hanno stesso modulo, direzione e verso, ovunque siano applicati.</div>
   </div>
   <div class="simwrap">
@@ -198,6 +230,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <span style="color:var(--vP)"><i></i>componente v<sub>y</sub></span>
       </div>
       <button class="anim-btn" id="veAnim">▶ Anima la costruzione</button>
+      <div class="caption" id="capVett">Muovi i cursori per esplorare, o premi <em>▶ Anima</em> per la spiegazione passo-passo.</div>
     </div>
     <div class="panel">
       <div class="panel-lbl">Controlli e misure</div>
@@ -208,6 +241,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="read" id="rdVett"></div>
     </div>
   </div>
+  <div class="prove" id="prove-vettori"></div>
   <div id="qz-vettori"></div>
 </section>
 
@@ -218,10 +252,10 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h3>Regola punta-coda</h3>
     <p>Per sommare <b><span class=vec>a</span></b> + <b><span class=vec>b</span></b> si trasla <b><span class=vec>b</span></b> in modo che la sua coda coincida con la punta di <b><span class=vec>a</span></b>. La <strong>risultante</strong> va dalla coda di <b><span class=vec>a</span></b> alla punta di <b><span class=vec>b</span></b>.</p>
     <h3>Per componenti</h3>
-    <div class="formula">(<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b>)<sub>x</sub> = a<sub>x</sub>+b<sub>x</sub>        (<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b>)<sub>y</sub> = a<sub>y</sub>+b<sub>y</sub></div>
+    <div class="formula">$$(\vec{a}+\vec{b})_x = a_x+b_x \qquad (\vec{a}+\vec{b})_y = a_y+b_y$$</div>
     <p>La somma è <strong>commutativa</strong> (<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b> = <b><span class=vec>b</span></b>+<b><span class=vec>a</span></b>) e si può costruire anche con la <strong>regola del parallelogramma</strong>.</p>
     <h3>La differenza</h3>
-    <div class="formula"><b><span class=vec>a</span></b> − <b><span class=vec>b</span></b> = <b><span class=vec>a</span></b> + (−<b><span class=vec>b</span></b>)</div>
+    <div class="formula">$$\vec{a} - \vec{b} = \vec{a} + (-\vec{b})$$</div>
     <p>Si somma ad <b><span class=vec>a</span></b> il vettore opposto di <b><span class=vec>b</span></b>. Applicati nello stesso punto, <b><span class=vec>a</span></b>−<b><span class=vec>b</span></b> è il vettore che va dalla punta di <b><span class=vec>b</span></b> alla punta di <b><span class=vec>a</span></b>.</p>
     <div class="tip">🔺 Il modulo della somma NON è in generale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>|: vale |<b><span class=vec>a</span></b>|+|<b><span class=vec>b</span></b>| solo se i vettori sono paralleli e concordi; se sono perpendicolari |<b><span class=vec>a</span></b>+<b><span class=vec>b</span></b>| = √<span class=rad>|<b><span class=vec>a</span></b>|²+|<b><span class=vec>b</span></b>|²</span>.</div>
   </div>
@@ -235,6 +269,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <span style="color:var(--vR)"><i></i>risultante</span>
       </div>
       <button class="anim-btn" id="soAnim">▶ Anima la costruzione</button>
+      <div class="caption" id="capSomma">Muovi i cursori per esplorare, o premi <em>▶ Anima</em> per la spiegazione passo-passo.</div>
     </div>
     <div class="panel">
       <div class="panel-lbl">Controlli e misure</div>
@@ -249,10 +284,12 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <label><span class="nm">a<sub>y</sub></span><input type="range" id="soAy" min="-6" max="6" step="1" value="1"><span class="v" id="soAyv">1</span></label>
         <label><span class="nm">b<sub>x</sub></span><input type="range" id="soBx" min="-6" max="6" step="1" value="1"><span class="v" id="soBxv">1</span></label>
         <label><span class="nm">b<sub>y</sub></span><input type="range" id="soBy" min="-6" max="6" step="1" value="3"><span class="v" id="soByv">3</span></label>
+        <label class="toggle"><input type="checkbox" id="soPar"> mostra il <strong>parallelogramma</strong></label>
       </div>
       <div class="read" id="rdSomma"></div>
     </div>
   </div>
+  <div class="prove" id="prove-somma"></div>
   <div id="qz-somma"></div>
 </section>
 
@@ -261,7 +298,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
   <div class="card">
     <h2>✕ Prodotto di un vettore per uno scalare</h2>
     <p>Moltiplicando un vettore <b><span class=vec>v</span></b> per un numero (scalare) <em>k</em> si ottiene un nuovo <strong>vettore</strong> k<b><span class=vec>v</span></b>:</p>
-    <div class="formula">|k<b><span class=vec>v</span></b>| = |k| · |<b><span class=vec>v</span></b>|        (k<b><span class=vec>v</span></b>)<sub>x</sub> = k·v<sub>x</sub>   ;   (k<b><span class=vec>v</span></b>)<sub>y</sub> = k·v<sub>y</sub></div>
+    <div class="formula">$$|k\vec{v}| = |k|\cdot|\vec{v}| \qquad (k\vec{v})_x = k\cdot v_x \,;\, (k\vec{v})_y = k\cdot v_y$$</div>
     <ul>
       <li>se <strong>k &gt; 0</strong>: k<b><span class=vec>v</span></b> ha lo <em>stesso verso</em> di <b><span class=vec>v</span></b>;</li>
       <li>se <strong>k &lt; 0</strong>: k<b><span class=vec>v</span></b> ha <em>verso opposto</em>;</li>
@@ -280,6 +317,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <span style="color:var(--vR)"><i></i>vettore k·<span class=vec>v</span></span>
       </div>
       <button class="anim-btn" id="scAnim">▶ Anima il prodotto</button>
+      <div class="caption" id="capScal">Muovi i cursori per esplorare, o premi <em>▶ Anima</em>.</div>
     </div>
     <div class="panel">
       <div class="panel-lbl">Controlli e misure</div>
@@ -292,6 +330,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="eqs" id="scStat">—</div>
     </div>
   </div>
+  <div class="prove" id="prove-scalare"></div>
   <div id="qz-scalare"></div>
 </section>
 
@@ -300,7 +339,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
   <div class="card">
     <h2>· Prodotto scalare</h2>
     <p>Il <strong>prodotto scalare</strong> di due vettori è un <strong>numero</strong> (uno scalare), non un vettore. Si può calcolare in due modi equivalenti:</p>
-    <div class="formula"><b><span class=vec>a</span></b>·<b><span class=vec>b</span></b> = |<b><span class=vec>a</span></b>| |<b><span class=vec>b</span></b>| cos θ        <b><span class=vec>a</span></b>·<b><span class=vec>b</span></b> = a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub></div>
+    <div class="formula">$$\vec{a}\cdot\vec{b} = |\vec{a}|\,|\vec{b}|\cos\theta \qquad \vec{a}\cdot\vec{b} = a_x b_x + a_y b_y$$</div>
     <p>dove θ è l'angolo compreso tra i due vettori.</p>
     <h3>Segno e angolo</h3>
     <ul>
@@ -310,7 +349,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     </ul>
     <h3>Significato geometrico</h3>
     <p>Il prodotto scalare è il modulo di <b><span class=vec>a</span></b> moltiplicato per la <strong>proiezione</strong> di <b><span class=vec>b</span></b> sulla direzione di <b><span class=vec>a</span></b>:</p>
-    <div class="formula">proiezione di <b><span class=vec>b</span></b> su <b><span class=vec>a</span></b> = (<b><span class=vec>a</span></b>·<b><span class=vec>b</span></b>) / |<b><span class=vec>a</span></b>|        cos θ = (<b><span class=vec>a</span></b>·<b><span class=vec>b</span></b>) / (|<b><span class=vec>a</span></b>| |<b><span class=vec>b</span></b>|)</div>
+    <div class="formula">$$\text{proiez. di }\vec{b}\text{ su }\vec{a} = \dfrac{\vec{a}\cdot\vec{b}}{|\vec{a}|} \qquad \cos\theta = \dfrac{\vec{a}\cdot\vec{b}}{|\vec{a}|\,|\vec{b}|}$$</div>
     <div class="tip">📌 Proprietà utili: <b><span class=vec>a</span></b>·<b><span class=vec>a</span></b> = |<b><span class=vec>a</span></b>|²  ed è commutativo: <b><span class=vec>a</span></b>·<b><span class=vec>b</span></b> = <b><span class=vec>b</span></b>·<b><span class=vec>a</span></b>.</div>
   </div>
   <div class="simwrap">
@@ -323,6 +362,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <span style="color:var(--vP)"><i></i>proiezione di <span class=vec>b</span> su <span class=vec>a</span></span>
       </div>
       <button class="anim-btn" id="psAnim">▶ Anima la proiezione</button>
+      <div class="caption" id="capPsc">Muovi i cursori per esplorare, o premi <em>▶ Anima</em>.</div>
     </div>
     <div class="panel">
       <div class="panel-lbl">Controlli e misure</div>
@@ -336,6 +376,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="eqs" id="psStat">—</div>
     </div>
   </div>
+  <div class="prove" id="prove-pscalare"></div>
   <div id="qz-pscalare"></div>
 </section>
 
@@ -347,10 +388,10 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
     <h3>Direzione e verso</h3>
     <p>Il vettore <b><span class=vec>a</span></b>×<b><span class=vec>b</span></b> è <strong>perpendicolare al piano</strong> individuato da <b><span class=vec>a</span></b> e <b><span class=vec>b</span></b>; il suo verso è dato dalla <strong>regola della mano destra</strong>.</p>
     <h3>Modulo</h3>
-    <div class="formula">|<b><span class=vec>a</span></b>×<b><span class=vec>b</span></b>| = |<b><span class=vec>a</span></b>| |<b><span class=vec>b</span></b>| sin θ</div>
+    <div class="formula">$$|\vec{a}\times\vec{b}| = |\vec{a}|\,|\vec{b}|\sin\theta$$</div>
     <p>Il modulo è uguale all'<strong>area del parallelogramma</strong> di lati <b><span class=vec>a</span></b> e <b><span class=vec>b</span></b>.</p>
     <h3>Componenti</h3>
-    <div class="formula"><span class=vec>a</span>×<span class=vec>b</span> = ( a<sub>y</sub>b<sub>z</sub>−a<sub>z</sub>b<sub>y</sub> ;  a<sub>z</sub>b<sub>x</sub>−a<sub>x</sub>b<sub>z</sub> ;  a<sub>x</sub>b<sub>y</sub>−a<sub>y</sub>b<sub>x</sub> )</div>
+    <div class="formula">$$\vec{a}\times\vec{b} = (a_y b_z - a_z b_y \,;\, a_z b_x - a_x b_z \,;\, a_x b_y - a_y b_x)$$</div>
     <div class="tip">🔄 Il prodotto vettoriale è <strong>anticommutativo</strong>: <b><span class=vec>a</span></b>×<b><span class=vec>b</span></b> = −(<b><span class=vec>b</span></b>×<b><span class=vec>a</span></b>). Se <b><span class=vec>a</span></b> e <b><span class=vec>b</span></b> sono paralleli (θ = 0° o 180°) allora <b><span class=vec>a</span></b>×<b><span class=vec>b</span></b> = <b><span class=vec>0</span></b>; in particolare <b><span class=vec>a</span></b>×<b><span class=vec>a</span></b> = <b><span class=vec>0</span></b>.</div>
   </div>
   <div class="simwrap">
@@ -364,6 +405,8 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
         <span style="color:var(--vP)"><i></i>parallelogramma</span>
       </div>
       <button class="anim-btn" id="pvAnim">▶ Anima la rotazione 3D</button>
+      <div class="caption" id="capPvt">Trascina il grafico con il mouse per ruotare, o premi <em>▶ Anima</em>.</div>
+      <div class="rhr"><b>✋ Regola della mano destra</b>: indice → <span class=vec>a</span>, medio → <span class=vec>b</span>, pollice → <span class=vec>a</span>×<span class=vec>b</span>.</div>
       <div class="warn" id="pvNote" style="font-size:.83em">Il vettore <span class=vec>a</span>×<span class=vec>b</span> è disegnato in scala ridotta quando è molto lungo: il valore reale del modulo è nella tabella.</div>
     </div>
     <div class="panel">
@@ -380,6 +423,7 @@ svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border)
       <div class="read" id="rdPvt"></div>
     </div>
   </div>
+  <div class="prove" id="prove-pvett"></div>
   <div id="qz-pvett"></div>
 </section>
 
@@ -532,10 +576,11 @@ function renderSomma(p){
   const grow=clamp((p-0.72)/0.28,0,1);    // resultant grows
   const offX=ax*slide, offY=ay*slide;
   let s=grid2d();
-  // parallelogram dashed (somma only) once chained in place
-  if(mode==='somma' && slide>0.99){
-    s+=`<line x1="${gx(bx)}" y1="${gy(by)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#bdbdbd" stroke-width="1.4" stroke-dasharray="4 3"/>`;
-    s+=`<line x1="${gx(ax)}" y1="${gy(ay)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#bdbdbd" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+  // parallelogram (somma only) — toggled by checkbox, or auto al fine animazione
+  const showPar = mode==='somma' && (document.getElementById('soPar').checked || slide>0.99);
+  if(showPar){
+    s+=`<line x1="${gx(bx)}" y1="${gy(by)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#8e8e8e" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+    s+=`<line x1="${gx(ax)}" y1="${gy(ay)}" x2="${gx(rx)}" y2="${gy(ry)}" stroke="#8e8e8e" stroke-width="1.5" stroke-dasharray="5 3"/>`;
   }
   // a
   s+=arrow(gx(0),gy(0),gx(ax),gy(ay),{color:COL.A,w:3.2,label:'a'});
@@ -681,7 +726,8 @@ bindRange('psAx','psAxv'); bindRange('psAy','psAyv'); bindRange('psBx','psBxv');
 document.getElementById('psAnim').addEventListener('click',e=>runAnim('psc',1700,renderPsc,e.target));
 
 /* ===================== PRODOTTO VETTORIALE (3D) ===================== */
-const O3={ox:200,oy:240,u:23}, EL=0.46;
+const O3={ox:200,oy:240,u:23};
+let EL=0.46;
 function proj3(x,y,z,az){
   const ca=Math.cos(az), sa=Math.sin(az);
   const x1=x*ca-y*sa, y1=x*sa+y*ca;
@@ -721,6 +767,10 @@ function renderPvt(p){
   s+=arrow(O.x,O.y,pa.x,pa.y,{color:COL.A,w:3.2,label:'a'});
   s+=arrow(O.x,O.y,pb.x,pb.y,{color:COL.B,w:3.2,label:'b'});
   if(cMod>1e-6){
+    if(cScale<0.99){
+      const pcR=pj(cx,cy,cz);
+      s+=`<line x1="${O.x.toFixed(1)}" y1="${O.y.toFixed(1)}" x2="${pcR.x.toFixed(1)}" y2="${pcR.y.toFixed(1)}" stroke="${COL.R}" stroke-width="1.7" stroke-dasharray="5 4" opacity="0.32"/>`;
+    }
     const pc=pj(cx*cScale,cy*cScale,cz*cScale);
     s+=arrow(O.x,O.y,pc.x,pc.y,{color:COL.R,w:3.8,label:'a×b'});
   }
@@ -740,6 +790,160 @@ bindRange('pvAx','pvAxv'); bindRange('pvAy','pvAyv'); bindRange('pvAz','pvAzv');
 bindRange('pvBx','pvBxv'); bindRange('pvBy','pvByv'); bindRange('pvBz','pvBzv');
 bindRange('pvAz2','pvAz2v');
 document.getElementById('pvAnim').addEventListener('click',e=>runAnim('pvt',4200,renderPvt,e.target));
+
+/* ===================== ESTENSIONI: captions, sfide, 3D drag, fisica, ghost ===================== */
+const PHYS=document.getElementById('physMode');
+const _S=(id,h)=>{const e=document.getElementById(id);if(e)e.innerHTML=h;};
+const _step=n=>`<span class="step">${n}</span>`;
+
+// ---- caption per scena ----
+const CAP={
+  vett(p){
+    const vx=+document.getElementById('veX').value, vy=+document.getElementById('veY').value;
+    const mod=Math.hypot(vx,vy);
+    if(p<0.55) return _step(1)+'Disegno il vettore <span class=vec>v</span> dall\'origine.';
+    if(p<1) return _step(2)+'Proietto <span class=vec>v</span> sugli assi: ottengo le componenti v<sub>x</sub> = '+vx+' e v<sub>y</sub> = '+vy+'.';
+    return 'Vettore <span class=vec>v</span> = ('+vx+' ; '+vy+'). Modulo |<span class=vec>v</span>| = √(v<sub>x</sub>²+v<sub>y</sub>²) = '+fmt(mod)+'.';
+  },
+  somma(p){
+    const mode=document.getElementById('soMode').value;
+    const lbl=mode==='somma'?'<span class=vec>a</span>+<span class=vec>b</span>':'<span class=vec>a</span>−<span class=vec>b</span>';
+    const second=mode==='somma'?'<span class=vec>b</span>':'−<span class=vec>b</span>';
+    if(p<0.3) return _step(1)+'Disegno <span class=vec>a</span> e <span class=vec>b</span> applicati nell\'origine.';
+    if(p<0.72) return _step(2)+'Traslo '+second+' con la coda sulla punta di <span class=vec>a</span> (regola punta-coda).';
+    if(p<1) return _step(3)+'Traccio la risultante '+lbl+' dalla coda di <span class=vec>a</span> alla punta finale.';
+    return 'Risultante '+lbl+' calcolata sommando le componenti separatamente.';
+  },
+  scal(p){
+    const k=+document.getElementById('scK').value;
+    if(p<1) return _step(1)+'Il vettore k·<span class=vec>v</span> cresce a partire dall\'origine.';
+    if(Math.abs(k)<1e-6) return 'k = 0 → il prodotto è il vettore nullo.';
+    if(k>0) return k>=1?'k > 0 e |k|≥1 → stesso verso di <span class=vec>v</span>, vettore allungato.':'k > 0 e |k|<1 → stesso verso di <span class=vec>v</span>, vettore accorciato.';
+    return Math.abs(k)>=1?'k < 0 e |k|≥1 → verso opposto, vettore allungato.':'k < 0 e |k|<1 → verso opposto, vettore accorciato.';
+  },
+  psc(p){
+    if(p<0.5) return _step(1)+'Calo la perpendicolare dalla punta di <span class=vec>b</span> sulla retta di <span class=vec>a</span>.';
+    if(p<1) return _step(2)+'Misuro la proiezione: <span class=vec>a</span>·<span class=vec>b</span> = |<span class=vec>a</span>| · (proiezione di <span class=vec>b</span> su <span class=vec>a</span>).';
+    return 'Il prodotto scalare è il modulo di <span class=vec>a</span> moltiplicato per la proiezione di <span class=vec>b</span> sulla direzione di <span class=vec>a</span>.';
+  },
+  pvt(p){
+    if(anims['pvt']!=null) return 'Ruoto la vista in azimut per evidenziare che <span class=vec>a</span>×<span class=vec>b</span> è perpendicolare al piano di <span class=vec>a</span> e <span class=vec>b</span>.';
+    return 'Trascina il grafico con il mouse per ruotare la vista. La linea tratteggiata indica la lunghezza reale di <span class=vec>a</span>×<span class=vec>b</span> quando viene rimpicciolita.';
+  }
+};
+
+// ---- unità su readouts (Vettori, Somma, Scalare) ----
+function applyUnits(){
+  const u=PHYS.value;
+  ['rdVett','rdSomma','rdScal'].forEach(id=>{
+    document.querySelectorAll('#'+id+' .v').forEach(v=>{
+      const t=v.textContent.replace(/ (N|m\/s)$/,''); v.textContent=t;
+      if(!u) return;
+      if(t==='—' || t.includes('°')) return;
+      v.textContent = t + ' ' + u;
+    });
+  });
+}
+
+// ---- monkey-patch dei render per aggiornare didascalia + unità ----
+const _rV=renderVett, _rS=renderSomma, _rSc=renderScal, _rPs=renderPsc, _rPv=renderPvt;
+renderVett=function(p){ _rV(p); _S('capVett',CAP.vett(p==null?1:p)); applyUnits(); };
+renderSomma=function(p){ _rS(p); _S('capSomma',CAP.somma(p==null?1:p)); applyUnits(); };
+renderScal=function(p){ _rSc(p); _S('capScal',CAP.scal(p==null?1:p)); applyUnits(); };
+renderPsc=function(p){ _rPs(p); _S('capPsc',CAP.psc(p==null?1:p)); };
+renderPvt=function(p){ _rPv(p); _S('capPvt',CAP.pvt(p==null?1:p)); };
+
+PHYS.addEventListener('change',()=>{renderVett(1);renderSomma(1);renderScal(1);});
+
+// ---- soPar listener ----
+document.getElementById('soPar').addEventListener('input',()=>renderSomma(1));
+
+// ---- 3D drag (azimut + elevazione) ----
+const _svgPvt=document.getElementById('svgPvt');
+let _drag=null;
+function _pvDown(e){
+  e.preventDefault();
+  const t=e.touches?e.touches[0]:e;
+  _drag={x:t.clientX,y:t.clientY,az:+document.getElementById('pvAz2').value,el:EL};
+  _svgPvt.style.cursor='grabbing';
+}
+function _pvMove(e){
+  if(!_drag) return;
+  e.preventDefault();
+  const t=e.touches?e.touches[0]:e;
+  const dx=t.clientX-_drag.x, dy=t.clientY-_drag.y;
+  const newAz=_drag.az + dx*0.45;
+  const el=document.getElementById('pvAz2');
+  el.value=((Math.round(newAz)%360)+360)%360;
+  EL=clamp(_drag.el - dy*0.012, 0.12, 1.35);
+  el.dispatchEvent(new Event('input'));
+}
+function _pvUp(){ if(_drag){ _drag=null; _svgPvt.style.cursor='grab'; } }
+_svgPvt.style.cursor='grab';
+_svgPvt.addEventListener('mousedown',_pvDown);
+window.addEventListener('mousemove',_pvMove);
+window.addEventListener('mouseup',_pvUp);
+_svgPvt.addEventListener('touchstart',_pvDown,{passive:false});
+window.addEventListener('touchmove',_pvMove,{passive:false});
+window.addEventListener('touchend',_pvUp);
+
+// ---- Sfide "prova tu" ----
+const SFIDE={
+  vettori:{
+    text:'Imposta v<sub>x</sub> e v<sub>y</sub> con i cursori in modo che il modulo |<span class=vec>v</span>| sia esattamente <code>5</code>.',
+    check:()=>{ const vx=+document.getElementById('veX').value, vy=+document.getElementById('veY').value; return Math.abs(Math.hypot(vx,vy)-5)<0.05; },
+    sol:'Tutte le coppie (v<sub>x</sub>, v<sub>y</sub>) per cui v<sub>x</sub>²+v<sub>y</sub>²=25. Per esempio (3 ; 4), (4 ; −3), (5 ; 0), (0 ; −5).'
+  },
+  somma:{
+    text:'Imposta <span class=vec>a</span> e <span class=vec>b</span> in modo che <span class=vec>a</span>+<span class=vec>b</span> = <code>(5 ; 0)</code>.',
+    check:()=>{ const ax=+document.getElementById('soAx').value, ay=+document.getElementById('soAy').value, bx=+document.getElementById('soBx').value, by=+document.getElementById('soBy').value; return document.getElementById('soMode').value==='somma' && ax+bx===5 && ay+by===0; },
+    sol:'Imposta operazione su a+b. Esempio: <span class=vec>a</span>=(3 ; 2), <span class=vec>b</span>=(2 ; −2).'
+  },
+  scalare:{
+    text:'Imposta <span class=vec>v</span>=(3 ; 4) e poi trova lo scalare k tale che |k·<span class=vec>v</span>| = <code>10</code>.',
+    check:()=>{ const vx=+document.getElementById('scX').value, vy=+document.getElementById('scY').value, k=+document.getElementById('scK').value; return Math.abs(vx-3)<0.5 && Math.abs(vy-4)<0.5 && Math.abs(Math.hypot(vx,vy)*Math.abs(k)-10)<0.15; },
+    sol:'|<span class=vec>v</span>|=√(9+16)=5, quindi |k|·5=10 → k=2 oppure k=−2.'
+  },
+  pscalare:{
+    text:'Imposta <span class=vec>b</span> in modo che sia perpendicolare ad <span class=vec>a</span>, ossia <span class=vec>a</span>·<span class=vec>b</span> = 0 (con entrambi non nulli).',
+    check:()=>{ const ax=+document.getElementById('psAx').value, ay=+document.getElementById('psAy').value, bx=+document.getElementById('psBx').value, by=+document.getElementById('psBy').value; const ma=Math.hypot(ax,ay), mb=Math.hypot(bx,by); return ma>0.5 && mb>0.5 && Math.abs(ax*bx+ay*by)<0.5; },
+    sol:'Se <span class=vec>a</span>=(a<sub>x</sub>; a<sub>y</sub>), un <span class=vec>b</span> perpendicolare è (−a<sub>y</sub> ; a<sub>x</sub>). Esempio: <span class=vec>a</span>=(5 ; 1) → <span class=vec>b</span>=(−1 ; 5).'
+  },
+  pvett:{
+    text:'Imposta <span class=vec>a</span> e <span class=vec>b</span> in modo che l\'area del parallelogramma |<span class=vec>a</span>×<span class=vec>b</span>| sia <code>12</code>.',
+    check:()=>{ const ax=+document.getElementById('pvAx').value, ay=+document.getElementById('pvAy').value, az=+document.getElementById('pvAz').value, bx=+document.getElementById('pvBx').value, by=+document.getElementById('pvBy').value, bz=+document.getElementById('pvBz').value; const cx=ay*bz-az*by, cy=az*bx-ax*bz, cz=ax*by-ay*bx; return Math.abs(Math.hypot(cx,cy,cz)-12)<0.5; },
+    sol:'Per esempio <span class=vec>a</span>=(3 ; 0 ; 0), <span class=vec>b</span>=(0 ; 4 ; 0) → <span class=vec>a</span>×<span class=vec>b</span>=(0 ; 0 ; 12), modulo 12.'
+  }
+};
+function setupProva(t){
+  const el=document.getElementById('prove-'+t);
+  if(!el) return;
+  const s=SFIDE[t];
+  el.innerHTML=`<h3>🎯 Prova tu</h3>
+    <div class="pq">${s.text}</div>
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+      <button class="pbtn" onclick="verifyProva('${t}')">Verifica</button>
+      <button class="pbtn" style="background:#94a3b8" onclick="showSol('${t}')">💡 Suggerimento</button>
+    </div>
+    <div class="fb" id="fb-${t}"></div>`;
+}
+function verifyProva(t){
+  const fb=document.getElementById('fb-'+t);
+  if(SFIDE[t].check()){
+    fb.className='fb ok';
+    fb.innerHTML='✓ <strong>Ottimo!</strong> Hai impostato i valori correttamente.';
+  } else {
+    fb.className='fb no';
+    fb.innerHTML='✗ Non ancora. Regola i cursori e riprova.';
+  }
+}
+function showSol(t){
+  const fb=document.getElementById('fb-'+t);
+  fb.className='fb ok';
+  fb.innerHTML='💡 '+SFIDE[t].sol;
+}
+['vettori','somma','scalare','pscalare','pvett'].forEach(setupProva);
+window.verifyProva=verifyProva; window.showSol=showSol;
 
 /* ===================== QUIZ DATA ===================== */
 const QUIZ={
