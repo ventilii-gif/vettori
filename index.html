@@ -1697,19 +1697,27 @@ pvett:{
 const TOPICS=['vettori','somma','scalare','pscalare','pvett'];
 const TITLES={vettori:'Vettori',somma:'Somma e differenza',scalare:'Prodotto per scalare',pscalare:'Prodotto scalare',pvett:'Prodotto vettoriale'};
 const qState={}, qKind={};
+function shuffleQ(q){
+  const ord=q.opts.map((_,i)=>i);
+  for(let i=ord.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=ord[i]; ord[i]=ord[j]; ord[j]=t; }
+  const out={q:q.q,opts:ord.map(i=>q.opts[i]),ans:ord.indexOf(q.ans),exp:q.exp};
+  if(q._topic) out._topic=q._topic;
+  return out;
+}
+function quizList(topic,kind){ const arr=QUIZ[topic][kind]; return kind==='calcolo'?arr.slice(0,5):arr; }
+function newQuizState(topic,kind){ return {idx:0,answers:[],done:false,qs:quizList(topic,kind).map(shuffleQ)}; }
 TOPICS.forEach(t=>{
   qKind[t]='teoria';
-  ['teoria','calcolo'].forEach(k=>{ qState[t+'-'+k]={idx:0,answers:[],done:false}; });
+  ['teoria','calcolo'].forEach(k=>{ qState[t+'-'+k]=newQuizState(t,k); });
 });
 const qScore=st=>st.answers.reduce((s,a)=>s+(a&&a.ok?1:0),0);
-function quizList(topic,kind){ const arr=QUIZ[topic][kind]; return kind==='calcolo'?arr.slice(0,5):arr; }
 
 function renderQuiz(topic){
   const el=document.getElementById('qz-'+topic);
   if(!el) return;
   const kind=qKind[topic];
   const st=qState[topic+'-'+kind];
-  const qs=quizList(topic,kind);
+  const qs=st.qs;
   const score=qScore(st);
   const tabs=`<div class="quiz-kinds">
     <button class="${kind==='teoria'?'active':''}" onclick="switchKind('${topic}','teoria')">📖 Teoria (10)</button>
@@ -1764,13 +1772,13 @@ function switchKind(topic,kind){ qKind[topic]=kind; renderQuiz(topic); }
 function answerQuiz(topic,chosen){
   const kind=qKind[topic], st=qState[topic+'-'+kind];
   if(st.answers[st.idx]!==undefined) return;
-  const q=quizList(topic,kind)[st.idx];
+  const q=st.qs[st.idx];
   st.answers[st.idx]={chosen:chosen,ok:chosen===q.ans};
   renderQuiz(topic);
 }
 function nextQuiz(topic){
   const kind=qKind[topic], st=qState[topic+'-'+kind];
-  if(st.idx+1>=quizList(topic,kind).length) st.done=true;
+  if(st.idx+1>=st.qs.length) st.done=true;
   else st.idx++;
   renderQuiz(topic);
 }
@@ -1781,12 +1789,12 @@ function prevQuiz(topic){
 }
 function reviewQuiz(topic){
   const kind=qKind[topic], st=qState[topic+'-'+kind];
-  st.done=false; st.idx=quizList(topic,kind).length-1;
+  st.done=false; st.idx=st.qs.length-1;
   renderQuiz(topic);
 }
 function restartQuiz(topic){
   const kind=qKind[topic];
-  qState[topic+'-'+kind]={idx:0,answers:[],done:false};
+  qState[topic+'-'+kind]=newQuizState(topic,kind);
   renderQuiz(topic);
 }
 window.switchKind=switchKind; window.answerQuiz=answerQuiz; window.nextQuiz=nextQuiz;
@@ -1801,7 +1809,7 @@ const FINAL_PICKS=[
   ['pvett','teoria',1],['pvett','teoria',3],['pvett','calcolo',9]
 ];
 const FINAL=FINAL_PICKS.map(a=>Object.assign({_topic:a[0]},QUIZ[a[0]][a[1]][a[2]]));
-const fSt={idx:0,ans:FINAL.map(()=>null),done:false,warn:false,filter:'tutte'};
+const fSt={idx:0,ans:FINAL.map(()=>null),done:false,warn:false,filter:'tutte',qs:FINAL.map(shuffleQ)};
 function renderFinale(){
   const el=document.getElementById('qz-finale');
   if(!el) return;
@@ -1809,13 +1817,13 @@ function renderFinale(){
   const answered=fSt.ans.filter(a=>a!==null).length;
   let body;
   if(fSt.done){
-    const score=fSt.ans.reduce((s,a,i)=>s+(a===FINAL[i].ans?1:0),0);
+    const score=fSt.ans.reduce((s,a,i)=>s+(a===fSt.qs[i].ans?1:0),0);
     const frac=score/total;
     const mi=score===total?4:frac<0.4?0:frac<0.6?1:frac<0.8?2:3;
     const icons=['😕','🙂','😊','🎉','🏆'];
     const msgs=['Da rivedere — riparti dalla teoria dei singoli argomenti.','Sufficiente — restano alcune lacune.','Buono — ci sei quasi!','Ottimo risultato!','Perfetto — nessun errore!'];
     const wrongCount=total-score;
-    const list=FINAL.map((q,i)=>({q,i}))
+    const list=fSt.qs.map((q,i)=>({q,i}))
       .filter(o=>fSt.filter==='errori'?fSt.ans[o.i]!==o.q.ans:true)
       .map(o=>{
         const q=o.q, i=o.i, you=fSt.ans[i], ok=you===q.ans;
@@ -1844,7 +1852,7 @@ function renderFinale(){
       </div>
       ${list||'<p class="quiz-msg" style="text-align:center">Nessun errore da rivedere. Complimenti! 🎉</p>'}`;
   } else {
-    const q=FINAL[fSt.idx], chosen=fSt.ans[fSt.idx];
+    const q=fSt.qs[fSt.idx], chosen=fSt.ans[fSt.idx];
     const opts=q.opts.map((o,j)=>`<button class="quiz-btn ${chosen===j?'sel':''}" onclick="fAnswer(${j})">${'ABCD'[j]}) ${o}</button>`).join('');
     const pct=answered/total*100, isLast=fSt.idx+1>=total;
     const backBtn=fSt.idx>0?`<button class="quiz-back" onclick="fNav(-1)">← Indietro</button>`:'';
@@ -1874,7 +1882,7 @@ function fAskSubmit(){ if(fSt.ans.filter(a=>a!==null).length<FINAL.length){ fSt.
 function fCancelSubmit(){ fSt.warn=false; renderFinale(); }
 function fSubmit(){ fSt.done=true; fSt.warn=false; renderFinale(); window.scrollTo({top:0,behavior:'smooth'}); }
 function fSetFilter(f){ fSt.filter=f; renderFinale(); }
-function fRestart(){ fSt.idx=0; fSt.ans=FINAL.map(()=>null); fSt.done=false; fSt.warn=false; fSt.filter='tutte'; renderFinale(); window.scrollTo({top:0,behavior:'smooth'}); }
+function fRestart(){ fSt.idx=0; fSt.ans=FINAL.map(()=>null); fSt.qs=FINAL.map(shuffleQ); fSt.done=false; fSt.warn=false; fSt.filter='tutte'; renderFinale(); window.scrollTo({top:0,behavior:'smooth'}); }
 window.fAnswer=fAnswer; window.fNav=fNav; window.fAskSubmit=fAskSubmit; window.fCancelSubmit=fCancelSubmit;
 window.fSubmit=fSubmit; window.fSetFilter=fSetFilter; window.fRestart=fRestart;
 
