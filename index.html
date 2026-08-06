@@ -13,13 +13,22 @@
   --bg:#f4f5f8;--surface:#fff;--primary:#2563eb;--primary-d:#1d4ed8;--accent:#ff7043;
   --text:#1f2430;--muted:#6b7488;--border:#e4e7ef;--soft:#f2f4f9;
   --vA:#1565c0;--vB:#ef6c00;--vR:#2e7d32;--vP:#8e24aa;--vC:#00897b;--vN:#0097a7;
+  --svgbg:#fbfcfe;--grid:#dde2ec;--axis:#5b6378;--tick:#6b7488;--svgtxt:#374151;
+  --ground3d:#e9ecf5;--axis3d:#aab2c4;--axisname:#7a8296;
+}
+:root[data-theme="dark"]{
+  --bg:#0e1016;--surface:#181b24;--primary:#5b8dff;--primary-d:#93b0ff;--accent:#ff8a5c;
+  --text:#e6e9f1;--muted:#98a1b6;--border:#2a2f3d;--soft:#20242f;
+  --vA:#5b9dff;--vB:#ff9d42;--vR:#57d17a;--vP:#c78bff;--vC:#3fd6c0;--vN:#35c9e6;
+  --svgbg:#12141d;--grid:#272d42;--axis:#7f8aa6;--tick:#7f8aa6;--svgtxt:#c3cad9;
+  --ground3d:#20263c;--axis3d:#525c78;--axisname:#7f8aa6;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   font-size:clamp(15px,2.4vw,17px);line-height:1.6}
 header{background:var(--surface);border-bottom:1px solid var(--border);
-  padding:1rem 1.1rem;position:sticky;top:0;z-index:10}
+  padding:1rem 3.6rem 1rem 1.1rem;position:sticky;top:0;z-index:10}
 header h1{margin:0;font-size:clamp(1.15rem,4.2vw,1.5rem);font-weight:800}
 header .sub{font-size:.86em;color:var(--muted);margin-top:.15rem}
 nav.main{background:var(--surface);display:flex;gap:.5rem;overflow-x:auto;
@@ -80,7 +89,7 @@ section.scene.active{display:block}
 .eqs.ok{background:#d6ecd7;color:#1b5e20}
 .eqs.no{background:#f6d4d4;color:#b71c1c}
 .eqs.lim{background:#fbe5c4;color:#bf360c}
-svg.sim{width:100%;height:auto;background:#fbfcfe;border:1px solid var(--border);
+svg.sim{width:100%;height:auto;background:var(--svgbg);border:1px solid var(--border);
   border-radius:9px;display:block;font-family:sans-serif}
 .legend{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.55rem;font-size:.77em}
 .legend span{display:inline-flex;align-items:center;gap:.3rem;
@@ -214,10 +223,50 @@ nav.sub button.active{background:var(--primary);color:#fff;border-color:var(--pr
 .storia h3{margin:0 0 .5rem;color:#7a5a1e;font-size:1.03em}
 .storia p{margin:.5rem 0;line-height:1.6;font-size:.94em}
 .storia b{color:#6b4a13}
+/* ----- Interruttore tema ----- */
+.theme-toggle{position:absolute;top:.85rem;right:1rem;background:var(--soft);
+  border:1px solid var(--border);border-radius:999px;width:40px;height:40px;
+  font-size:1.15em;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  line-height:1;padding:0;color:var(--text)}
+.theme-toggle:hover{border-color:var(--primary)}
+/* ----- Tema scuro: override colori fissi ----- */
+:root[data-theme="dark"] nav.main button.active{background:var(--primary);border-color:var(--primary);color:#fff}
+:root[data-theme="dark"] nav.main button.active .n{background:#fff;color:var(--primary-d)}
+:root[data-theme="dark"] .tip{background:#16281c;border-left-color:#3ea45c}
+:root[data-theme="dark"] .warn{background:#2a2416;border-left-color:#e0a53c}
+:root[data-theme="dark"] .caption{background:#2a2416;color:#e8cd97}
+:root[data-theme="dark"] .eqs.ok{background:#16311c;color:#8fe0a0}
+:root[data-theme="dark"] .eqs.no{background:#3a1e1e;color:#f0a3a3}
+:root[data-theme="dark"] .eqs.lim{background:#392915;color:#f0b877}
+:root[data-theme="dark"] .prove{background:#211a33;border-color:#4a2f7a}
+:root[data-theme="dark"] .prove h3{color:#c7a3ff}
+:root[data-theme="dark"] .prove .pq code{background:#3a2a57}
+:root[data-theme="dark"] .prove .fb.ok{background:#16311c;color:#8fe0a0}
+:root[data-theme="dark"] .prove .fb.no{background:#3a1e1e;color:#f0a3a3}
+:root[data-theme="dark"] .quiz-kinds button{background:#20242f}
+:root[data-theme="dark"] .quiz-btn{background:#20242f}
+:root[data-theme="dark"] .quiz-btn:not(:disabled):hover{background:#2b3040}
+:root[data-theme="dark"] .quiz-btn.correct{background:#1c3a24!important;border-color:#3ea45c!important;color:#a6e8b5}
+:root[data-theme="dark"] .quiz-btn.wrong{background:#3d1f1f!important;border-color:#c0504a!important;color:#f0a3a3}
+:root[data-theme="dark"] .quiz-btn.sel{background:#243154!important;color:#bcd0ff}
+:root[data-theme="dark"] .quiz-exp.ok{background:#16281c;color:#a6e8b5}
+:root[data-theme="dark"] .quiz-exp.no{background:#2c1a1a;color:#f0a3a3}
+:root[data-theme="dark"] .quiz-bar-wrap{background:#2a2f3d}
+:root[data-theme="dark"] .ex-hint{background:#2a2416;color:#e8cd97}
+:root[data-theme="dark"] .ex-sol{background:#16281c;color:#bfe6c6}
+:root[data-theme="dark"] .rev.err{background:#241717;border-color:#5a3030}
+:root[data-theme="dark"] .rev-hd .mark.ok{color:#8fe0a0}
+:root[data-theme="dark"] .rev-hd .mark.no{color:#f0a3a3}
+:root[data-theme="dark"] .qf-warn{background:#2a2416;color:#e8cd97}
+:root[data-theme="dark"] .qf-filter button{background:#20242f}
+:root[data-theme="dark"] .storia{background:linear-gradient(180deg,#201c12,#1a1710);border-color:#4a3d1e;border-left-color:#b08a3e}
+:root[data-theme="dark"] .storia h3{color:#d9bd7c}
+:root[data-theme="dark"] .storia b{color:#cbab6c}
 </style>
 </head>
 <body>
 <header>
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambia tema" title="Tema chiaro/scuro">🌙</button>
   <h1>➳ Studio dei Vettori</h1>
   <div class="sub">Fisica e matematica per il liceo · teoria, simulazioni animate &amp; quiz</div>
 </header>
@@ -604,6 +653,7 @@ function arrow(x1,y1,x2,y2,opt){
 }
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const COL={A:'#1565c0',B:'#ef6c00',R:'#2e7d32',P:'#8e24aa',C:'#00897b',N:'#0097a7'};
+const SC={grid:'',axis:'',tick:'',svgtxt:'',ground:'',axis3d:'',axisname:''};
 
 /* ----- 2D plotting ----- */
 const P2={ox:200,oy:188,u:20};
@@ -611,15 +661,15 @@ const gx=x=>P2.ox+x*P2.u;
 const gy=y=>P2.oy-y*P2.u;
 function grid2d(){
   let g='';
-  for(let x=-9;x<=9;x++) g+=`<line x1="${gx(x)}" y1="0" x2="${gx(x)}" y2="360" stroke="#dde2ec" stroke-width="1"/>`;
-  for(let y=-8;y<=8;y++) g+=`<line x1="0" y1="${gy(y)}" x2="400" y2="${gy(y)}" stroke="#dde2ec" stroke-width="1"/>`;
-  g+=`<line x1="0" y1="${gy(0)}" x2="400" y2="${gy(0)}" stroke="#5b6378" stroke-width="1.7"/>`;
-  g+=`<line x1="${gx(0)}" y1="0" x2="${gx(0)}" y2="360" stroke="#5b6378" stroke-width="1.7"/>`;
-  for(let x=-8;x<=8;x++){ if(x!==0) g+=`<text x="${gx(x)}" y="${gy(0)+14}" font-size="11" fill="#6b7488" text-anchor="middle">${x}</text>`; }
-  for(let y=-7;y<=7;y++){ if(y!==0) g+=`<text x="${gx(0)-7}" y="${gy(y)+4}" font-size="11" fill="#6b7488" text-anchor="end">${y}</text>`; }
-  g+=`<text x="394" y="${gy(0)-6}" font-size="13" fill="#5b6378" text-anchor="end" font-style="italic">x</text>`;
-  g+=`<text x="${gx(0)+8}" y="14" font-size="13" fill="#5b6378" font-style="italic">y</text>`;
-  g+=`<circle cx="${gx(0)}" cy="${gy(0)}" r="2.8" fill="#5b6378"/>`;
+  for(let x=-9;x<=9;x++) g+=`<line x1="${gx(x)}" y1="0" x2="${gx(x)}" y2="360" stroke="${SC.grid}" stroke-width="1"/>`;
+  for(let y=-8;y<=8;y++) g+=`<line x1="0" y1="${gy(y)}" x2="400" y2="${gy(y)}" stroke="${SC.grid}" stroke-width="1"/>`;
+  g+=`<line x1="0" y1="${gy(0)}" x2="400" y2="${gy(0)}" stroke="${SC.axis}" stroke-width="1.7"/>`;
+  g+=`<line x1="${gx(0)}" y1="0" x2="${gx(0)}" y2="360" stroke="${SC.axis}" stroke-width="1.7"/>`;
+  for(let x=-8;x<=8;x++){ if(x!==0) g+=`<text x="${gx(x)}" y="${gy(0)+14}" font-size="11" fill="${SC.tick}" text-anchor="middle">${x}</text>`; }
+  for(let y=-7;y<=7;y++){ if(y!==0) g+=`<text x="${gx(0)-7}" y="${gy(y)+4}" font-size="11" fill="${SC.tick}" text-anchor="end">${y}</text>`; }
+  g+=`<text x="394" y="${gy(0)-6}" font-size="13" fill="${SC.axis}" text-anchor="end" font-style="italic">x</text>`;
+  g+=`<text x="${gx(0)+8}" y="14" font-size="13" fill="${SC.axis}" font-style="italic">y</text>`;
+  g+=`<circle cx="${gx(0)}" cy="${gy(0)}" r="2.8" fill="${SC.axis}"/>`;
   return g;
 }
 function fmt(n,d){ return (Math.abs(n)<1e-9?0:n).toFixed(d==null?2:d); }
@@ -690,10 +740,10 @@ function renderVett(p){
       const ex2=ox+R*Math.cos(ang), ey2=oy-R*Math.sin(ang);
       const sweep=ang>0?0:1;
       const arcA=clamp((p-0.55)/0.45,0,1);
-      s+=`<path d="M ${sx} ${sy} A ${R} ${R} 0 0 ${sweep} ${ex2.toFixed(1)} ${ey2.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.4" opacity="${arcA}"/>`;
+      s+=`<path d="M ${sx} ${sy} A ${R} ${R} 0 0 ${sweep} ${ex2.toFixed(1)} ${ey2.toFixed(1)}" fill="none" stroke="${SC.axis}" stroke-width="1.4" opacity="${arcA}"/>`;
       const lblAng=ang/2;
       const lx=ox+(R+13)*Math.cos(lblAng), ly=oy-(R+13)*Math.sin(lblAng);
-      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="#374151" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle" opacity="${arcA}">θ</text>`;
+      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="${SC.svgtxt}" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle" opacity="${arcA}">θ</text>`;
     }
   }
   // components (dashed)
@@ -817,16 +867,16 @@ function renderPsc(p){
       const c1x=ox+uax*sq, c1y=oy-uay*sq;
       const c2x=c1x+ubx*sq, c2y=c1y-uby*sq;
       const c3x=ox+ubx*sq, c3y=oy-uby*sq;
-      s+=`<polyline points="${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${c3x.toFixed(1)},${c3y.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.5"/>`;
+      s+=`<polyline points="${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${c3x.toFixed(1)},${c3y.toFixed(1)}" fill="none" stroke="${SC.axis}" stroke-width="1.5"/>`;
     } else {
       const R=22;
       const sxA=ox+R*Math.cos(aA), syA=oy-R*Math.sin(aA);
       const exB=ox+R*Math.cos(aA+dAng), eyB=oy-R*Math.sin(aA+dAng);
       const sweep=dAng>0?0:1;
-      s+=`<path d="M ${sxA.toFixed(1)} ${syA.toFixed(1)} A ${R} ${R} 0 0 ${sweep} ${exB.toFixed(1)} ${eyB.toFixed(1)}" fill="none" stroke="#5b6378" stroke-width="1.4"/>`;
+      s+=`<path d="M ${sxA.toFixed(1)} ${syA.toFixed(1)} A ${R} ${R} 0 0 ${sweep} ${exB.toFixed(1)} ${eyB.toFixed(1)}" fill="none" stroke="${SC.axis}" stroke-width="1.4"/>`;
       const mid=aA+dAng/2;
       const lx=ox+(R+13)*Math.cos(mid), ly=oy-(R+13)*Math.sin(mid);
-      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="#374151" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle">θ</text>`;
+      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="${SC.svgtxt}" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle">θ</text>`;
     }
   }
   // projection of b onto a
@@ -907,15 +957,15 @@ function renderPvt(p){
   // ground grid on z=0
   for(let i=-5;i<=5;i++){
     const a1=pj(i,-5,0),a2=pj(i,5,0),b1=pj(-5,i,0),b2=pj(5,i,0);
-    s+=`<line x1="${a1.x.toFixed(1)}" y1="${a1.y.toFixed(1)}" x2="${a2.x.toFixed(1)}" y2="${a2.y.toFixed(1)}" stroke="#e9ecf5" stroke-width="1"/>`;
-    s+=`<line x1="${b1.x.toFixed(1)}" y1="${b1.y.toFixed(1)}" x2="${b2.x.toFixed(1)}" y2="${b2.y.toFixed(1)}" stroke="#e9ecf5" stroke-width="1"/>`;
+    s+=`<line x1="${a1.x.toFixed(1)}" y1="${a1.y.toFixed(1)}" x2="${a2.x.toFixed(1)}" y2="${a2.y.toFixed(1)}" stroke="${SC.ground}" stroke-width="1"/>`;
+    s+=`<line x1="${b1.x.toFixed(1)}" y1="${b1.y.toFixed(1)}" x2="${b2.x.toFixed(1)}" y2="${b2.y.toFixed(1)}" stroke="${SC.ground}" stroke-width="1"/>`;
   }
   // axes
   const axEnd=[pj(6,0,0),pj(0,6,0),pj(0,0,6)];
   const axNames=['x','y','z'];
   axEnd.forEach((e,i)=>{
-    s+=`<line x1="${O.x.toFixed(1)}" y1="${O.y.toFixed(1)}" x2="${e.x.toFixed(1)}" y2="${e.y.toFixed(1)}" stroke="#aab2c4" stroke-width="1.4"/>`;
-    s+=`<text x="${e.x.toFixed(1)}" y="${(e.y-4).toFixed(1)}" font-size="11" fill="#7a8296" font-style="italic" text-anchor="middle">${axNames[i]}</text>`;
+    s+=`<line x1="${O.x.toFixed(1)}" y1="${O.y.toFixed(1)}" x2="${e.x.toFixed(1)}" y2="${e.y.toFixed(1)}" stroke="${SC.axis3d}" stroke-width="1.4"/>`;
+    s+=`<text x="${e.x.toFixed(1)}" y="${(e.y-4).toFixed(1)}" font-size="11" fill="${SC.axisname}" font-style="italic" text-anchor="middle">${axNames[i]}</text>`;
   });
   // parallelogram a,b
   const pa=pj(ax,ay,az), pb=pj(bx,by,bz), pab=pj(ax+bx,ay+by,az+bz);
@@ -998,6 +1048,37 @@ renderPvt=function(p){ _rPv(p); _S('capPvt',CAP.pvt(p==null?1:p)); };
 
 // ---- soPar listener ----
 document.getElementById('soPar').addEventListener('input',()=>renderSomma(1));
+
+// ---- tema chiaro/scuro ----
+function _readVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function refreshColors(){
+  COL.A=_readVar('--vA')||'#1565c0'; COL.B=_readVar('--vB')||'#ef6c00'; COL.R=_readVar('--vR')||'#2e7d32';
+  COL.P=_readVar('--vP')||'#8e24aa'; COL.C=_readVar('--vC')||'#00897b'; COL.N=_readVar('--vN')||'#0097a7';
+  SC.grid=_readVar('--grid')||'#dde2ec'; SC.axis=_readVar('--axis')||'#5b6378'; SC.tick=_readVar('--tick')||'#6b7488';
+  SC.svgtxt=_readVar('--svgtxt')||'#374151'; SC.ground=_readVar('--ground3d')||'#e9ecf5';
+  SC.axis3d=_readVar('--axis3d')||'#aab2c4'; SC.axisname=_readVar('--axisname')||'#7a8296';
+}
+function _renderSims(){ renderVett(1); renderSomma(1); renderScal(1); renderPsc(1); renderPvt(1); }
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  const b=document.getElementById('themeToggle');
+  if(b){ b.textContent=t==='dark'?'☀️':'🌙'; b.setAttribute('aria-label',t==='dark'?'Passa al tema chiaro':'Passa al tema scuro'); }
+  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content',t==='dark'?'#181b24':'#5e35b1');
+  refreshColors();
+  _renderSims();
+}
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+  const next=cur==='dark'?'light':'dark';
+  try{ localStorage.setItem('tema',next); }catch(e){}
+  applyTheme(next);
+}
+function initTheme(){
+  let t=null; try{ t=localStorage.getItem('tema'); }catch(e){}
+  if(t!=='dark'&&t!=='light'){ t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+  applyTheme(t);
+  const b=document.getElementById('themeToggle'); if(b) b.addEventListener('click',toggleTheme);
+}
 
 // ---- 3D drag (azimut + elevazione) ----
 const _svgPvt=document.getElementById('svgPvt');
@@ -1806,7 +1887,7 @@ function _navTop(){
 }
 new ResizeObserver(_navTop).observe(_hdr); new ResizeObserver(_navTop).observe(_nav); _navTop();
 
-renderVett(1); renderSomma(1); renderScal(1); renderPsc(1); renderPvt(1);
+initTheme();
 TOPICS.forEach(renderQuiz);
 TOPICS.forEach(renderEsercizi);
 renderFinale();
