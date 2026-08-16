@@ -224,6 +224,23 @@ nav.sub button.active{background:var(--primary);color:var(--on-accent);border-co
 .ex-sol{background:#eef7ee;border-left:3px solid #2e7d32;color:#1b4620}
 .ex-hint.show,.ex-sol.show{display:block}
 .ex-sol .st{display:block;margin:.32rem 0}
+.ex-check{margin:.7rem 0 .2rem;padding:.75rem .85rem;background:var(--soft);border-radius:9px}
+.ex-check-hint{font-size:.8em;color:var(--muted);margin-bottom:.55rem}
+.ex-fields{display:flex;flex-wrap:wrap;gap:.55rem .9rem;margin-bottom:.6rem}
+.ex-field{display:flex;align-items:center;gap:.4rem;font-size:.9em}
+.ex-field>span{color:var(--muted)}
+.ex-field input{width:6.5em;padding:.4rem .5rem;border:1.5px solid var(--border);border-radius:7px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.95em;background:var(--card);color:var(--text)}
+.ex-field input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ex-field input.ok{border-color:var(--correct)}
+.ex-field input.no{border-color:var(--wrong)}
+.ex-verify{background:var(--primary)!important;color:var(--on-accent)!important;border-color:var(--primary)!important}
+.ex-verify:hover{background:var(--primary-d)!important;border-color:var(--primary-d)!important}
+.ex-fb{margin-top:.55rem;font-size:.9em;display:none;align-items:center;gap:.35rem;font-weight:600;line-height:1.4}
+.ex-fb.ok{display:inline-flex;color:var(--correct)}
+.ex-fb.no{display:inline-flex;color:var(--wrong)}
+.ex-fb.warn{display:inline-flex;color:var(--warn)}
+.ex-fb .ic{width:1.1em;height:1.1em;flex:0 0 auto}
 /* ----- Quiz finale (feedback differito) ----- */
 .quiz-btn.sel{background:#e0e7ff!important;border-color:var(--primary)!important;
   color:var(--primary-d);font-weight:600}
@@ -1429,17 +1446,84 @@ pvett:[
       '<span class="st"><b>3.</b> Area del triangolo: A = ½ · 12 = <b>6</b>.</span>'}
 ]
 };
+/* risposte numeriche degli esercizi (con etichetta, valore atteso, tolleranza opzionale) */
+const EX_CHECK={
+ vettori:[
+  [{l:'|<span class=vec>v</span>|',v:10}],
+  [{l:'v<sub>x</sub>',v:8.66,t:0.1},{l:'v<sub>y</sub>',v:5,t:0.1}],
+  [{l:'|<span class=vec>v</span>|',v:7.07,t:0.1},{l:'θ (°)',v:135,t:1}],
+  [{l:'comp. x',v:0.6,t:0.03},{l:'comp. y',v:0.8,t:0.03}],
+  [{l:'|v<sub>y</sub>|',v:6.93,t:0.1},{l:'θ con v<sub>y</sub>&gt;0 (°)',v:60,t:1}]
+ ],
+ somma:[
+  [{l:'x',v:4},{l:'y',v:6}],
+  [{l:'x',v:3},{l:'y',v:-2}],
+  [{l:'|<span class=vec>a</span>+<span class=vec>b</span>|',v:5,t:0.1}],
+  [{l:'b<sub>x</sub>',v:3},{l:'b<sub>y</sub>',v:-7}],
+  [{l:'|<span class=vec>a</span>+<span class=vec>b</span>|',v:10,t:0.1},{l:'α (°)',v:53.13,t:0.7}]
+ ],
+ scalare:[
+  [{l:'x',v:6},{l:'y',v:15}],
+  [{l:'x',v:-2},{l:'y',v:3}],
+  [{l:'|k·<span class=vec>v</span>|',v:24,t:0.1}],
+  [{l:'comp. x',v:0.8,t:0.03},{l:'comp. y',v:0.6,t:0.03}],
+  [{l:'|k|',v:3,t:0.1}]
+ ],
+ pscalare:[
+  [{l:'<span class=vec>a</span>·<span class=vec>b</span>',v:10,t:0.1}],
+  [{l:'<span class=vec>a</span>·<span class=vec>b</span>',v:0,t:0.1}],
+  [{l:'<span class=vec>a</span>·<span class=vec>b</span>',v:10,t:0.1}],
+  [{l:'cos θ',v:0.894,t:0.02},{l:'θ (°)',v:26.57,t:0.6}],
+  [{l:'m',v:1,t:0.1}]
+ ],
+ pvett:[
+  [{l:'x',v:0},{l:'y',v:0},{l:'z',v:1}],
+  [{l:'|<span class=vec>a</span>×<span class=vec>b</span>|',v:6,t:0.1}],
+  [{l:'|<span class=vec>a</span>×<span class=vec>b</span>|',v:10,t:0.1}],
+  [{l:'x',v:-3},{l:'y',v:6},{l:'z',v:-3}],
+  [{l:'Area',v:6,t:0.1}]
+ ]
+};
+function verifyEx(topic,i){
+  const chk=EX_CHECK[topic] && EX_CHECK[topic][i];
+  const fb=document.getElementById('exfb-'+topic+'-'+i);
+  if(!chk||!fb) return;
+  let allOk=true, anyEmpty=false;
+  chk.forEach((f,k)=>{
+    const inp=document.getElementById('exin-'+topic+'-'+i+'-'+k);
+    if(!inp) return;
+    const raw=inp.value.trim().replace(',','.');
+    if(raw===''){ anyEmpty=true; allOk=false; inp.classList.remove('ok','no'); return; }
+    const val=parseFloat(raw);
+    const tol=(f.t!=null)?f.t:Math.max(0.15,Math.abs(f.v)*0.02);
+    const ok=isFinite(val) && Math.abs(val-f.v)<=tol;
+    inp.classList.toggle('ok',ok); inp.classList.toggle('no',!ok);
+    if(!ok) allOk=false;
+  });
+  if(anyEmpty){ fb.className='ex-fb warn'; fb.innerHTML=ic('warn')+' Inserisci tutti i valori richiesti.'; return; }
+  if(allOk){ fb.className='ex-fb ok'; fb.innerHTML=ic('check')+' Corretto! Ottimo lavoro.'; }
+  else { fb.className='ex-fb no'; fb.innerHTML=ic('cross')+' Non ancora giusto: ricontrolla i calcoli, oppure usa il suggerimento e la soluzione.'; }
+}
+window.verifyEx=verifyEx;
 function renderEsercizi(topic){
   const el=document.getElementById('ex-'+topic);
   if(!el) return;
   const list=ESERCIZI[topic]||[];
-  let h='<p class="ex-intro">Esercizi svolti in ordine di difficoltà crescente. Prova a risolverli da solo, poi usa il suggerimento o mostra la soluzione passo-passo.</p>';
+  let h='<p class="ex-intro">Esercizi in ordine di difficoltà crescente. Risolvi, inserisci il tuo risultato e premi <strong>Verifica</strong>; in caso di difficoltà usa il suggerimento o mostra la soluzione passo-passo.</p>';
   list.forEach((ex,i)=>{
     const hintBtn=ex.hint?`<button class="ex-btn" onclick="toggleEx('${topic}',${i},'hint')">${ic('bulb')} Suggerimento</button>`:'';
     const hintBox=ex.hint?`<div class="ex-hint" id="exh-${topic}-${i}">${ex.hint}</div>`:'';
+    const chk=EX_CHECK[topic] && EX_CHECK[topic][i];
+    const checkUI=chk?`<div class="ex-check">
+      <div class="ex-check-hint">Inserisci il risultato e premi Verifica (è accettata una piccola tolleranza; per i decimali usa il punto o la virgola).</div>
+      <div class="ex-fields">${chk.map((f,k)=>`<label class="ex-field"><span>${f.l} =</span><input type="text" inputmode="decimal" autocomplete="off" id="exin-${topic}-${i}-${k}" aria-label="Risposta ${topic} esercizio ${i+1}, campo ${k+1}"></label>`).join('')}</div>
+      <button class="ex-btn ex-verify" onclick="verifyEx('${topic}',${i})">${ic('check')} Verifica</button>
+      <div class="ex-fb" id="exfb-${topic}-${i}" role="status" aria-live="polite"></div>
+    </div>`:'';
     h+=`<div class="ex">
       <div class="ex-hd"><span class="ex-liv l${ex.liv}">Livello ${ex.liv}</span><span class="t">Esercizio ${i+1}</span></div>
       <div class="ex-testo">${ex.testo}</div>
+      ${checkUI}
       <div class="ex-btns">${hintBtn}<button class="ex-btn" onclick="toggleEx('${topic}',${i},'sol')">${ic('check')} Mostra soluzione</button></div>
       ${hintBox}
       <div class="ex-sol" id="exs-${topic}-${i}">${ex.sol}</div>
