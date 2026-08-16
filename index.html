@@ -48,6 +48,11 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
   font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:clamp(15px,2.4vw,17px);line-height:1.6}
 .v,.quiz-score-big{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:5px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
 header{background:var(--surface);border-bottom:1px solid var(--border);
   padding:1rem 3.6rem 1rem 1.1rem;position:sticky;top:0;z-index:10}
 header h1{margin:0;font-size:clamp(1.15rem,4.2vw,1.5rem);font-weight:800}
@@ -255,11 +260,36 @@ h1 .ic{width:1em;height:1em}
 nav.main button .ic,nav.sub button .ic{margin-right:.05rem}
 .card h2 .ic-slot,.card h2 .ic{color:var(--accent);margin-right:.35rem;vertical-align:-0.12em}
 /* ----- Interruttore tema ----- */
-.theme-toggle{position:absolute;top:.85rem;right:1rem;background:var(--soft);
-  border:1px solid var(--border);border-radius:999px;width:40px;height:40px;
-  font-size:1.15em;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  line-height:1;padding:0;color:var(--text)}
-.theme-toggle:hover{border-color:var(--primary)}
+/* ----- Azioni header, progresso, badge, footer, stampa ----- */
+.hdr-actions{position:absolute;top:.7rem;right:1rem;display:flex;gap:.5rem;align-items:center}
+.hdr-btn{background:var(--soft);border:1px solid var(--border);border-radius:999px;
+  height:40px;min-height:40px;padding:0 .85rem;cursor:pointer;color:var(--text);
+  font-family:inherit;font-size:.82em;font-weight:600;display:inline-flex;align-items:center;gap:.35rem}
+.hdr-btn:hover{border-color:var(--primary)}
+.theme-toggle{width:40px;padding:0;justify-content:center;font-size:1.05em}
+@media(max-width:600px){.hdr-btn-lbl{display:none}.hdr-btn{padding:0;width:40px;justify-content:center}}
+.progwrap{margin-top:.75rem;display:flex;align-items:center;gap:.6rem}
+.progtrack{flex:1;height:7px;background:var(--soft);border-radius:999px;overflow:hidden}
+.progbar{height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .4s}
+.proglbl{font-size:.78em;color:var(--muted);white-space:nowrap}
+.proglbl b{color:var(--primary-d)}
+.donechip{display:inline-flex;align-items:center;gap:.25rem;margin-top:.5rem;
+  font-size:.72em;font-weight:700;color:var(--correct);
+  border:1px solid var(--correct);border-radius:999px;padding:.12rem .55rem;background:transparent}
+.donechip .ic{width:.95em;height:.95em}
+footer{max-width:1000px;margin:1.5rem auto 0;padding:1.2rem 1.1rem;color:var(--muted);
+  font-size:.85em;text-align:center;border-top:1px solid var(--border)}
+@media print{
+  .hdr-actions,nav.main,.progwrap,nav.sub,footer,header .sub{display:none!important}
+  section.scene{display:block!important}
+  section.scene#home,section.scene#finale{display:none!important}
+  .subpane{display:none!important}
+  .subpane[data-sub="teoria"]{display:block!important}
+  .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid}
+  header{position:static;border:0}
+  body{background:#fff;color:#000}
+  h2{break-after:avoid}
+}
 /* ----- Tema scuro: override colori fissi ----- */
 :root[data-theme="dark"] .tip{background:#16281c;border-left-color:#3ea45c}
 :root[data-theme="dark"] .warn{background:#2a2416;border-left-color:#e0a53c}
@@ -292,9 +322,16 @@ nav.main button .ic,nav.sub button .ic{margin-right:.05rem}
 </head>
 <body>
 <header>
-  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambia tema" title="Tema chiaro/scuro"></button>
+  <div class="hdr-actions">
+    <button id="printBtn" class="hdr-btn" type="button" aria-label="Stampa la teoria" title="Stampa la teoria"><span class="ic-slot" data-icon="print"></span><span class="hdr-btn-lbl">Stampa teoria</span></button>
+    <button id="themeToggle" class="hdr-btn theme-toggle" type="button" aria-label="Cambia tema" title="Tema chiaro/scuro"></button>
+  </div>
   <h1><span class="ic-slot" data-icon="vec"></span> Studio dei Vettori</h1>
   <div class="sub">Fisica e matematica per il liceo · teoria, simulazioni animate &amp; quiz</div>
+  <div class="progwrap">
+    <div class="progtrack"><div class="progbar" id="progBar"></div></div>
+    <span class="proglbl">Progresso <b id="progLbl">0/5</b></span>
+  </div>
 </header>
 <nav class="main" id="mainNav">
   <button data-tab="home" class="active"><span class="n"><span class="ic-slot" data-icon="home"></span></span>Home</button>
@@ -325,11 +362,11 @@ nav.main button .ic,nav.sub button .ic{margin-right:.05rem}
     </div>
   </div>
   <div class="home-grid">
-    <button class="home-card" data-go="vettori"><span class="ico"><span class="ic-slot" data-icon="vec"></span></span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span></button>
-    <button class="home-card" data-go="somma"><span class="ico"><span class="ic-slot" data-icon="plus"></span></span><strong>Somma e differenza</strong><span>Regola punta-coda e parallelogramma</span></button>
-    <button class="home-card" data-go="scalare"><span class="ico"><span class="ic-slot" data-icon="scale"></span></span><strong>Prodotto per uno scalare</strong><span>Allungare, accorciare e invertire un vettore</span></button>
-    <button class="home-card" data-go="pscalare"><span class="ico"><span class="ic-slot" data-icon="dot"></span></span><strong>Prodotto scalare</strong><span><span class=vec>a</span>·<span class=vec>b</span>, proiezioni e angolo tra vettori</span></button>
-    <button class="home-card" data-go="pvett"><span class="ico"><span class="ic-slot" data-icon="cprod"></span></span><strong>Prodotto vettoriale</strong><span><span class=vec>a</span>×<span class=vec>b</span> in 3D, regola della mano destra</span></button>
+    <button class="home-card" data-go="vettori"><span class="ico"><span class="ic-slot" data-icon="vec"></span></span><strong>Vettori</strong><span>Modulo, direzione, verso e componenti</span><span class="donechip" data-done="vettori" hidden></span></button>
+    <button class="home-card" data-go="somma"><span class="ico"><span class="ic-slot" data-icon="plus"></span></span><strong>Somma e differenza</strong><span>Regola punta-coda e parallelogramma</span><span class="donechip" data-done="somma" hidden></span></button>
+    <button class="home-card" data-go="scalare"><span class="ico"><span class="ic-slot" data-icon="scale"></span></span><strong>Prodotto per uno scalare</strong><span>Allungare, accorciare e invertire un vettore</span><span class="donechip" data-done="scalare" hidden></span></button>
+    <button class="home-card" data-go="pscalare"><span class="ico"><span class="ic-slot" data-icon="dot"></span></span><strong>Prodotto scalare</strong><span><span class=vec>a</span>·<span class=vec>b</span>, proiezioni e angolo tra vettori</span><span class="donechip" data-done="pscalare" hidden></span></button>
+    <button class="home-card" data-go="pvett"><span class="ico"><span class="ic-slot" data-icon="cprod"></span></span><strong>Prodotto vettoriale</strong><span><span class=vec>a</span>×<span class=vec>b</span> in 3D, regola della mano destra</span><span class="donechip" data-done="pvett" hidden></span></button>
     <button class="home-card" data-go="finale"><span class="ico"><span class="ic-slot" data-icon="cap"></span></span><strong>Quiz finale</strong><span>Verifica riepilogativa su tutti gli argomenti</span></button>
   </div>
   <div class="storia">
@@ -647,6 +684,7 @@ nav.main button .ic,nav.sub button .ic{margin-right:.05rem}
 </section>
 
 </main>
+<footer>Realizzato per studenti del liceo · Fisica</footer>
 <script>
 "use strict";
 
@@ -733,6 +771,7 @@ function angleDeg(x,y){ let a=Math.atan2(y,x)*180/Math.PI; if(a<0)a+=360; return
 const anims={};
 function runAnim(key,dur,render,btn){
   if(anims[key]) cancelAnimationFrame(anims[key]);
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){ render(1); return; }
   if(btn){ btn.disabled=true; }
   const t0=performance.now();
   function step(now){
@@ -748,7 +787,7 @@ function runAnim(key,dur,render,btn){
 const navBtns=document.querySelectorAll('#mainNav button');
 const scenes=document.querySelectorAll('section.scene');
 function showTab(name){
-  navBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  navBtns.forEach(b=>{ const on=b.dataset.tab===name; b.classList.toggle('active',on); if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current'); });
   scenes.forEach(s=>s.classList.toggle('active',s.id===name));
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -759,7 +798,7 @@ document.querySelectorAll('.home-card').forEach(c=>c.addEventListener('click',()
 function showSub(topic,sub){
   const sec=document.getElementById(topic);
   if(!sec) return;
-  sec.querySelectorAll(':scope > nav.sub button').forEach(b=>b.classList.toggle('active',b.dataset.sub===sub));
+  sec.querySelectorAll(':scope > nav.sub button').forEach(b=>{ const on=b.dataset.sub===sub; b.classList.toggle('active',on); if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current'); });
   sec.querySelectorAll(':scope > .subpane').forEach(p=>{ p.hidden=(p.dataset.sub!==sub); });
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1831,7 +1870,7 @@ function answerQuiz(topic,chosen){
 }
 function nextQuiz(topic){
   const kind=qKind[topic], st=qState[topic+'-'+kind];
-  if(st.idx+1>=st.qs.length) st.done=true;
+  if(st.idx+1>=st.qs.length){ st.done=true; markDone(topic); }
   else st.idx++;
   renderQuiz(topic);
 }
@@ -1938,6 +1977,20 @@ function fRestart(){ fSt.idx=0; fSt.ans=FINAL.map(()=>null); fSt.qs=FINAL.map(sh
 window.fAnswer=fAnswer; window.fNav=fNav; window.fAskSubmit=fAskSubmit; window.fCancelSubmit=fCancelSubmit;
 window.fSubmit=fSubmit; window.fSetFilter=fSetFilter; window.fRestart=fRestart;
 
+/* ===================== PROGRESSO / STATO ===================== */
+const doneTopics={};
+function markDone(topic){ if(!TOPICS.includes(topic)||doneTopics[topic]) return; doneTopics[topic]=true; updateProgress(); }
+function updateProgress(){
+  const n=TOPICS.filter(t=>doneTopics[t]).length;
+  const bar=document.getElementById('progBar'); if(bar) bar.style.width=(n/TOPICS.length*100)+'%';
+  const lbl=document.getElementById('progLbl'); if(lbl) lbl.textContent=n+'/'+TOPICS.length;
+  document.querySelectorAll('.donechip[data-done]').forEach(e=>{
+    const dn=!!doneTopics[e.dataset.done];
+    if(dn && !e.dataset.filled){ e.innerHTML=ic('check')+'fatto'; e.dataset.filled='1'; }
+    e.hidden=!dn;
+  });
+}
+
 /* ===================== INIT ===================== */
 const _hdr=document.querySelector('header'), _nav=document.querySelector('nav.main');
 function _navTop(){
@@ -1952,6 +2005,16 @@ initTheme();
 TOPICS.forEach(renderQuiz);
 TOPICS.forEach(renderEsercizi);
 renderFinale();
+const _pb=document.getElementById('printBtn'); if(_pb) _pb.addEventListener('click',()=>window.print());
+updateProgress();
+/* accessibilità: nomi ai controlli e stato tab */
+document.querySelectorAll('.ctrl label').forEach(lab=>{
+  const inp=lab.querySelector('input,select'), nm=lab.querySelector('.nm');
+  if(inp&&nm&&!inp.getAttribute('aria-label')) inp.setAttribute('aria-label',nm.textContent.replace(/\s+/g,' ').trim());
+});
+const _navMain=document.querySelector('nav.main'); if(_navMain) _navMain.setAttribute('aria-label','Navigazione argomenti');
+document.querySelectorAll('nav.sub').forEach(n=>n.setAttribute('aria-label',"Sezioni dell'argomento"));
+document.querySelectorAll('nav.main button.active,nav.sub button.active').forEach(b=>b.setAttribute('aria-current','page'));
 </script>
 </body>
 </html>
