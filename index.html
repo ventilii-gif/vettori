@@ -20,6 +20,8 @@
   --accent:#1565c0; --accent-2:#00897b;
   /* stato (sempre con icona + testo, mai solo colore) */
   --correct:#1b7f4b; --wrong:#c0392b; --warn:#ef6c00;
+  /* stato campi risposta — coppia Okabe–Ito sicura per daltonici */
+  --field-ok:#009E73; --field-no:#D55E00;
   /* raggi, ombre, spazi, testo su accent */
   --radius:14px; --shadow:0 6px 24px rgba(16,32,43,.09);
   --space:clamp(12px,2.5vw,20px); --on-accent:#ffffff;
@@ -36,6 +38,7 @@
   --text:#e7eef5; --text-soft:#9fb0c0;
   --accent:#4fc3f7; --accent-2:#4db6ac;
   --correct:#66bb6a; --wrong:#ef5350; --warn:#ffa726;
+  --field-ok:#4ecfa6; --field-no:#ff8a4d;
   --shadow:0 6px 24px rgba(0,0,0,.38); --on-accent:#08151f;
   --surface:var(--card); --primary:var(--accent); --primary-d:#81d4fa;
   --muted:var(--text-soft); --soft:#1e3040;
@@ -232,8 +235,11 @@ nav.sub button.active{background:var(--primary);color:var(--on-accent);border-co
 .ex-field input{width:6.5em;padding:.4rem .5rem;border:1.5px solid var(--border);border-radius:7px;
   font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.95em;background:var(--card);color:var(--text)}
 .ex-field input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.ex-field input.ok{border-color:var(--correct)}
-.ex-field input.no{border-color:var(--wrong)}
+.ex-field input.ok{border-color:var(--field-ok);box-shadow:0 0 0 1px var(--field-ok)}
+.ex-field input.no{border-color:var(--field-no);box-shadow:0 0 0 1px var(--field-no)}
+.ex-mark{display:inline-flex;width:1.05em;height:1.05em;flex:0 0 auto}
+.ex-mark.ok{color:var(--field-ok)}
+.ex-mark.no{color:var(--field-no)}
 .ex-verify{background:var(--primary)!important;color:var(--on-accent)!important;border-color:var(--primary)!important}
 .ex-verify:hover{background:var(--primary-d)!important;border-color:var(--primary-d)!important}
 .ex-fb{margin-top:.55rem;font-size:.9em;display:none;align-items:center;gap:.35rem;font-weight:600;line-height:1.4}
@@ -1491,13 +1497,15 @@ function verifyEx(topic,i){
   let allOk=true, anyEmpty=false;
   chk.forEach((f,k)=>{
     const inp=document.getElementById('exin-'+topic+'-'+i+'-'+k);
+    const mk=document.getElementById('exmk-'+topic+'-'+i+'-'+k);
     if(!inp) return;
     const raw=inp.value.trim().replace(',','.');
-    if(raw===''){ anyEmpty=true; allOk=false; inp.classList.remove('ok','no'); return; }
+    if(raw===''){ anyEmpty=true; allOk=false; inp.classList.remove('ok','no'); if(mk){ mk.className='ex-mark'; mk.innerHTML=''; } return; }
     const val=parseFloat(raw);
     const tol=(f.t!=null)?f.t:Math.max(0.15,Math.abs(f.v)*0.02);
     const ok=isFinite(val) && Math.abs(val-f.v)<=tol;
     inp.classList.toggle('ok',ok); inp.classList.toggle('no',!ok);
+    if(mk){ mk.className='ex-mark '+(ok?'ok':'no'); mk.innerHTML=ic(ok?'check':'cross'); }
     if(!ok) allOk=false;
   });
   if(anyEmpty){ fb.className='ex-fb warn'; fb.innerHTML=ic('warn')+' Inserisci tutti i valori richiesti.'; return; }
@@ -1516,7 +1524,7 @@ function renderEsercizi(topic){
     const chk=EX_CHECK[topic] && EX_CHECK[topic][i];
     const checkUI=chk?`<div class="ex-check">
       <div class="ex-check-hint">Inserisci il risultato e premi Verifica (è accettata una piccola tolleranza; per i decimali usa il punto o la virgola).</div>
-      <div class="ex-fields">${chk.map((f,k)=>`<label class="ex-field"><span>${f.l} =</span><input type="text" inputmode="decimal" autocomplete="off" id="exin-${topic}-${i}-${k}" aria-label="Risposta ${topic} esercizio ${i+1}, campo ${k+1}"></label>`).join('')}</div>
+      <div class="ex-fields">${chk.map((f,k)=>`<label class="ex-field"><span>${f.l} =</span><input type="text" inputmode="decimal" autocomplete="off" id="exin-${topic}-${i}-${k}" aria-label="Risposta ${topic} esercizio ${i+1}, campo ${k+1}"><span class="ex-mark" id="exmk-${topic}-${i}-${k}" aria-hidden="true"></span></label>`).join('')}</div>
       <button class="ex-btn ex-verify" onclick="verifyEx('${topic}',${i})">${ic('check')} Verifica</button>
       <div class="ex-fb" id="exfb-${topic}-${i}" role="status" aria-live="polite"></div>
     </div>`:'';
